@@ -1,0 +1,127 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Vibe Coder — Live Sample</title>
+  <style>
+    :root{--bg:#0f1724;--panel:#0b1220;--accent:#7c3aed}
+    body{margin:0;font-family:system-ui,Segoe UI,Helvetica,Arial;background:var(--bg);color:#fff;display:flex;align-items:center;justify-content:center;height:100vh}
+    .card{width:92vw;max-width:900px;background:linear-gradient(180deg,rgba(255,255,255,0.02),transparent);padding:18px;border-radius:12px;box-shadow:0 8px 24px rgba(2,6,23,0.6)}
+    h1{margin:0 0 6px 0;font-size:20px}
+    p{margin:0 0 12px 0;color:rgba(255,255,255,0.75)}
+    canvas{width:100%;height:260px;background:#021026;border-radius:8px;display:block}
+    .controls{display:flex;gap:12px;align-items:center;margin-top:12px}
+    .btn{background:var(--accent);border:none;padding:8px 12px;border-radius:8px;color:#fff;cursor:pointer}
+    label{font-size:13px;color:#cbd5e1}
+    input[type="range"]{width:170px}
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>Vibe Coder — Live Sample</h1>
+    <p>Small interactive canvas: random data, color palettes and speed control — paste your own app to replace this.</p>
+    <canvas id="vibe" width="900" height="260"></canvas>
+    <div class="controls">
+      <label>Palette:
+        <select id="palette">
+          <option value="vivid">Vivid</option>
+          <option value="cool">Cool</option>
+          <option value="warm">Warm</option>
+          <option value="mono">Mono</option>
+        </select>
+      </label>
+
+      <label>Bars:
+        <input id="bars" type="range" min="4" max="24" value="12">
+      </label>
+
+      <label>Speed:
+        <input id="speed" type="range" min="10" max="200" value="80">
+      </label>
+
+      <button id="randomize" class="btn">Randomize</button>
+    </div>
+  </div>
+
+  <script>
+    const canvas = document.getElementById('vibe');
+    const ctx = canvas.getContext('2d');
+    const paletteEl = document.getElementById('palette');
+    const barsEl = document.getElementById('bars');
+    const speedEl = document.getElementById('speed');
+    const randomBtn = document.getElementById('randomize');
+
+    // Set up size
+    function resize(){
+      const rect = canvas.getBoundingClientRect();
+      canvas.width = rect.width;
+      canvas.height = rect.height;
+    }
+    window.addEventListener('resize', resize);
+    resize();
+
+    function palettes(name){
+      const sets = {
+        vivid: ['#06b6d4','#7c3aed','#ff6b6b','#ffd166','#00cc66'],
+        cool: ['#60a5fa','#38bdf8','#7dd3fc','#0ea5a6','#4ade80'],
+        warm: ['#ff7b54','#ffad60','#f6e27f','#ffd9b3','#ff6f91'],
+        mono: ['#d1d5db','#9ca3af','#6b7280','#4b5563','#111827']
+      };
+      return sets[name] || sets.vivid;
+    }
+
+    let data = [];
+    function randomData(n){
+      return Array.from({length:n}, () => Math.floor(Math.random()*100));
+    }
+
+    function draw(){
+      const w = canvas.width, h = canvas.height;
+      ctx.clearRect(0,0,w,h);
+      const n = parseInt(barsEl.value,10);
+      if(data.length !== n) data = randomData(n);
+      const pad = 24;
+      const barW = (w - pad*2) / n;
+      const pal = palettes(paletteEl.value);
+      data.forEach((v,i)=>{
+        const x = pad + i*barW + 6;
+        const barH = (v/100) * (h - 40);
+        const y = h - barH - 10;
+        ctx.fillStyle = pal[i % pal.length];
+        const radius = 8;
+        // rounded rect
+        ctx.beginPath();
+        ctx.moveTo(x+radius, y);
+        ctx.arcTo(x+barW-12, y, x+barW-12, y+radius, radius);
+        ctx.lineTo(x+barW-12, y+barH-radius);
+        ctx.arcTo(x+barW-12, y+barH, x+barW-12-radius, y+barH, radius);
+        ctx.lineTo(x+radius, y+barH);
+        ctx.arcTo(x, y+barH, x, y+barH-radius, radius);
+        ctx.lineTo(x, y+radius);
+        ctx.arcTo(x, y, x+radius, y, radius);
+        ctx.fill();
+      });
+    }
+
+    let last = 0;
+    function tick(now){
+      const speed = parseInt(speedEl.value,10);
+      if(!last || now - last >= speed){
+        // shift data slightly for motion
+        data = data.map(d => Math.max(6, Math.min(100, d + (Math.random()*18-9))));
+        draw();
+        last = now;
+      }
+      requestAnimationFrame(tick);
+    }
+
+    randomBtn.addEventListener('click', ()=> data = randomData(parseInt(barsEl.value,10)));
+    paletteEl.addEventListener('change', draw);
+    barsEl.addEventListener('input', ()=> { data = randomData(parseInt(barsEl.value,10)); });
+    speedEl.addEventListener('input', ()=>{});
+    data = randomData(parseInt(barsEl.value,10));
+    requestAnimationFrame(tick);
+  </script>
+</body>
+</html>
