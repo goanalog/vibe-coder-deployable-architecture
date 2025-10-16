@@ -2,24 +2,37 @@
   "id": "vibe-coder",
   "version": "0.1.0",
   "displayName": "Vibe Coder — Instant SPA",
-  "description": "A deployable architecture for 'vibe coding' single page apps: paste or upload your index.html and get an instant COS-hosted SPA.",
+  "description": "A deployable architecture for 'vibe coding' single-page apps: paste or upload your index.html and get an instant IBM COS-hosted SPA.",
   "type": "deployable_architecture",
   "deliveryMethod": "terraform",
   "repository": {
-    "url": "https://github.com/YOUR_ORG/vibe-coder-deployable-architecture",
+    "url": "https://github.com/goanalog/vibe-coder-deployable-architecture",
     "path": "/"
   },
   "icons": {
-    "small": "https://raw.githubusercontent.com/YOUR_ORG/vibe-coder-deployable-architecture/main/icon-48.png",
-    "large": "https://raw.githubusercontent.com/YOUR_ORG/vibe-coder-deployable-architecture/main/icon-256.png"
+    "small": "https://raw.githubusercontent.com/goanalog/vibe-coder-deployable-architecture/main/icon-48.png",
+    "large": "https://raw.githubusercontent.com/goanalog/vibe-coder-deployable-architecture/main/icon-256.png"
   },
   "support": {
-    "name": "Brendan Andrew",
-    "email": "realbrendan@ibm.com"
+    "name": "GoAnalog Community",
+    "email": "support@goanalog.dev"
   },
   "cost": {
     "currency": "USD",
     "amount": 0
   },
-  "tags": ["vibe", "vibe code," "spa", "ai," "coding," "build," "builder," "easy app," "cos", "terraform", "sample-app"]
+  "tags": [
+    "vibe",
+    "coding",
+    "ai",
+    "ai-coding",
+    "mistral",
+    "bob",
+    "spa",
+    "cos",
+    "terraform",
+    "sample-app",
+    "simple",
+    "easy"
+  ]
 }
