@@ -1,0 +1,127 @@
+<svg width="100%" height="100%" viewBox="0 0 1000 300" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@500;600&display=swap');
+
+      :root {
+        --text: #161616;
+        --subtext: #525252;
+        --arrow: #525252;
+        --bg-cloud: rgba(244,244,244,0.85);
+      }
+
+      @media (prefers-color-scheme: dark) {
+        :root {
+          --text: #f4f4f4;
+          --subtext: #c6c6c6;
+          --arrow: #c6c6c6;
+          --bg-cloud: rgba(38,38,38,0.85);
+        }
+      }
+
+      .label { font-family: 'IBM Plex Sans', sans-serif; text-anchor: middle; }
+      .title { font-size: 18px; font-weight: 600; fill: var(--text); }
+      .subtitle { font-size: 14px; font-weight: 500; fill: var(--subtext); }
+      .arrow { stroke: var(--arrow); stroke-width: 3; fill: none; marker-end: url(#arrowhead); }
+      .icon { stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; fill: none; }
+
+      .person { fill: url(#grad-person); stroke: none; }
+      .git { fill: url(#grad-git); stroke: none; }
+      .devops { fill: url(#grad-devops); stroke: none; }
+      .storage { fill: url(#grad-storage); stroke: none; }
+      .browser { fill: url(#grad-browser); stroke: none; }
+    </style>
+
+    <marker id="arrowhead" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 Z" fill="var(--arrow)" />
+    </marker>
+
+    <!-- Gradients with subtle animation -->
+    <linearGradient id="grad-person" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#8A3FFC">
+        <animate attributeName="stop-color" values="#8A3FFC;#FF6EC7;#8A3FFC" dur="4s" repeatCount="indefinite"/>
+      </stop>
+      <stop offset="100%" stop-color="#FF6EC7">
+        <animate attributeName="stop-color" values="#FF6EC7;#8A3FFC;#FF6EC7" dur="4s" repeatCount="indefinite"/>
+      </stop>
+    </linearGradient>
+    <linearGradient id="grad-git" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#007D79">
+        <animate attributeName="stop-color" values="#007D79;#00FFD6;#007D79" dur="4s" repeatCount="indefinite"/>
+      </stop>
+      <stop offset="100%" stop-color="#00FFD6">
+        <animate attributeName="stop-color" values="#00FFD6;#007D79;#00FFD6" dur="4s" repeatCount="indefinite"/>
+      </stop>
+    </linearGradient>
+    <linearGradient id="grad-devops" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#D946EF">
+        <animate attributeName="stop-color" values="#D946EF;#F59E0B;#D946EF" dur="4s" repeatCount="indefinite"/>
+      </stop>
+      <stop offset="100%" stop-color="#F59E0B">
+        <animate attributeName="stop-color" values="#F59E0B;#D946EF;#F59E0B" dur="4s" repeatCount="indefinite"/>
+      </stop>
+    </linearGradient>
+    <linearGradient id="grad-storage" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#008A75">
+        <animate attributeName="stop-color" values="#008A75;#00FFC2;#008A75" dur="4s" repeatCount="indefinite"/>
+      </stop>
+      <stop offset="100%" stop-color="#00FFC2">
+        <animate attributeName="stop-color" values="#00FFC2;#008A75;#00FFC2" dur="4s" repeatCount="indefinite"/>
+      </stop>
+    </linearGradient>
+    <linearGradient id="grad-browser" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#393939">
+        <animate attributeName="stop-color" values="#393939;#999999;#393939" dur="4s" repeatCount="indefinite"/>
+      </stop>
+      <stop offset="100%" stop-color="#999999">
+        <animate attributeName="stop-color" values="#999999;#393939;#999999" dur="4s" repeatCount="indefinite"/>
+      </stop>
+    </linearGradient>
+  </defs>
+
+  <!-- Cloud label -->
+  <rect x="360" y="55" width="280" height="30" rx="15" fill="var(--bg-cloud)" />
+  <text x="500" y="76" class="label title">IBM Cloud</text>
+
+  <!-- 1. Vibe coder -->
+  <g transform="translate(100,150)">
+    <circle cx="0" cy="-15" r="10" class="person"/>
+    <path d="M-15 10 v-10 a15 15 0 0 1 30 0 v10" class="person"/>
+    <text y="55" class="label title">Vibe coder</text>
+  </g>
+  <line x1="150" y1="150" x2="250" y2="150" class="arrow"/>
+  <text x="200" y="130" class="label subtitle">Vibe code goes here</text>
+
+  <!-- 2. GitLab repo -->
+  <g transform="translate(300,150)">
+    <rect x="-15" y="-15" width="30" height="30" rx="5" class="git"/>
+    <!-- removed central circle -->
+    <text y="55" class="label title">GitLab repo</text>
+  </g>
+  <line x1="350" y1="150" x2="450" y2="150" class="arrow"/>
+
+  <!-- 3. Pipeline -->
+  <g transform="translate(500,150)">
+    <rect x="-15" y="-15" width="30" height="30" rx="5" class="devops"/>
+    <path d="M-10 0 h20 M0 -10 v20" class="devops"/>
+    <text y="55" class="label title">Pipeline</text>
+  </g>
+  <line x1="550" y1="150" x2="650" y2="150" class="arrow"/>
+
+  <!-- 4. Free vibe code bucket -->
+  <g transform="translate(700,150)">
+    <rect x="-15" y="-15" width="30" height="30" rx="5" class="storage"/>
+    <path d="M-10 -10 h20 v20 h-20 Z" class="storage"/>
+    <text y="55" class="label title">Free vibe code bucket</text>
+  </g>
+  <line x1="750" y1="150" x2="850" y2="150" class="arrow"/>
+  <text x="800" y="130" class="label subtitle">Your app</text>
+
+  <!-- 5. User browser -->
+  <g transform="translate(900,150)">
+    <circle cx="0" cy="0" r="15" class="browser"/>
+    <circle cx="0" cy="0" r="7.5" class="browser"/>
+    <path d="M-15 0 h30 M0 -15 v30" class="browser"/>
+    <text y="55" class="label title">User browser</text>
+  </g>
+</svg>
