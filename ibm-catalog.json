@@ -13,5 +13,30 @@
     "small": "https://raw.githubusercontent.com/goanalog/vibe-coder-deployable-architecture/main/icon-48@2x.png",
     "large": "https://raw.githubusercontent.com/goanalog/vibe-coder-deployable-architecture/main/icon-256@2x.png"
   },
+  "support": {
+    "name": "Nunya",
+    "email": "no-reply@dontcontact.org"
+  },
+  "cost": {
+    "currency": "USD",
+    "amount": 0
+  },
+  "tags": [
+    "vibe",
+    "coding",
+    "ai",
+    "ai-coding",
+    "mistral",
+    "bob",
+    "sample-app",
+    "cloud-object-storage",
+    "cos",
+    "terraform",
+    "developer-tools",
+    "simple",
+    "easy",
+    "free",
+    "trial"
+  ],
   "inputs": "catalog-inputs.json"
 }

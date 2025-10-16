@@ -32,7 +32,7 @@
     },
     {
       "name": "vibe_code",
-      "description": "Paste your HTML here. Default is a starter app, but your code will overwrite it—your vibes, your rules!",
+      "description": "Paste your HTML here. Default is starter app, but your code will overwrite it—your vibes, your rules!",
       "default": "<h1>Hello, Vibe World!</h1>",
       "type": "string"
     }
