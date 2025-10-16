@@ -1,25 +1,60 @@
+# -------------------------------------------------------------
+# 🪩 Vibe Coder — IBM Cloud Deployable Architecture Manifest
+# Simple, beginner-friendly, and ready for catalog onboarding.
+# -------------------------------------------------------------
+
 name: vibe-coder
 id: vibe-coder
-version: 0.0.0
+version: 0.1.0
 displayName: Vibe Coder — Instant Sample Application
 description: >
-  A deployable architecture for 'vibe coding' sample applications: paste or upload your HTML
-  and get an instant IBM COS-hosted sample application.
+  Instantly deploy a simple web sample to IBM Cloud Object Storage.
+  Paste or upload your HTML and see it live — perfect for vibe coding
+  and rapid prototyping.
 type: terraform
 deliveryMethod: terraform
 
-repository:
-  url: https://github.com/goanalog/vibe-coder-deployable-architecture
-  path: /
+# Where to find the Terraform entrypoint
+install:
+  method: terraform
+  location: .
+  mainFile: main.tf
+  instructions: >
+    This deployable architecture provisions an IBM Cloud Object Storage bucket,
+    uploads your SPA HTML, and optionally makes it publicly viewable.
+    Don’t worry — safe defaults are provided.
 
+# Optional: point to our friendly README
+documentation:
+  readme: README.md
+
+# Optional categories and search tags for IBM Cloud catalog
+tags:
+  - vibe
+  - coding
+  - sample-app
+  - html
+  - static-site
+  - rapid-prototyping
+  - ibm-cloud
+  - single-page-application
+  - sandbox
+  - frontend
+
+# Icons
 icons:
   small: https://raw.githubusercontent.com/goanalog/vibe-coder-deployable-architecture/main/icon-48@2x.png
   large: https://raw.githubusercontent.com/goanalog/vibe-coder-deployable-architecture/main/icon-256@2x.png
 
+# Support info
 support:
   name: Nunya
   email: no-reply@dontcontact.org
 
+# Cost info
 cost:
   currency: USD
   amount: 0
+
+# License
+license: Apache-2.0
