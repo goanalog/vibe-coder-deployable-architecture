@@ -1,4 +1,4 @@
-provider "ibm" {
+provider "IBM-Cloud/ibm" {
   region = var.cos_region
 }
 
