@@ -5,10 +5,10 @@
   "description": "A deployable architecture for 'vibe coding' sample applications: paste or upload your HTML and get an instant IBM COS-hosted sample application.",
   "type": "deployable_architecture",
   "deliveryMethod": "terraform",
-  "repository": {
-    "url": "https://github.com/goanalog/vibe-coder-deployable-architecture",
-    "path": "/releases/tag/vnow"
-  },
+ "repository": {
+  "url": "https://github.com/goanalog/vibe-coder-deployable-architecture",
+  "path": "/"
+}
   "icons": {
     "small": "https://raw.githubusercontent.com/goanalog/vibe-coder-deployable-architecture/main/icon-48@2x.png",
     "large": "https://raw.githubusercontent.com/goanalog/vibe-coder-deployable-architecture/main/icon-256@2x.png"
