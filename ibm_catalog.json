@@ -7,7 +7,7 @@
   "deliveryMethod": "terraform",
   "repository": {
     "url": "https://github.com/goanalog/vibe-coder-deployable-architecture",
-    "path": "/"
+    "path": "/releases/tag/vnow"
   },
   "icons": {
     "small": "https://raw.githubusercontent.com/goanalog/vibe-coder-deployable-architecture/main/icon-48@2x.png",
