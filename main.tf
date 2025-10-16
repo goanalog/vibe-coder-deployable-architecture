@@ -1,4 +1,13 @@
-provider "IBM-Cloud/ibm" {
+terraform {
+  required_providers {
+    ibm = {
+      source  = "IBM-Cloud/ibm"
+      version = ">= 1.53.0"
+    }
+  }
+}
+
+provider "ibm" {
   region = var.cos_region
 }
 
