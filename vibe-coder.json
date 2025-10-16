@@ -1,29 +1,41 @@
-variable "region" {
-  description = "IBM Cloud region"
-  type        = string
-  default     = "us-south"
+{
+  "id": "vibe-coder",
+  "version": "0.1.0",
+  "displayName": "Vibe Coder — Instant SPA",
+  "description": "A deployable architecture for 'vibe coding' single-page apps: paste or upload your index.html and get an instant IBM COS-hosted sample app.",
+  "type": "deployable_architecture",
+  "deliveryMethod": "terraform",
+  "repository": {
+    "url": "https://github.com/goanalog/vibe-coder-deployable-architecture",
+    "path": "/"
+  },
+  "icons": {
+    "small": "https://github.com/goanalog/vibe-coder-deployable-architecture/blob/main/icon-48@2x.png?raw=true",
+    "large": "https://github.com/goanalog/vibe-coder-deployable-architecture/blob/main/icon-256@2x.png?raw=true"
+  },
+  "support": {
+    "name": "Nunya",
+    "email": "no-reply@dontcontact.org"
+  },
+  "cost": {
+    "currency": "USD",
+    "amount": 0
+  },
+  "tags": [
+    "vibe",
+    "coding",
+    "ai",
+    "ai-coding",
+    "mistral",
+    "bob",
+    "spa",
+    "cos",
+    "terraform",
+    "sample-app",
+    "simple",
+    "easy",
+    "free",
+    "trial"
+  ]
 }
 
-variable "bucket_name_prefix" {
-  description = "Prefix for COS bucket name"
-  type        = string
-  default     = "vibe-coder"
-}
-
-variable "local_app_path" {
-  description = "Optional path to a local index.html to upload (overrides pasted_app_code)"
-  type        = string
-  default     = ""
-}
-
-variable "pasted_app_code" {
-  description = "Optional pasted HTML/JS/CSS for the single page app"
-  type        = string
-  default     = ""
-}
-
-variable "object_key" {
-  description = "Object key in the COS bucket"
-  type        = string
-  default     = "index.html"
-}
