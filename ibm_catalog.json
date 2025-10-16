@@ -6,7 +6,7 @@
   "type": "deployable_architecture",
   "deliveryMethod": "terraform",
   "repository": {
-    "url": "https://github.com/goanalog/vibe-coder-deployable-architecture",
+    "url": "https://github.com/goanalog/vibe-coder-deployable-architecture/releases/tag/thebb",
     "path": "https://github.com/goanalog/vibe-coder-deployable-architecture/releases/tag/thebb"
   },
   "icons": {
