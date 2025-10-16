@@ -1,6 +1,6 @@
 {
   "id": "vibe-coder",
-  "version": "0.1.0",
+  "version": "0.0.0",
   "displayName": "Vibe Coder — Instant Sample Application",
   "description": "A deployable architecture for 'vibe coding' sample applications: paste or upload your HTML and get an instant IBM COS-hosted sample application.",
   "type": "deployable_architecture",
