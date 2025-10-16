@@ -1,0 +1,42 @@
+{
+  "id": "vibe-coder",
+  "version": "0.1.0",
+  "name": "Vibe Coder — Instant SPA",
+  "short_description": "Deployable architecture for instant single-page apps.",
+  "long_description": "Vibe Coder allows you to paste or upload your index.html and get an instant IBM COS-hosted SPA using Terraform. Perfect for 'vibe coding', rapid prototyping, and demos.",
+  "type": "deployable_architecture",
+  "delivery_method": "terraform",
+  "repository": {
+    "url": "https://github.com/goanalog/vibe-coder-deployable-architecture",
+    "path": "/"
+  },
+  "documentation_url": "https://github.com/goanalog/vibe-coder-deployable-architecture#readme",
+  "license": "Apache-2.0",
+  "support": {
+    "name": "GoAnalog Community",
+    "email": "support@goanalog.dev"
+  },
+  "targetAccountType": "standard",
+  "tags": [
+    "vibe",
+    "coding",
+    "ai",
+    "ai-coding",
+    "mistral",
+    "bob",
+    "spa",
+    "cos",
+    "terraform",
+    "sample-app",
+    "simple",
+    "easy"
+  ],
+  "icons": {
+    "small": "https://raw.githubusercontent.com/goanalog/vibe-coder-deployable-architecture/main/icon-48.png",
+    "large": "https://raw.githubusercontent.com/goanalog/vibe-coder-deployable-architecture/main/icon-256.png"
+  },
+  "cost": {
+    "currency": "USD",
+    "amount": 0
+  }
+}
