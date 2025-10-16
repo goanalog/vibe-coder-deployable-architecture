@@ -1,0 +1,25 @@
+name: vibe-coder
+id: vibe-coder
+version: 0.0.0
+displayName: Vibe Coder — Instant Sample Application
+description: >
+  A deployable architecture for 'vibe coding' sample applications: paste or upload your HTML
+  and get an instant IBM COS-hosted sample application.
+type: terraform
+deliveryMethod: terraform
+
+repository:
+  url: https://github.com/goanalog/vibe-coder-deployable-architecture
+  path: /
+
+icons:
+  small: https://raw.githubusercontent.com/goanalog/vibe-coder-deployable-architecture/main/icon-48@2x.png
+  large: https://raw.githubusercontent.com/goanalog/vibe-coder-deployable-architecture/main/icon-256@2x.png
+
+support:
+  name: Nunya
+  email: no-reply@dontcontact.org
+
+cost:
+  currency: USD
+  amount: 0
