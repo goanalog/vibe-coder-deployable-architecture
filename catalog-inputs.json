@@ -1,0 +1,40 @@
+{
+  "variables": [
+    {
+      "name": "cos_bucket_name",
+      "description": "Name your free vibe code bucket where your sample app lives. Smart default lets you launch instantly.",
+      "default": "vibe-coder-sample-bucket",
+      "type": "string"
+    },
+    {
+      "name": "cos_region",
+      "description": "Select the cloud region for your bucket. Default is fast and reliable.",
+      "default": "us-south",
+      "type": "string"
+    },
+    {
+      "name": "cos_resource_group",
+      "description": "Choose a resource group for your bucket. Default is 'default' for quick setup.",
+      "default": "default",
+      "type": "string"
+    },
+    {
+      "name": "index_html_path",
+      "description": "Path to your sample app's index.html file. Starter app is default, pasting your own code replaces it.",
+      "default": "sample-index.html",
+      "type": "string"
+    },
+    {
+      "name": "public_access",
+      "description": "Make your app public? Default is true for instant sharing, set false to keep it private.",
+      "default": true,
+      "type": "boolean"
+    },
+    {
+      "name": "vibe_code",
+      "description": "Paste your HTML here. Default is a starter app, but your code will overwrite it—your vibes, your rules!",
+      "default": "<h1>Hello, Vibe World!</h1>",
+      "type": "string"
+    }
+  ]
+}
