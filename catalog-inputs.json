@@ -20,7 +20,7 @@
     },
     {
       "name": "index_html_path",
-      "description": "Specify the path to your sample app’s index.html file. Our starter app is the default, but if you paste your own code it will replace it—totally vibes.",
+      "description": "Specify the path to your sample app's index.html file. Our starter app is the default, but if you paste your own code it will replace it—totally vibes.",
       "default": "sample-index.html",
       "type": "string"
     },
