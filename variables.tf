@@ -1,67 +1,34 @@
-###############################################################################
-# Vibe Coder — Instant SPA
-# Inputs for IBM Cloud Schematics & Catalog UI
-###############################################################################
-
 variable "ibmcloud_api_key" {
-  description = "IBM Cloud API key with access to your resource group."
   type        = string
-  sensitive   = true
-}
-
-variable "cos_name" {
-  description = "Name of your IBM Cloud Object Storage instance — where your vibe-coded app will live."
-  type        = string
-  default     = "vibe-coder-cos"
-}
-
-variable "cos_plan" {
-  description = "Choose the COS service plan. 'lite' gives you free storage for your sample apps."
-  type        = string
-  default     = "lite"
+  description = "IBM Cloud API key"
 }
 
 variable "region" {
-  description = "Pick the IBM Cloud region closest to your users for faster vibe delivery."
   type        = string
+  description = "IBM Cloud region"
   default     = "us-south"
 }
 
-variable "resource_group" {
-  description = "Select which resource group to place your COS instance in."
+variable "cos_name" {
   type        = string
-  default     = "Default"
+  description = "Name for the COS instance"
+  default     = "vibe-coder-cos"
 }
 
 variable "bucket_name" {
-  description = "Optional: specify a custom bucket name. If left empty, one will be auto-generated."
   type        = string
-  default     = ""
-}
-
-variable "sample_app_html" {
-  description = <<EOT
-Paste your single-page app (HTML) here — or leave blank to use the included starter sample.
-When you redeploy, this content will be uploaded to your IBM COS bucket as 'index.html'.
-EOT
-  type    = string
-  default = ""
+  description = "COS bucket name"
+  default     = "vibe-coder-bucket"
 }
 
 variable "make_public" {
-  description = "If true, your sample app will be publicly accessible from a URL. Set to false for private vibes."
-  type    = bool
-  default = true
+  type        = bool
+  description = "Set to true to make the bucket public"
+  default     = true
 }
 
-variable "cos_storage_class" {
-  description = "COS bucket storage class (standard, vault, cold, etc.). Standard is ideal for web hosting."
-  type    = string
-  default = "standard"
-}
-
-variable "html_file_path" {
-  description = "Internal use: path to the sample app’s HTML file included with the repo."
-  type    = string
-  default = "sample-app/index.html"
+variable "index_file_path" {
+  type        = string
+  description = "Path to your index.html file"
+  default     = "index.html"
 }

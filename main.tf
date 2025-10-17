@@ -1,12 +1,15 @@
-terraform {
-  required_version = ">= 1.12"
+#######################################################
+# IBM Cloud Terraform: Vibe Coder Deployable Architecture
+#######################################################
 
+terraform {
   required_providers {
     ibm = {
       source  = "IBM-Cloud/ibm"
       version = ">= 1.84.0"
     }
   }
+  required_version = ">= 1.12"
 }
 
 provider "ibm" {
@@ -14,32 +17,34 @@ provider "ibm" {
   region           = var.region
 }
 
-# Create COS instance
+#######################################################
+# Cloud Object Storage (COS) Instance
+#######################################################
+
 resource "ibm_resource_instance" "cos_instance" {
-  name              = var.cos_name
-  service           = "cloud-object-storage"
-  plan              = var.cos_plan
-  resource_group_id = data.ibm_resource_group.selected.id
-  tags              = ["vibe-coder"]
+  name     = var.cos_name
+  service  = "cloud-object-storage"
+  plan     = "standard"
+  location = var.region
 }
 
-data "ibm_resource_group" "selected" {
-  name = var.resource_group
-}
+#######################################################
+# COS Bucket
+#######################################################
 
-# Create COS bucket
 resource "ibm_cos_bucket" "bucket" {
-  name              = var.bucket_name != "" ? var.bucket_name : "${var.cos_name}-bucket"
-  location          = var.region
-  storage_class     = var.cos_storage_class
-  bucket_access_type = var.make_public ? "public" : "private"
+  bucket               = var.bucket_name
+  resource_instance_id = ibm_resource_instance.cos_instance.id
+  acl                  = var.make_public ? "public-read" : "private"
 }
 
-# Upload SPA HTML
+#######################################################
+# Upload index.html to COS Bucket
+#######################################################
+
 resource "ibm_cos_bucket_object" "index" {
-  bucket       = ibm_cos_bucket.bucket.name
-  key          = "index.html"
-  source       = var.sample_app_html != "" ? "" : var.html_file_path
-  content      = var.sample_app_html != "" ? var.sample_app_html : null
-  depends_on   = [ibm_cos_bucket.bucket]
+  bucket      = ibm_cos_bucket.bucket.bucket
+  key         = "index.html"
+  source      = var.index_file_path
+  content_type = "text/html"
 }
