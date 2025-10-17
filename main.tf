@@ -1,48 +1,59 @@
-terraform {
-  required_providers {
-    ibm = {
-      source  = "ibm-cloud/ibm"
-      version = ">= 1.84.0"
-    }
-  }
+###############################################################################
+# Vibe Coder — IBM COS SPA Hosting
+###############################################################################
+
+provider "ibm" {
+  ibmcloud_api_key = var.ibmcloud_api_key
+  region           = var.region
 }
 
-provider "ibm" {}
-
-data "ibm_resource_group" "group" {
+# Optional: resource group
+data "ibm_resource_group" "rg" {
   name = var.resource_group
 }
 
-# --- Cloud Object Storage instance ---
-resource "ibm_resource_instance" "cos_instance" {
-  name              = var.cos_name
-  service           = "cloud-object-storage"
-  plan              = var.cos_plan
-  location          = var.region
-  resource_group_id = data.ibm_resource_group.group.id
-}
-
-# --- Bucket ---
+###############################################################################
+# COS Bucket
+###############################################################################
 resource "ibm_cos_bucket" "bucket" {
-  bucket_name          = "${var.cos_name}-bucket"
-  resource_instance_id  = ibm_resource_instance.cos_instance.id
-  region_location       = var.region
-  storage_class         = "standard"
+  name          = var.bucket_name != "" ? var.bucket_name : "vibe-coder-${timestamp()}"
+  location      = var.region
+  resource_group_id = data.ibm_resource_group.rg.id
+  storage_class = var.cos_storage_class
 }
 
-# --- Default or user-supplied web app ---
+###############################################################################
+# Upload SPA index.html
+###############################################################################
 resource "ibm_cos_bucket_object" "index" {
-  bucket_crn       = ibm_cos_bucket.bucket.crn
-  bucket_location  = ibm_cos_bucket.bucket.region_location
-  key              = "index.html"
-  content          = var.sample_app_html
-  content_type     = "text/html"
+  bucket = ibm_cos_bucket.bucket.name
+  key    = "index.html"
+  source = var.html_file_path
+
+  # Optional: set content type using metadata
+  metadata = {
+    "Content-Type" = "text/html"
+  }
 }
 
-output "cos_bucket_name" {
-  value = ibm_cos_bucket.bucket.bucket_name
+###############################################################################
+# Make public if requested
+###############################################################################
+resource "ibm_cos_bucket_policy" "public_policy" {
+  bucket = ibm_cos_bucket.bucket.name
+  policy = var.make_public ? jsonencode({
+    "Version": "2012-10-17",
+    "Statement": [
+      {
+        "Effect": "Allow",
+        "Principal": "*",
+        "Action": ["s3:GetObject"],
+        "Resource": ["arn:aws:s3:::${ibm_cos_bucket.bucket.name}/*"]
+      }
+    ]
+  }) : ""
 }
 
-output "cos_url" {
-  value = "https://${ibm_cos_bucket.bucket.bucket_name}.s3.${var.region}.cloud-object-storage.appdomain.cloud/index.html"
+output "public_url" {
+  value = var.make_public ? "https://${ibm_cos_bucket.bucket.name}.s3.${var.region}.cloud-object-storage.appdomain.cloud/index.html" : "Bucket is private"
 }
