@@ -1,7 +1,3 @@
-#######################################################
-# IBM Cloud Terraform: Vibe Coder Deployable Architecture
-#######################################################
-
 terraform {
   required_providers {
     ibm = {
@@ -9,7 +5,6 @@ terraform {
       version = ">= 1.84.0"
     }
   }
-  required_version = ">= 1.12"
 }
 
 provider "ibm" {
@@ -17,10 +12,7 @@ provider "ibm" {
   region           = var.region
 }
 
-#######################################################
-# Cloud Object Storage (COS) Instance
-#######################################################
-
+# Create COS instance
 resource "ibm_resource_instance" "cos_instance" {
   name     = var.cos_name
   service  = "cloud-object-storage"
@@ -28,23 +20,17 @@ resource "ibm_resource_instance" "cos_instance" {
   location = var.region
 }
 
-#######################################################
-# COS Bucket
-#######################################################
-
-resource "ibm_cos_bucket" "bucket" {
-  bucket               = var.bucket_name
-  resource_instance_id = ibm_resource_instance.cos_instance.id
-  acl                  = var.make_public ? "public-read" : "private"
+# Create a COS bucket
+resource "ibm_resource_key" "cos_key" {
+  name               = "${var.cos_name}-key"
+  role               = "Writer"
+  source             = ibm_resource_instance.cos_instance.id
+  type               = "service_credentials"
 }
 
-#######################################################
-# Upload index.html to COS Bucket
-#######################################################
-
-resource "ibm_cos_bucket_object" "index" {
-  bucket      = ibm_cos_bucket.bucket.bucket
-  key         = "index.html"
-  source      = var.index_file_path
-  content_type = "text/html"
+resource "ibm_cos_bucket_v2" "bucket" {
+  name                = var.bucket_name
+  resource_instance_id = ibm_resource_instance.cos_instance.id
+  location            = var.region
+  public_access       = var.make_public
 }
