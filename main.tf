@@ -1,49 +1,48 @@
 terraform {
   required_providers {
     ibm = {
-      source  = "IBM-Cloud/ibm"
-      version = ">= 1.53.0"
+      source  = "ibm-cloud/ibm"
+      version = ">= 1.84.0"
     }
   }
 }
 
-provider "ibm" {
-  region = var.cos_region
+provider "ibm" {}
+
+data "ibm_resource_group" "group" {
+  name = var.resource_group
 }
 
-# ------------------------------------------------------------
-# Create COS Bucket
-# ------------------------------------------------------------
-resource "ibm_resource_instance" "cos_bucket" {
-  name           = var.cos_bucket_name
-  service        = "cloud-object-storage"
-  plan           = "standard"
-  resource_group = var.cos_resource_group
+# --- Cloud Object Storage instance ---
+resource "ibm_resource_instance" "cos_instance" {
+  name              = var.cos_name
+  service           = "cloud-object-storage"
+  plan              = var.cos_plan
+  location          = var.region
+  resource_group_id = data.ibm_resource_group.group.id
 }
 
-# ------------------------------------------------------------
-# Upload Sample App HTML
-# ------------------------------------------------------------
-resource "ibm_cos_bucket_object" "sample_app_index" {
-  bucket       = ibm_resource_instance.cos_bucket.name
-  key          = "index.html"
-  content_type = "text/html"
-  source       = var.index_html_path
+# --- Bucket ---
+resource "ibm_cos_bucket" "bucket" {
+  bucket_name          = "${var.cos_name}-bucket"
+  resource_instance_id  = ibm_resource_instance.cos_instance.id
+  region_location       = var.region
+  storage_class         = "standard"
 }
 
-# ------------------------------------------------------------
-# Apply Public Access if requested
-# ------------------------------------------------------------
-resource "ibm_cos_bucket_acl" "public_access" {
-  bucket = ibm_resource_instance.cos_bucket.name
-  acl    = var.public_access ? "public-read" : "private"
+# --- Default or user-supplied web app ---
+resource "ibm_cos_bucket_object" "index" {
+  bucket_crn       = ibm_cos_bucket.bucket.crn
+  bucket_location  = ibm_cos_bucket.bucket.region_location
+  key              = "index.html"
+  content          = var.sample_app_html
+  content_type     = "text/html"
 }
 
-# ------------------------------------------------------------
-# If user pasted vibe code, overwrite sample app
-# ------------------------------------------------------------
-resource "local_file" "vibe_code_file" {
-  filename = var.index_html_path
-  content  = var.vibe_code
-  depends_on = [ibm_resource_instance.cos_bucket]
+output "cos_bucket_name" {
+  value = ibm_cos_bucket.bucket.bucket_name
+}
+
+output "cos_url" {
+  value = "https://${ibm_cos_bucket.bucket.bucket_name}.s3.${var.region}.cloud-object-storage.appdomain.cloud/index.html"
 }

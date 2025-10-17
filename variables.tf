@@ -1,35 +1,33 @@
-variable "cos_bucket_name" {
+variable "cos_name" {
+  description = "Name of the Cloud Object Storage instance."
   type        = string
-  default     = "vibe-coder-sample-bucket"
-  description = "Name your free vibe code bucket—smart default lets you launch instantly."
+  default     = "vibe-coder-cos"
 }
 
-variable "cos_region" {
+variable "cos_plan" {
+  description = "The plan for the COS instance."
+  type        = string
+  default     = "lite"
+}
+
+variable "region" {
+  description = "Region to deploy resources in."
   type        = string
   default     = "us-south"
-  description = "Cloud region for your bucket. Default is fast and reliable."
 }
 
-variable "cos_resource_group" {
+variable "resource_group" {
+  description = "The IBM Cloud resource group to use."
   type        = string
-  default     = "default"
-  description = "Resource group for your bucket. Default is 'default' for quick setup."
+  default     = "Default"
 }
 
-variable "index_html_path" {
-  type        = string
-  default     = "sample-index.html"
-  description = "Path to your sample app's index.html file. Starter app is default, pasting your own code replaces it."
-}
-
-variable "public_access" {
-  type        = bool
-  default     = true
-  description = "Make your app public? Default is true for instant sharing."
-}
-
-variable "vibe_code" {
-  type        = string
-  default     = "<h1>Hello, Vibe World!</h1>"
-  description = "Paste your HTML here. Default is starter app, but your code will overwrite it—your vibes, your rules!"
+variable "sample_app_html" {
+  description = <<DESC
+Smart default HTML content for your web app.
+If you paste your own code here (or override via UI input),
+it completely replaces this sample. Totally vibes.
+DESC
+  type    = string
+  default = file("${path.module}/sample-app/index.html")
 }

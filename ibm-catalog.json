@@ -1,42 +1,21 @@
 {
   "id": "vibe-coder",
-  "version": "0.1.0",
-  "displayName": "Vibe Code Host",
-  "description": "Deploy a sample app from your vibe code in one click.",
+  "version": "0.2.0",
+  "displayName": "Vibe Coder — Instant SPA",
+  "description": "Deploy an instant single-page app hosted in IBM Cloud Object Storage. Paste or upload your own code to overwrite the smart default sample app.",
   "type": "deployable_architecture",
-  "deliveryMethod": "terraform",
-  "repository": {
-    "url": "https://github.com/goanalog/vibe-coder-deployable-architecture",
-    "path": "/"
-  },
-  "icons": {
-    "small": "https://raw.githubusercontent.com/goanalog/vibe-coder-deployable-architecture/main/icon-48@2x.png",
-    "large": "https://raw.githubusercontent.com/goanalog/vibe-coder-deployable-architecture/main/icon-256@2x.png"
-  },
-  "support": {
-    "name": "Nunya",
-    "email": "no-reply@dontcontact.org"
-  },
-  "cost": {
-    "currency": "USD",
-    "amount": 0
-  },
   "tags": [
-    "vibe",
-    "coding",
-    "ai",
-    "ai-coding",
-    "mistral",
-    "bob",
-    "sample-app",
-    "cloud-object-storage",
-    "cos",
-    "terraform",
-    "developer-tools",
-    "simple",
-    "easy",
-    "free",
-    "trial"
+    "webapp",
+    "spa",
+    "ibm-cloud-object-storage",
+    "serverless",
+    "static-hosting",
+    "vibe-coding"
   ],
-  "inputs": "catalog-inputs.json"
+  "deliveryMethod": "repo",
+  "icon": "https://raw.githubusercontent.com/goanalog/vibe-coder-deployable-architecture/main/.ibmcloud/icon.png",
+  "metadata": {
+    "use_case": "Instant sample app hosting for vibe coding or rapid prototyping",
+    "smart_defaults": true
+  }
 }
