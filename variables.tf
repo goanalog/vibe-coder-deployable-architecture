@@ -1,7 +1,13 @@
 ###############################################################################
-# Vibe Coder — Instant Sample App
-# Terraform input variables for IBM Cloud Schematics & Catalog UI
+# Vibe Coder — Instant SPA
+# Inputs for IBM Cloud Schematics & Catalog UI
 ###############################################################################
+
+variable "ibmcloud_api_key" {
+  description = "IBM Cloud API key with access to your resource group."
+  type        = string
+  sensitive   = true
+}
 
 variable "cos_name" {
   description = "Name of your IBM Cloud Object Storage instance — where your vibe-coded app will live."
@@ -34,29 +40,28 @@ variable "bucket_name" {
 }
 
 variable "sample_app_html" {
-  description = "Paste your sample app (HTML) here — or leave blank to use the included starter sample. When you redeploy, this content will be uploaded to your IBM COS bucket as 'index.html'."
-  type        = string
-  default     = ""
+  description = <<EOT
+Paste your single-page app (HTML) here — or leave blank to use the included starter sample.
+When you redeploy, this content will be uploaded to your IBM COS bucket as 'index.html'.
+EOT
+  type    = string
+  default = ""
 }
 
 variable "make_public" {
   description = "If true, your sample app will be publicly accessible from a URL. Set to false for private vibes."
-  type        = bool
-  default     = true
+  type    = bool
+  default = true
 }
-
-###############################################################################
-# Advanced options (hidden or optional in most UI cases)
-###############################################################################
 
 variable "cos_storage_class" {
   description = "COS bucket storage class (standard, vault, cold, etc.). Standard is ideal for web hosting."
-  type        = string
-  default     = "standard"
+  type    = string
+  default = "standard"
 }
 
 variable "html_file_path" {
   description = "Internal use: path to the sample app’s HTML file included with the repo."
-  type        = string
-  default     = "sample-app/index.html"
+  type    = string
+  default = "sample-app/index.html"
 }

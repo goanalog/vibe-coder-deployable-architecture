@@ -1,59 +1,45 @@
-###############################################################################
-# Vibe Coder — IBM COS SPA Hosting
-###############################################################################
+terraform {
+  required_version = ">= 1.12"
+
+  required_providers {
+    ibm = {
+      source  = "IBM-Cloud/ibm"
+      version = ">= 1.84.0"
+    }
+  }
+}
 
 provider "ibm" {
   ibmcloud_api_key = var.ibmcloud_api_key
   region           = var.region
 }
 
-# Optional: resource group
-data "ibm_resource_group" "rg" {
+# Create COS instance
+resource "ibm_resource_instance" "cos_instance" {
+  name              = var.cos_name
+  service           = "cloud-object-storage"
+  plan              = var.cos_plan
+  resource_group_id = data.ibm_resource_group.selected.id
+  tags              = ["vibe-coder"]
+}
+
+data "ibm_resource_group" "selected" {
   name = var.resource_group
 }
 
-###############################################################################
-# COS Bucket
-###############################################################################
+# Create COS bucket
 resource "ibm_cos_bucket" "bucket" {
-  name          = var.bucket_name != "" ? var.bucket_name : "vibe-coder-${timestamp()}"
-  location      = var.region
-  resource_group_id = data.ibm_resource_group.rg.id
-  storage_class = var.cos_storage_class
+  name              = var.bucket_name != "" ? var.bucket_name : "${var.cos_name}-bucket"
+  location          = var.region
+  storage_class     = var.cos_storage_class
+  bucket_access_type = var.make_public ? "public" : "private"
 }
 
-###############################################################################
-# Upload SPA index.html
-###############################################################################
+# Upload SPA HTML
 resource "ibm_cos_bucket_object" "index" {
-  bucket = ibm_cos_bucket.bucket.name
-  key    = "index.html"
-  source = var.html_file_path
-
-  # Optional: set content type using metadata
-  metadata = {
-    "Content-Type" = "text/html"
-  }
-}
-
-###############################################################################
-# Make public if requested
-###############################################################################
-resource "ibm_cos_bucket_policy" "public_policy" {
-  bucket = ibm_cos_bucket.bucket.name
-  policy = var.make_public ? jsonencode({
-    "Version": "2012-10-17",
-    "Statement": [
-      {
-        "Effect": "Allow",
-        "Principal": "*",
-        "Action": ["s3:GetObject"],
-        "Resource": ["arn:aws:s3:::${ibm_cos_bucket.bucket.name}/*"]
-      }
-    ]
-  }) : ""
-}
-
-output "public_url" {
-  value = var.make_public ? "https://${ibm_cos_bucket.bucket.name}.s3.${var.region}.cloud-object-storage.appdomain.cloud/index.html" : "Bucket is private"
+  bucket       = ibm_cos_bucket.bucket.name
+  key          = "index.html"
+  source       = var.sample_app_html != "" ? "" : var.html_file_path
+  content      = var.sample_app_html != "" ? var.sample_app_html : null
+  depends_on   = [ibm_cos_bucket.bucket]
 }

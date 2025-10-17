@@ -1,21 +1,20 @@
 {
   "id": "vibe-coder",
-  "version": "0.2.0",
+  "version": "0.1.0",
   "displayName": "Vibe Coder — Instant SPA",
-  "description": "Deploy an instant single-page app hosted in IBM Cloud Object Storage. Paste or upload your own code to overwrite the smart default sample app.",
+  "description": "Deploy a single-page app instantly to IBM Cloud Object Storage using Vibe Coder.",
   "type": "deployable_architecture",
-  "tags": [
-    "webapp",
-    "spa",
-    "ibm-cloud-object-storage",
-    "serverless",
-    "static-hosting",
-    "vibe-coding"
-  ],
-  "deliveryMethod": "repo",
-  "icon": "https://raw.githubusercontent.com/goanalog/vibe-coder-deployable-architecture/main/.ibmcloud/icon.png",
-  "metadata": {
-    "use_case": "Instant sample app hosting for vibe coding or rapid prototyping",
-    "smart_defaults": true
-  }
+  "tags": ["SPA", "COS", "Web Hosting", "Sample App", "Vibe Coding"],
+  "inputs": [
+    {"name": "ibmcloud_api_key", "type": "string", "required": true, "sensitive": true},
+    {"name": "cos_name", "type": "string"},
+    {"name": "cos_plan", "type": "string"},
+    {"name": "region", "type": "string"},
+    {"name": "resource_group", "type": "string"},
+    {"name": "bucket_name", "type": "string"},
+    {"name": "sample_app_html", "type": "string"},
+    {"name": "make_public", "type": "boolean"},
+    {"name": "cos_storage_class", "type": "string"},
+    {"name": "html_file_path", "type": "string"}
+  ]
 }
