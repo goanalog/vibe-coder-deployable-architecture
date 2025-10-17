@@ -1,5 +1,23 @@
 {
-  "variables": [
+  "id": "vibe-coder",
+  "version": "0.1.1",
+  "displayName": "Vibe Coder — Instant SPA",
+  "description": "A deployable architecture for 'vibe coding' single-page apps: paste or upload your index.html and get an instant IBM COS-hosted sample app.",
+  "type": "deployable_architecture",
+  "deliveryMethod": "terraform",
+  "inputs": [
+    {
+      "name": "ibmcloud_api_key",
+      "type": "string",
+      "description": "Your IBM Cloud API key. Required to authenticate and create resources.",
+      "required": true,
+      "ui_hints": {
+        "group": "Setup",
+        "label": "IBM Cloud API Key",
+        "control": "password",
+        "placeholder": "Enter your IBM Cloud API key"
+      }
+    },
     {
       "name": "cos_name",
       "type": "string",
