@@ -1,34 +1,33 @@
-variable "ibmcloud_api_key" {
-  type        = string
-  description = "IBM Cloud API key"
-}
-
 variable "region" {
+  description = "IBM Cloud region to deploy resources"
   type        = string
-  description = "IBM Cloud region"
   default     = "us-south"
 }
 
-variable "cos_name" {
-  type        = string
-  description = "Name for the COS instance"
-  default     = "vibe-coder-cos"
-}
-
 variable "bucket_name" {
+  description = "Name of the Cloud Object Storage bucket"
   type        = string
-  description = "COS bucket name"
-  default     = "vibe-coder-bucket"
 }
 
 variable "make_public" {
+  description = "Whether to make the bucket public"
   type        = bool
-  description = "Set to true to make the bucket public"
   default     = true
 }
 
-variable "index_file_path" {
+variable "cos_instance_crn" {
+  description = "CRN of the Cloud Object Storage instance"
   type        = string
-  description = "Path to your index.html file"
+}
+
+variable "index_file_path" {
+  description = "Local path to the index.html file to upload"
+  type        = string
   default     = "index.html"
+}
+
+variable "cos_name" {
+  description = "Short name for the COS instance (used for resource key)"
+  type        = string
+  default     = "vibe-coder-cos"
 }
