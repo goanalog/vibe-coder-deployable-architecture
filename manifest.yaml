@@ -1,0 +1,35 @@
+name: vibe-coder
+version: 0.1.0
+displayName: Vibe Coder — Instant SPA
+description: |
+  Deploy an instant single-page app (SPA) on IBM Cloud Object Storage. Paste or upload your HTML and get a live app immediately. Comes with a default sample so you can start vibing instantly.
+type: deployable_architecture
+deliveryMethod: terraform
+icon: https://example.com/vibe-coder-icon.png
+tags:
+  - "vibe coding"
+  - "SPA"
+  - "IBM Cloud"
+  - "COS"
+  - "Terraform"
+variables:
+  - name: region
+    type: string
+    description: IBM Cloud region to deploy your SPA. Default is 'us-south'.
+    default: us-south
+  - name: cos_name
+    type: string
+    description: COS instance name to host your vibe-coded app.
+    default: vibe-coder-cos
+  - name: bucket_name
+    type: string
+    description: Bucket name where your SPA will live.
+    default: vibe-coder-sample-bucket
+  - name: make_public
+    type: boolean
+    description: Whether the COS bucket should be public. Default false.
+    default: false
+  - name: sample_app_html
+    type: string
+    description: Optional HTML content for the default SPA. Leave empty to use preloaded sample.
+    default: ""

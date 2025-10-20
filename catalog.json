@@ -1,41 +1,67 @@
 {
   "id": "vibe-coder",
-  "version": "0.2.1",
-  "displayName": "Vibe Coder — Instant SPA with COS Upload",
-  "description": "Deploy a ready-to-run 'vibe coding' single-page app instantly! Paste or upload your HTML and get a live IBM Cloud Object Storage-hosted sample app automatically. Your SPA will be live as soon as Terraform finishes.",
+  "version": "0.1.0",
+  "displayName": "Vibe Coder — Instant SPA",
+  "description": "Deploy an instant single-page app (SPA) on IBM Cloud Object Storage. Paste or upload your HTML and get a live app immediately. Don't worry, it comes with a default sample!",
   "type": "deployable_architecture",
   "deliveryMethod": "terraform",
-  "tags": ["vibe-coding", "SPA", "IBM COS", "Terraform", "instant-app"],
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/goanalog/vibe-coder-deployable-architecture.git",
-    "release": "garden-10-20-2025"
-  },
-  "files": [
-    {
-      "path": "main.tf",
-      "description": "Terraform resources: COS instance, bucket, and automatic SPA upload."
-    },
-    {
-      "path": "inputs.tf",
-      "description": "Terraform input variables with friendly defaults and sample HTML."
-    }
+  "icon": "https://example.com/vibe-coder-icon.png",
+  "tags": [
+    "vibe coding",
+    "SPA",
+    "IBM Cloud",
+    "COS",
+    "Terraform"
   ],
-  "ui_hints": {
-    "group": "Setup",
-    "icon": "🌐",
-    "intro": "Deploy your first vibe-coder SPA in seconds! No coding fuss, just paste or upload HTML."
-  },
-  "outputs": [
+  "variables": [
     {
-      "name": "cos_bucket_url",
-      "description": "The public URL of your deployed SPA in COS.",
-      "value": "${terraform.output.cos_bucket_url}"
+      "name": "region",
+      "type": "string",
+      "description": "IBM Cloud region to deploy your SPA. Don't worry, default is 'us-south'.",
+      "default": "us-south",
+      "ui_hints": {
+        "group": "Setup",
+        "label": "Region",
+        "placeholder": "e.g. us-south"
+      }
     },
     {
-      "name": "cos_bucket_name",
-      "description": "The IBM COS bucket name created for your SPA.",
-      "value": "${terraform.output.bucket_name}"
+      "name": "cos_name",
+      "type": "string",
+      "description": "COS instance name to host your vibe-coded app. Don't worry, a default name is prefilled.",
+      "default": "vibe-coder-cos",
+      "ui_hints": {
+        "group": "Setup",
+        "label": "COS Instance Name",
+        "placeholder": "vibe-coder-cos"
+      }
+    },
+    {
+      "name": "bucket_name",
+      "type": "string",
+      "description": "Bucket name where your SPA will live. Don't worry, a default bucket is prefilled.",
+      "default": "vibe-coder-sample-bucket",
+      "ui_hints": {
+        "group": "Setup",
+        "label": "Bucket Name",
+        "placeholder": "vibe-coder-sample-bucket"
+      }
+    },
+    {
+      "name": "make_public",
+      "type": "boolean",
+      "description": "Whether the COS bucket should be public. Default is false.",
+      "default": false,
+      "ui_hints": {
+        "group": "Access",
+        "label": "Make Public"
+      }
+    },
+    {
+      "name": "sample_app_html",
+      "type": "string",
+      "description": "Optional HTML content for the default SPA. Leave empty to use preloaded sample.",
+      "default": ""
     }
   ]
 }
