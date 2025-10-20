@@ -1,9 +1,9 @@
 output "bucket_name" {
-  description = "COS bucket name"
-  value       = ibm_cos_bucket.sample.bucket
+  description = "The name of the COS bucket."
+  value       = ibm_cos_bucket.sample.bucket_name
 }
 
-output "app_url" {
-  description = "URL to access the sample app"
-  value       = "https://${var.bucket_name}.s3.${var.region}.cloud-object-storage.appdomain.cloud/index.html"
+output "bucket_endpoint" {
+  description = "The public endpoint of the COS bucket."
+  value       = ibm_cos_bucket.sample.endpoint
 }
