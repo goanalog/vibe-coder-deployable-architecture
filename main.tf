@@ -65,14 +65,30 @@ resource "ibm_cos_bucket_object" "html_spa" {
 }
 
 # --- Public Access Policy (Conditional) ---
-# FINAL FIX: This is the correct, dedicated resource for making a COS bucket public.
-# It avoids all the account context issues seen with the generic IAM policy resource.
-resource "ibm_cos_bucket_public_access" "public_access" {
+# FINAL FIX: This resource applies a standard S3-style bucket policy
+# directly to the bucket, making it public. This is the most robust and
+# compatible method, avoiding all previous IAM and provider version issues.
+resource "ibm_cos_bucket_policy" "public_access" {
   count = var.make_public ? 1 : 0
 
   bucket_crn    = ibm_cos_bucket.sample.crn
-  bucket_region = ibm_cos_bucket.sample.region_location
-  public_access = "reader" # Sets the bucket to be publicly readable
+  endpoint_type = ibm_cos_bucket.sample.endpoint_type
+  region        = ibm_cos_bucket.sample.region_location
+
+  policy_document = jsonencode({
+    Version = "2012-10-17",
+    Statement = [
+      {
+        Sid       = "PublicReadGetObject",
+        Effect    = "Allow",
+        Principal = "*",
+        Action    = "s3:GetObject",
+        Resource = [
+          "arn:aws:s3:::${ibm_cos_bucket.sample.bucket_name}/*"
+        ]
+      }
+    ]
+  })
 
   depends_on = [
     ibm_cos_bucket_object.html_spa
