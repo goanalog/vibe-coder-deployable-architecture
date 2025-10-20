@@ -1,7 +1,6 @@
 name: vibe-coder
 version: 0.1.0
 description: Deploy an instant SPA by pasting HTML, hosted in IBM Cloud Object Storage automatically.
-
 inputs:
   - name: ibmcloud_api_key
     type: password
@@ -13,5 +12,5 @@ inputs:
     type: textarea
     label: Paste Your HTML
     default: "<h1>Welcome to Vibe Coder!</h1><p>Your instant SPA is live.</p>"
-    required: true
+    required: false
     description: "Paste HTML code here to create your instant SPA. Sample content included."
