@@ -16,10 +16,8 @@ data "ibm_iam_access_group" "public_access_group" {
 }
 
 # --- THIS IS THE FIX ---
-# This data block now finds your account's default resource group
-# instead of searching for one named "default".
 data "ibm_resource_group" "group" {
-  use_default = true
+  is_default = true
 }
 # ---------------------
 
