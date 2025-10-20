@@ -10,11 +10,6 @@ resource "ibm_cos_bucket" "sample_app_bucket" {
   public        = var.make_public
 }
 
-resource "local_file" "sample_app_html_file" {
-  content  = var.sample_app_html
-  filename = "${path.module}/index.html"
-}
-
 resource "ibm_cos_object" "upload_sample_app" {
   bucket  = ibm_cos_bucket.sample_app_bucket.bucket
   key     = "index.html"

@@ -1,57 +1,69 @@
 {
-  "$schema": "https://cloud.ibm.com/schemas/deployable-architecture/v1.json",
   "id": "vibe-coder",
-  "version": "0.1.2",
+  "version": "0.1.0",
   "displayName": "Vibe Coder — Instant SPA",
-  "description": "A deployable architecture for 'vibe coding' single-page apps: paste or upload your index.html and get an instant IBM COS-hosted sample app.",
+  "description": "Deploy an instant 'vibe coding' sample app: upload or paste your HTML and host it in IBM Cloud Object Storage.",
   "type": "deployable_architecture",
   "deliveryMethod": "terraform",
-  "metadata": {
-    "category": "Developer Tools",
-    "tags": ["vibe", "spa", "cos", "web-hosting", "ibm-cloud"],
-    "language": "hcl",
-    "terraformVersion": "1.5"
+  "terraform": {
+    "targetWorkspaces": ["us-south"],
+    "source": {
+      "type": "git",
+      "url": "https://github.com/goanalog/vibe-coder-deployable-architecture.git",
+      "ref": "main"
+    },
+    "varFile": "schematics.tfvars"
+  },
+  "uiHints": {
+    "icon": "https://raw.githubusercontent.com/goanalog/vibe-coder-deployable-architecture/main/icon.png",
+    "categories": ["Developer Tools", "Sample Apps"],
+    "keywords": ["vibe", "spa", "sample app", "IBM COS", "HTML"]
   },
   "inputs": [
     {
-variable "ibmcloud_api_key" {
-  description = "Your IBM Cloud API key — needed to authenticate Terraform. Don't worry, it's safe!"
-  type        = string
-}
-
-variable "region" {
-  description = "IBM Cloud region where resources will be created."
-  type        = string
-  default     = "us-south"
-}
-
-variable "cos_crn" {
-  description = "The CRN of your IBM Cloud Object Storage instance."
-  type        = string
-}
-
-variable "bucket_name" {
-  description = "Name of the bucket where the sample app HTML will be uploaded."
-  type        = string
-  default     = "vibe-coder-sample-bucket"
-}
-
-variable "make_public" {
-  description = "Whether to make the bucket publicly accessible."
-  type        = bool
-  default     = true
-}
-
-variable "sample_app_html" {
-  description = "HTML content for your sample app. Defaults to the included sample-app-index.html file."
-  type        = string
-  default     = file("${path.module}/sample-app-index.html")
-}
-
+      "name": "ibmcloud_api_key",
+      "type": "string",
+      "label": "IBM Cloud API Key",
+      "description": "Your IBM Cloud API key — needed to authenticate Terraform. Don't worry, it's safe!",
+      "required": true
+    },
+    {
+      "name": "region",
+      "type": "string",
+      "label": "IBM Cloud Region",
+      "description": "Region where resources will be created.",
+      "default": "us-south",
+      "required": false
+    },
+    {
+      "name": "cos_crn",
+      "type": "string",
+      "label": "COS Instance CRN",
+      "description": "The CRN of your IBM Cloud Object Storage instance.",
+      "required": true
+    },
+    {
+      "name": "bucket_name",
+      "type": "string",
+      "label": "Bucket Name",
+      "description": "Name of the bucket where the sample app HTML will be uploaded.",
+      "default": "vibe-coder-sample-bucket",
+      "required": false
+    },
+    {
+      "name": "make_public",
+      "type": "boolean",
+      "label": "Make Bucket Public",
+      "description": "Whether to make the bucket publicly accessible.",
+      "default": true,
+      "required": false
+    },
+    {
+      "name": "sample_app_html",
+      "type": "string",
+      "label": "Sample App HTML",
+      "description": "HTML content for your sample app. Defaults to the included sample-app-index.html file.",
+      "required": false
     }
   ]
 }
-
-
-
-
