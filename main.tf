@@ -24,14 +24,16 @@ resource "ibm_resource_instance" "cos" {
 }
 
 resource "ibm_cos_bucket" "sample" {
-  name                 = var.bucket_name
+  # --- THIS IS THE FIX ---
+  bucket_name          = var.bucket_name 
+  # ---------------------
   resource_instance_id = ibm_resource_instance.cos.id
   force_destroy        = true
   public_access        = var.make_public
 }
 
 resource "ibm_cos_object" "html_spa" {
-  bucket       = ibm_cos_bucket.sample.name
+  bucket       = ibm_cos_bucket.sample.bucket_name
   key          = "index.html"
   content      = var.html_content
   content_type = "text/html"
