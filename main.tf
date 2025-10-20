@@ -93,4 +93,3 @@ output "application_url" {
   description = "The public URL for the sample application."
   value       = "https://${ibm_cos_bucket.sample.s3_endpoint_public}/${ibm_cos_bucket_object.html_spa.key}"
 }
-
