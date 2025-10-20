@@ -1,5 +1,3 @@
-
-
 # --- Required Providers ---
 
 terraform {
@@ -54,34 +52,15 @@ resource "ibm_cos_bucket_object" "html_spa" {
   force_delete    = true
 }
 
-#
-# --- THIS IS THE FIX ---
-#
-# 1. I removed the 'data "ibm_iam_access_group" "public_access_group"' block.
-# 2. I removed the failing 'resource "ibm_iam_access_group_policy" "public_access_policy"' block.
-# 3. I added this single resource, which is the correct way
-#    to make a COS bucket public.
-#
-
-
-#
-# --- CLICKABLE OUTPUT ---
-#
-# As we discussed earlier, this creates the key output.
-# It builds the public URL from the bucket's public endpoint and the object's key.
-#
-output "application_url" {
-  description = "The public URL for the sample application."
-  value       = "https://${ibm_cos_bucket.sample.s3_endpoint_public}/${ibm_cos_bucket_object.html_spa.key}"
-}
-
+# This policy grants "Content Reader" access to the "PublicAccess" group,
+# making your bucket's objects readable by anyone on the internet.
 resource "ibm_iam_access_group_policy" "public_access_policy" {
-  # This is the key fix: "PublicAccess" is the correct ID,
-  # not the data source we used before.
+  # This is the key fix: "PublicAccess" is the correct ID.
   access_group_id = "PublicAccess"
 
   roles = ["Content Reader"]
 
+  # This block correctly targets the policy to your new bucket
   resources {
     service              = "cloud-object-storage"
     resource_instance_id = ibm_resource_instance.cos.id
@@ -93,4 +72,14 @@ resource "ibm_iam_access_group_policy" "public_access_policy" {
   depends_on = [
     ibm_cos_bucket.sample
   ]
+}
+
+# --- CLICKABLE OUTPUT ---
+#
+# As we discussed earlier, this creates the key output.
+# It builds the public URL from the bucket's public endpoint and the object's key.
+#
+output "application_url" {
+  description = "The public URL for the sample application."
+  value       = "https://${ibm_cos_bucket.sample.s3_endpoint_public}/${ibm_cos_bucket_object.html_spa.key}"
 }
