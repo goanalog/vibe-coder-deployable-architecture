@@ -6,12 +6,18 @@ variable "cos_instance_name" {
 
 variable "bucket_name" {
   type        = string
-  description = "Name of the bucket where your SPA will live — can be auto-generated if not provided."
+  description = "Name of the bucket where your SPA will live — auto-generated if empty."
   default     = "vibe-coder-sample-bucket"
 }
 
 variable "make_public" {
   type        = bool
-  description = "Whether to make the SPA publicly accessible. Default is true."
+  description = "Whether to make your SPA publicly accessible. Default is true."
+  default     = true
+}
+
+variable "sample_html_enabled" {
+  type        = bool
+  description = "Include a default sample HTML if no custom code is provided."
   default     = true
 }
