@@ -1,6 +1,7 @@
 terraform {
   required_version = ">= 1.12"
-  
+}
+
 # COS bucket
 resource "ibm_cos_bucket" "bucket" {
   bucket_name      = var.bucket_name
@@ -19,8 +20,8 @@ resource "ibm_resource_key" "cos_key" {
 
 # Upload index.html to bucket
 resource "ibm_cos_bucket_object" "index" {
-  bucket_crn     = ibm_cos_bucket.bucket.crn
+  bucket_crn      = ibm_cos_bucket.bucket.crn
   bucket_location = ibm_cos_bucket.bucket.location
-  key            = "index.html"
-  source         = var.index_file_path
+  key             = "index.html"
+  source          = var.index_file_path
 }
