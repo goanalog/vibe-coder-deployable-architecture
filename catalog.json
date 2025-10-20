@@ -1,14 +1,11 @@
 {
   "$schema": "https://cloud.ibm.com/schemas/deployable-architecture/v1.json",
   "id": "vibe-coder",
-  "version": "0.1.3",
+  "version": "0.1.2",
   "displayName": "Vibe Coder — Instant SPA",
   "description": "A deployable architecture for 'vibe coding' single-page apps: paste or upload your index.html and get an instant IBM COS-hosted sample app.",
   "type": "deployable_architecture",
   "deliveryMethod": "terraform",
-  "source": {
-    "path": "."
-  },
   "metadata": {
     "category": "Developer Tools",
     "tags": ["vibe", "spa", "cos", "web-hosting", "ibm-cloud"],
@@ -21,12 +18,119 @@
       "type": "string",
       "description": "Your IBM Cloud API key. Required to authenticate and create resources.",
       "required": true,
-      "ui_hints": { "group": "Setup", "control": "password", "label": "IBM Cloud API Key" }
+      "ui_hints": {
+        "group": "Setup",
+        "label": "IBM Cloud API Key",
+        "control": "password",
+        "placeholder": "Enter your IBM Cloud API key"
+      }
     },
-    { "name": "cos_name", "type": "string", "default": "vibe-coder-cos" },
-    { "name": "region", "type": "string", "default": "us-south" },
-    { "name": "bucket_name", "type": "string", "default": "" },
-    { "name": "make_public", "type": "bool", "default": true },
-    { "name": "index_file_path", "type": "string", "default": "sample-app/index.html" }
+    {
+      "name": "cos_name",
+      "type": "string",
+      "description": "Name your IBM Cloud Object Storage instance — where your vibe-coded app will live.",
+      "default": "vibe-coder-cos",
+      "ui_hints": {
+        "group": "Setup",
+        "label": "COS instance name",
+        "placeholder": "vibe-coder-cos"
+      },
+      "required": false
+    },
+    {
+      "name": "cos_plan",
+      "type": "string",
+      "description": "Choose the COS service plan. 'lite' gives you free storage for your sample apps.",
+      "default": "lite",
+      "ui_hints": {
+        "group": "Setup",
+        "label": "Service plan",
+        "control": "dropdown",
+        "options": [
+          { "label": "Lite (Free)", "value": "lite" },
+          { "label": "Standard", "value": "standard" }
+        ]
+      }
+    },
+    {
+      "name": "region",
+      "type": "string",
+      "description": "Pick the IBM Cloud region closest to your users for faster vibe delivery.",
+      "default": "us-south",
+      "ui_hints": {
+        "group": "Setup",
+        "label": "Region",
+        "control": "dropdown",
+        "options": [
+          { "label": "US South (Dallas)", "value": "us-south" },
+          { "label": "US East (Washington DC)", "value": "us-east" },
+          { "label": "EU Germany (Frankfurt)", "value": "eu-de" },
+          { "label": "Asia Pacific (Tokyo)", "value": "jp-tok" }
+        ]
+      }
+    },
+    {
+      "name": "resource_group",
+      "type": "string",
+      "description": "Select which resource group to place your COS instance in.",
+      "default": "Default",
+      "ui_hints": {
+        "group": "Setup",
+        "label": "Resource group"
+      }
+    },
+    {
+      "name": "bucket_name",
+      "type": "string",
+      "description": "Optional: specify a custom bucket name. If left empty, one will be auto-generated.",
+      "default": "",
+      "ui_hints": {
+        "group": "Setup",
+        "label": "Custom bucket name (optional)",
+        "placeholder": "leave blank for auto-generated"
+      },
+      "required": false
+    },
+    {
+      "name": "sample_app_html",
+      "type": "string",
+      "description": "Paste your sample app (HTML) here — or leave blank to use the included starter sample.",
+      "default": "<!DOCTYPE html><html><body><h1>Hello, Vibe World!</h1></body></html>",
+      "ui_hints": {
+        "group": "Your App",
+        "label": "Sample app HTML",
+        "control": "textarea",
+        "rows": 10,
+        "placeholder": "<h1>Hello, Vibe World!</h1>"
+      }
+    },
+    {
+      "name": "make_public",
+      "type": "bool",
+      "description": "If true, your sample app will be publicly accessible from a URL. Set to false for private vibes.",
+      "default": true,
+      "ui_hints": {
+        "group": "Your App",
+        "label": "Make app public"
+      }
+    },
+    {
+      "name": "cos_storage_class",
+      "type": "string",
+      "description": "COS bucket storage class (standard, vault, cold, etc.). Standard is ideal for web hosting.",
+      "default": "standard",
+      "ui_hints": {
+        "hidden": true
+      }
+    },
+    {
+      "name": "html_file_path",
+      "type": "string",
+      "description": "Internal use: path to the sample app’s HTML file included with the repo.",
+      "default": "sample-app-index.html",
+      "ui_hints": {
+        "hidden": true
+      }
+    }
   ]
 }

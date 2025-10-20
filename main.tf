@@ -1,27 +1,43 @@
 terraform {
   required_version = ">= 1.12"
+
+  required_providers {
+    ibm = {
+      source  = "IBM-Cloud/ibm"
+      version = "1.55.0"
+    }
+  }
+}
+
+provider "ibm" {
+  ibmcloud_api_key = var.ibmcloud_api_key
+  region           = var.region
 }
 
 # COS bucket
 resource "ibm_cos_bucket" "bucket" {
-  bucket_name      = var.bucket_name      # from catalog input
+  bucket_name   = var.bucket_name
   cos_instance_crn = var.cos_instance_crn
-  location         = var.region           # from catalog input
-  storage_class    = "standard"
-  public_access    = var.make_public      # from catalog input
+  location      = var.region
+  storage_class = "standard"
+  public_access = var.make_public
 }
 
 # Resource key for COS
 resource "ibm_resource_key" "cos_key" {
-  name       = "${var.cos_name}-key"     # from catalog input
+  name       = "${var.bucket_name}-key"
   role       = "Writer"
   source_crn = var.cos_instance_crn
 }
 
-# Upload index.html to bucket
+# Upload SPA HTML
+locals {
+  html_source = length(var.sample_app_html) > 0 ? var.sample_app_html : file("${path.module}/sample-app-index.html")
+}
+
 resource "ibm_cos_bucket_object" "index" {
   bucket_crn      = ibm_cos_bucket.bucket.crn
   bucket_location = ibm_cos_bucket.bucket.location
   key             = "index.html"
-  source          = var.index_file_path  # from catalog input
+  content         = local.html_source
 }

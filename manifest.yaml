@@ -1,11 +1,10 @@
 name: vibe-coder
 id: vibe-coder
-version: 0.1.3
-displayName: Vibe Coder — Instant Sample Application
+version: 0.1.2
+displayName: Vibe Coder — Instant SPA
 description: >
-  Instantly deploy a simple web sample to IBM Cloud Object Storage.
-  Paste or upload your HTML and see it live — perfect for vibe coding
-  and rapid prototyping.
+  Instantly deploy a simple SPA to IBM Cloud Object Storage.
+  Paste or upload your HTML and see it live — perfect for vibe coding.
 type: terraform
 deliveryMethod: terraform
 
@@ -14,8 +13,7 @@ install:
   location: .
   mainFile: main.tf
   instructions: >
-    This deployable architecture provisions an IBM Cloud Object Storage bucket,
-    uploads your SPA HTML, and optionally makes it publicly viewable.
+    This DA provisions a COS bucket, uploads your SPA HTML, and optionally makes it public.
 
 documentation:
   readme: README.md
@@ -28,9 +26,6 @@ tags:
   - static-site
   - rapid-prototyping
   - ibm-cloud
-  - single-page-application
-  - sandbox
-  - frontend
 
 icons:
   small: https://raw.githubusercontent.com/goanalog/vibe-coder-deployable-architecture/main/icon-48@2x.png
