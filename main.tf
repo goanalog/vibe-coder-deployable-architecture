@@ -52,6 +52,10 @@ resource "ibm_cos_bucket" "sample" {
   region_location      = var.location # The bucket itself is regional
   endpoint_type        = "public"
   force_delete         = true # Allows the bucket to be deleted even if not empty
+
+  # FINAL FIX: Set the public access directly on the bucket using an ACL.
+  # This method is supported by older versions of the IBM provider.
+  acl = var.make_public ? "public-read" : "private"
 }
 
 # This uploads a sample index.html file to the bucket.
@@ -62,29 +66,6 @@ resource "ibm_cos_bucket_object" "html_spa" {
   content         = var.html_content
   endpoint_type   = "public"
   force_delete    = true
-}
-
-# --- Public Access Bucket Policy (Conditional) ---
-# This applies a JSON policy to the bucket to make objects publicly readable.
-resource "ibm_cos_bucket_policy" "public_read_policy" {
-  count = var.make_public ? 1 : 0
-
-  bucket_crn      = ibm_cos_bucket.sample.crn
-  bucket_location = ibm_cos_bucket.sample.region_location
-  endpoint_type   = "public"
-
-  policy_document = jsonencode({
-    "Version" : "2012-10-17",
-    "Statement" : [
-      {
-        "Sid" : "PublicRead",
-        "Effect" : "Allow",
-        "Principal" : "*",
-        "Action" : "s3:GetObject",
-        "Resource" : "${ibm_cos_bucket.sample.crn}/*"
-      }
-    ]
-  })
 }
 
 # --- Clickable Output ---
