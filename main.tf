@@ -15,9 +15,13 @@ data "ibm_iam_access_group" "public_access_group" {
   access_group_name = "Public Access"
 }
 
+# --- THIS IS THE FIX ---
+# This data block now finds your account's default resource group
+# instead of searching for one named "default".
 data "ibm_resource_group" "group" {
-  name = var.resource_group_name
+  use_default = true
 }
+# ---------------------
 
 resource "ibm_resource_instance" "cos" {
   name              = var.cos_instance_name
@@ -52,10 +56,6 @@ resource "ibm_cos_bucket_object" "html_spa" {
   bucket_location = var.location
   key             = "index.html"
   content         = var.html_content
-  # --- THIS IS THE FIX ---
-  # The "content_type" line below has been removed.
-  # content_type    = "text/html" 
-  # ---------------------
 
   depends_on = [
     ibm_iam_access_group_policy.public_access_policy
