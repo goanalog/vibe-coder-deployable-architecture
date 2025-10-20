@@ -75,8 +75,11 @@ resource "ibm_iam_access_group_policy" "public_access_policy" {
 
   resources {
     service      = "cloud-object-storage"
-    resource_crn = ibm_cos_bucket.sample.crn
+    resource_can = ibm_cos_bucket.sample.crn
   }
+
+
+}
 
   # This ensures the bucket is created before this policy is applied.
   depends_on = [
