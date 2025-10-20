@@ -55,7 +55,7 @@ resource "ibm_cos_bucket_object" "html_spa" {
 # This policy grants "Content Reader" access to the "PublicAccess" group,
 # making your bucket's objects readable by anyone on the internet.
 resource "ibm_iam_access_group_policy" "public_access_policy" {
-  # This is the key fix: "PublicAccess" is the correct ID.
+  # This correctly sets the group to "PublicAccess"
   access_group_id = "PublicAccess"
 
   roles = ["Content Reader"]
@@ -76,7 +76,7 @@ resource "ibm_iam_access_group_policy" "public_access_policy" {
 
 # --- CLICKABLE OUTPUT ---
 #
-# As we discussed earlier, this creates the key output.
+# This creates the key output for your deployable architecture.
 # It builds the public URL from the bucket's public endpoint and the object's key.
 #
 output "application_url" {
