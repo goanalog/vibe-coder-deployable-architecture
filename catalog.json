@@ -6,9 +6,6 @@
   "description": "A deployable architecture for 'vibe coding' single-page apps: paste or upload your index.html and get an instant IBM COS-hosted sample app.",
   "type": "deployable_architecture",
   "deliveryMethod": "terraform",
-  "source": {
-    "path": "terraform"
-  },
   "metadata": {
     "category": "Developer Tools",
     "tags": ["vibe", "spa", "cos", "web-hosting", "ibm-cloud"],
