@@ -65,35 +65,30 @@ resource "ibm_cos_bucket_object" "html_spa" {
 }
 
 # --- Public Access Policy (Conditional) ---
-# FINAL FIX: This resource applies a standard S3-style bucket policy
-# directly to the bucket, making it public. This is the most robust and
-# compatible method, avoiding all previous IAM and provider version issues.
-resource "ibm_cos_bucket_policy" "public_access" {
+# FINAL FIX: Reverting to the 'ibm_iam_access_group_policy' resource, which is
+# supported by your provider version. This configuration is fully specified
+# to avoid the original account context errors.
+resource "ibm_iam_access_group_policy" "public_access_policy" {
   count = var.make_public ? 1 : 0
 
-  bucket_crn    = ibm_cos_bucket.sample.crn
-  endpoint_type = ibm_cos_bucket.sample.endpoint_type
-  region        = ibm_cos_bucket.sample.region_location
+  access_group_id = "PublicAccess"
+  roles           = ["Content Reader"]
 
-  policy_document = jsonencode({
-    Version = "2012-10-17",
-    Statement = [
-      {
-        Sid       = "PublicReadGetObject",
-        Effect    = "Allow",
-        Principal = "*",
-        Action    = "s3:GetObject",
-        Resource = [
-          "arn:aws:s3:::${ibm_cos_bucket.sample.bucket_name}/*"
-        ]
-      }
-    ]
-  })
+  # This block correctly targets the policy to your new bucket.
+  # It must be fully specified to avoid account context errors.
+  resources {
+    service              = "cloud-object-storage"
+    resource_instance_id = ibm_resource_instance.cos.id
+    resource_type        = "bucket"
+    resource             = ibm_cos_bucket.sample.bucket_name
+  }
 
+  # This ensures the bucket is created before this policy is applied.
   depends_on = [
-    ibm_cos_bucket_object.html_spa
+    ibm_cos_bucket.sample
   ]
 }
+
 
 # --- Clickable Output ---
 # This creates the key output for your deployable architecture.
