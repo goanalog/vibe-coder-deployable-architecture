@@ -4,6 +4,9 @@
   "displayName": "Vibe Coder — Instant SPA",
   "description": "A deployable architecture for 'vibe coding' single-page apps: paste or upload your index.html and get an instant IBM COS-hosted sample app.",
   "type": "deployable_architecture",
+"source": {
+  "path": "terraform"
+},
   "deliveryMethod": "terraform",
   "inputs": [
     {
@@ -127,3 +130,5 @@
     }
   ]
 }
+
+
