@@ -65,8 +65,8 @@ resource "ibm_cos_bucket_object" "html_spa" {
 }
 
 # --- Public Access Policy (Conditional) ---
-# FINAL FIX: This uses the only supported resource for this provider version.
-# It targets the bucket by its unique CRN to avoid all account context errors.
+# FINAL FIX: This defines the resource using attributes supported by the provider.
+# It targets the bucket by specifying the service instance, resource type, and bucket name.
 resource "ibm_iam_access_group_policy" "public_access_policy" {
   count = var.make_public ? 1 : 0
 
@@ -74,12 +74,13 @@ resource "ibm_iam_access_group_policy" "public_access_policy" {
   roles           = ["Content Reader"]
 
   resources {
-    service      = "cloud-object-storage"
-    # TYPO FIX: Changed "resource_can" to "resource_crn"
-    resource_crn = ibm_cos_bucket.sample.crn
+    service              = "cloud-object-storage"
+    resource_instance_id = ibm_resource_instance.cos.id
+    resource_type        = "bucket"
+    resource             = ibm_cos_bucket.sample.bucket_name
   }
 
-  # SYNTAX FIX: Moved depends_on inside the resource block
+  # This ensures the bucket is created before this policy is applied.
   depends_on = [
     ibm_cos_bucket.sample
   ]
@@ -94,3 +95,4 @@ output "application_url" {
   description = "The public URL for the sample application."
   value       = "https://${ibm_cos_bucket.sample.s3_endpoint_public}/${ibm_cos_bucket_object.html_spa.key}"
 }
+
