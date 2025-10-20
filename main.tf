@@ -9,10 +9,3 @@ resource "local_file" "sample_html" {
   filename = "${path.module}/sample-app-output.html"
 }
 
-output "bucket_name" {
-  value = ibm_cos_bucket.sample.bucket
-}
-
-output "app_url" {
-  value = "https://${var.bucket_name}.s3.${var.region}.cloud-object-storage.appdomain.cloud/index.html"
-}
