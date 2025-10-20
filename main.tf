@@ -14,6 +14,14 @@ terraform {
   }
 }
 
+# --- Provider Configuration ---
+# Configures the IBM Cloud provider with the API key.
+
+provider "ibm" {
+  ibmcloud_api_key = var.ibmcloud_api_key
+  region           = var.location # Use the location variable for the provider region
+}
+
 # --- Configuration ---
 
 # Add a random suffix to the bucket name to ensure it is globally unique.
@@ -31,7 +39,7 @@ resource "ibm_resource_instance" "cos" {
   name              = var.cos_instance_name
   service           = "cloud-object-storage"
   plan              = "lite"
-  location          = "global"
+  location          = "global" # COS service instance is always global
   resource_group_id = data.ibm_resource_group.group.id
 }
 
@@ -39,7 +47,7 @@ resource "ibm_resource_instance" "cos" {
 resource "ibm_cos_bucket" "sample" {
   bucket_name          = "${var.bucket_name_prefix}-${random_id.suffix.hex}"
   resource_instance_id = ibm_resource_instance.cos.id
-  region_location      = var.region
+  region_location      = var.location # The bucket itself is regional
   endpoint_type        = "public"
   force_delete         = true # Allows the bucket to be deleted even if not empty
 }
@@ -49,23 +57,24 @@ resource "ibm_cos_bucket_object" "html_spa" {
   bucket_crn      = ibm_cos_bucket.sample.crn
   bucket_location = ibm_cos_bucket.sample.region_location
   key             = "index.html"
-  content         = "<h1>Welcome to Vibe Coder!</h1><p>Your instant SPA is live.</p>"
+  content         = var.html_content # <-- FIX: Use the variable for HTML content
   endpoint_type   = "public"
   force_delete    = true
 }
 
-# --- FIX ---
+# --- Public Access Policy (Conditional) ---
 # This policy grants "Content Reader" access to the "PublicAccess" group,
 # making your bucket's objects readable by anyone on the internet.
-# It correctly targets the specific bucket and COS instance created above.
-resource "ibm_iam_access_group_policy" "public_access_policy" {
-  # This correctly sets the group to "PublicAccess"
-  access_group_id = "PublicAccess"
+# It is only created if the 'make_public' variable is set to true.
 
-  roles = ["Content Reader"]
+resource "ibm_iam_access_group_policy" "public_access_policy" {
+  # <-- FIX: Conditionally create this resource
+  count = var.make_public ? 1 : 0
+
+  access_group_id = "PublicAccess"
+  roles           = ["Content Reader"]
 
   # This block correctly targets the policy to your new bucket.
-  # This was the source of the previous errors.
   resources {
     service              = "cloud-object-storage"
     resource_instance_id = ibm_resource_instance.cos.id
@@ -79,11 +88,10 @@ resource "ibm_iam_access_group_policy" "public_access_policy" {
   ]
 }
 
-# --- CLICKABLE OUTPUT ---
-#
+# --- Clickable Output ---
 # This creates the key output for your deployable architecture.
 # It builds the public URL from the bucket's public endpoint and the object's key.
-#
+
 output "application_url" {
   description = "The public URL for the sample application."
   value       = "https://${ibm_cos_bucket.sample.s3_endpoint_public}/${ibm_cos_bucket_object.html_spa.key}"

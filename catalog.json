@@ -1,10 +1,15 @@
 {
-  "id": "vibe-coder",
+  "id": "vibe-coder-instant-spa",
   "version": "0.1.0",
   "displayName": "Vibe Coder — Instant SPA",
-  "description": "Deploy an instant SPA by pasting HTML. Hosted in IBM Cloud Object Storage automatically.",
+  "description": "Deploy an instant Single Page Application (SPA) by pasting HTML, hosted automatically in IBM Cloud Object Storage.",
   "type": "deployable_architecture",
   "deliveryMethod": "terraform",
+  "tags": [
+    "Vibe",
+    "Developer Tools",
+    "WebApp"
+  ],
   "inputs": [
     {
       "name": "ibmcloud_api_key",
@@ -13,10 +18,25 @@
       "description": "Your IBM Cloud API key to deploy resources."
     },
     {
+      "name": "location",
+      "type": "string",
+      "required": true,
+      "defaultValue": "us-south",
+      "description": "The IBM Cloud location for the COS bucket (e.g., us-south, eu-de)."
+    },
+    {
       "name": "html_content",
       "type": "textarea",
       "required": true,
+      "defaultValue": "<h1>Welcome to Vibe Coder!</h1><p>Your instant SPA is live.</p>",
       "description": "Paste your HTML code here for the SPA."
+    },
+    {
+      "name": "make_public",
+      "type": "boolean",
+      "required": true,
+      "defaultValue": "true",
+      "description": "Make the SPA publicly accessible on the internet."
     }
   ]
 }

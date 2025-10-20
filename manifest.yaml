@@ -1,6 +1,6 @@
-name: vibe-coder
+name: vibe-coder-instant-spa
 version: 0.1.0
-description: Deploy an instant SPA by pasting HTML, hosted in IBM Cloud Object Storage automatically.
+description: "Deploy an instant Single Page Application (SPA) by pasting HTML, hosted automatically in IBM Cloud Object Storage."
 inputs:
   - name: ibmcloud_api_key
     type: password
@@ -12,12 +12,19 @@ inputs:
     type: string
     label: Location
     default: "us-south"
-    required: false
-    description: "The IBM Cloud location to deploy resources (e.g., us-south, eu-de)."
+    required: true
+    description: "The IBM Cloud location where the COS bucket will be created (e.g., us-south, eu-de)."
 
   - name: html_content
     type: textarea
     label: Paste Your HTML
     default: "<h1>Welcome to Vibe Coder!</h1><p>Your instant SPA is live.</p>"
-    required: false
-    description: "Paste HTML code here to create your instant SPA. Sample content included."
+    required: true
+    description: "Paste the complete HTML code for your SPA here. Sample content is provided as a default."
+
+  - name: make_public
+    type: boolean
+    label: Make Publicly Accessible
+    default: true
+    required: true
+    description: "If true, a public access policy will be attached to the bucket, making your SPA viewable on the internet."

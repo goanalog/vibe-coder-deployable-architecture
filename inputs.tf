@@ -6,7 +6,7 @@ variable "ibmcloud_api_key" {
 
 variable "make_public" {
   type        = bool
-  description = "Whether the bucket should be public."
+  description = "Set to true to make the bucket's content publicly accessible via a URL."
   default     = true
 }
 
@@ -34,8 +34,9 @@ variable "cos_instance_name" {
   default     = "vibe-coder-cos"
 }
 
-variable "region" {
-  description = "The region to deploy the COS bucket in (e.g., us-south)."
+# <-- FIX: Renamed 'region' to 'location' for consistency
+variable "location" {
+  description = "The IBM Cloud location to deploy the COS bucket in (e.g., us-south)."
   type        = string
   default     = "us-south"
 }
