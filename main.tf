@@ -9,9 +9,16 @@ resource "ibm_resource_instance" "cos" {
   plan    = "standard"
 }
 
-resource "ibm_cos_bucket" "sample" {
+resource "ibm_cos_bucket" "spa" {
   bucket_name          = var.bucket_name
   resource_instance_id = ibm_resource_instance.cos.id
   force_destroy        = true
   public_access        = var.make_public ? "true" : "false"
+}
+
+resource "ibm_cos_object" "index_html" {
+  bucket      = ibm_cos_bucket.spa.bucket_name
+  resource_instance_id = ibm_resource_instance.cos.id
+  key         = "index.html"
+  content     = var.html_content
 }

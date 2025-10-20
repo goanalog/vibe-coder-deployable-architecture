@@ -1,8 +1,8 @@
 {
   "id": "vibe-coder-spa",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "displayName": "Vibe Coder — Instant SPA",
-  "description": "Deploy an IBM Cloud SPA for vibe coding: paste or upload your HTML and instantly see it live.",
+  "description": "Deploy an IBM Cloud SPA for vibe coding. Paste HTML directly into the input and deploy.",
   "type": "deployable_architecture",
   "deliveryMethod": "auto-upload",
   "resources": [

@@ -1,18 +1,18 @@
 name: vibe-coder-spa
-version: 0.3.0
+version: 0.4.0
 type: deployable_architecture
 displayName: Vibe Coder — Instant SPA
 description: >
-  Deploy an instant IBM Cloud single-page app (SPA) for "vibe coding".
-  Paste or upload your HTML to see it live immediately. Don't worry — sample content is included so you can start coding vibes right away.
+  Deploy an IBM Cloud single-page app (SPA) for "vibe coding".
+  Paste HTML directly into the catalog input and deploy immediately. Don't worry — sample content is included.
 catalog:
   id: vibe-coder-spa
-  version: 0.3.0
+  version: 0.4.0
   deliveryMethod: auto-upload
 resources:
   - main.tf
   - inputs.tf
-  - index.html
+  - index.html.tpl
   - catalog.json
   - README.md
 tags:
@@ -20,9 +20,15 @@ tags:
   - SPA
   - IBM Cloud
   - deployable-architecture
-  - sample-app
 ui_hints:
   logo_url: logo.png
   categories:
     - Tools
     - Developer Utilities
+inputs:
+  - name: html_content
+    type: textarea
+    label: Paste Your HTML
+    default: "<h1>Welcome to Vibe Coder!</h1><p>Your instant SPA is live.</p>"
+    required: true
+    description: "Paste HTML code here to create your instant SPA. Sample content included."
