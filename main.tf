@@ -29,11 +29,6 @@ data "ibm_resource_group" "group" {
   name = var.resource_group_name
 }
 
-# This data source fetches the account ID associated with the API key.
-# This ID is used to resolve ambiguity when creating the IAM policy.
-data "ibm_iam_account_settings" "acc" {
-}
-
 # --- Configuration ---
 
 # Add a random suffix to the bucket name to ensure it is globally unique.
@@ -70,30 +65,17 @@ resource "ibm_cos_bucket_object" "html_spa" {
 }
 
 # --- Public Access Policy (Conditional) ---
-# This policy grants "Content Reader" access to the "PublicAccess" group,
-# making your bucket's objects readable by anyone on the internet.
-
-resource "ibm_iam_access_group_policy" "public_access_policy" {
+# FINAL FIX: This is the correct, dedicated resource for making a COS bucket public.
+# It avoids all the account context issues seen with the generic IAM policy resource.
+resource "ibm_cos_bucket_public_access" "public_access" {
   count = var.make_public ? 1 : 0
 
-  access_group_id = "PublicAccess"
-  roles           = ["Content Reader"]
+  bucket_crn    = ibm_cos_bucket.sample.crn
+  bucket_region = ibm_cos_bucket.sample.region_location
+  public_access = "reader" # Sets the bucket to be publicly readable
 
-  # FINAL FIX: This argument explicitly provides the account context
-  # directly to the IAM policy resource, which resolves the error.
-  iam_account_id = data.ibm_iam_account_settings.acc.account_id
-
-  # The 'resources' block correctly targets the policy to your new bucket.
-  resources {
-    service              = "cloud-object-storage"
-    resource_instance_id = ibm_resource_instance.cos.id
-    resource_type        = "bucket"
-    resource             = ibm_cos_bucket.sample.bucket_name
-  }
-
-  # This ensures the bucket is created before this policy is applied.
   depends_on = [
-    ibm_cos_bucket.sample
+    ibm_cos_bucket_object.html_spa
   ]
 }
 
