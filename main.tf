@@ -1,12 +1,5 @@
 terraform {
   required_version = ">= 1.12"
-
-  required_providers {
-    ibm = {
-      source  = "IBM-Cloud/ibm"
-      version = "1.55.0"
-    }
-  }
 }
 
 provider "ibm" {
@@ -14,30 +7,40 @@ provider "ibm" {
   region           = var.region
 }
 
-# COS bucket
-resource "ibm_cos_bucket" "bucket" {
-  bucket_name   = var.bucket_name
-  cos_instance_crn = var.cos_instance_crn
-  location      = var.region
-  storage_class = "standard"
+# Create COS instance
+resource "ibm_resource_instance" "cos_instance" {
+  name     = var.cos_name
+  service  = "cloud-object-storage"
+  plan     = var.cos_plan
+  region   = var.region
+  resource_group = var.resource_group
+}
+
+# Create COS bucket
+resource "ibm_cos_bucket_v2" "bucket" {
+  bucket     = var.bucket_name != "" ? var.bucket_name : "${var.cos_name}-bucket"
+  cos_instance_crn = ibm_resource_instance.cos_instance.crn
+  storage_class = var.cos_storage_class
   public_access = var.make_public
 }
 
-# Resource key for COS
-resource "ibm_resource_key" "cos_key" {
-  name       = "${var.bucket_name}-key"
-  role       = "Writer"
-  source_crn = var.cos_instance_crn
+# Write sample_app_html to a temp file for upload
+data "local_file" "sample_html" {
+  content  = var.sample_app_html
+  filename = "${path.module}/temp_index.html"
 }
 
-# Upload SPA HTML
-locals {
-  html_source = length(var.sample_app_html) > 0 ? var.sample_app_html : file("${path.module}/sample-app-index.html")
+# Upload HTML to COS bucket
+resource "ibm_cos_bucket_object_v2" "index" {
+  bucket = ibm_cos_bucket_v2.bucket.bucket
+  key    = "index.html"
+  source = data.local_file.sample_html.filename
 }
 
-resource "ibm_cos_bucket_object" "index" {
-  bucket_crn      = ibm_cos_bucket.bucket.crn
-  bucket_location = ibm_cos_bucket.bucket.location
-  key             = "index.html"
-  content         = local.html_source
+output "bucket_name" {
+  value = ibm_cos_bucket_v2.bucket.bucket
+}
+
+output "app_url" {
+  value = "https://${ibm_cos_bucket_v2.bucket.bucket}.s3.${var.region}.cloud-object-storage.appdomain.cloud/index.html"
 }
