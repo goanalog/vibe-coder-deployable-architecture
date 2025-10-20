@@ -1,22 +1,4 @@
-# --- Assumed Variables ---
-# (You likely have these defined in variables.tf)
 
-variable "resource_group_name" {
-  type    = string
-  default = "default" # Adjust this if your resource group is not named "default"
-}
-variable "bucket_name_prefix" {
-  type    = string
-  default = "vibe-coder-sample-bucket"
-}
-variable "cos_instance_name" {
-  type    = string
-  default = "vibe-coder-cos"
-}
-variable "region" {
-  type    = string
-  default = "us-south" # Your log showed "us-south"
-}
 
 # --- Required Providers ---
 
