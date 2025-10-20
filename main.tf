@@ -7,13 +7,20 @@ terraform {
   }
 }
 
+provider "ibm" {
+  ibmcloud_api_key = var.ibmcloud_api_key
+}
+
+data "ibm_resource_group" "group" {
+  name = var.resource_group_name
+}
+
 resource "ibm_resource_instance" "cos" {
-  name     = var.cos_instance_name
-  service  = "cloud-object-storage"
-  plan     = "standard"
-  # You will likely need to add location and resource_group_id
-  # location = var.resource_group_location 
-  # resource_group = data.ibm_resource_group.group.id 
+  name              = var.cos_instance_name
+  service           = "cloud-object-storage"
+  plan              = "standard"
+  location          = var.location
+  resource_group_id = data.ibm_resource_group.group.id
 }
 
 resource "ibm_cos_bucket" "sample" {

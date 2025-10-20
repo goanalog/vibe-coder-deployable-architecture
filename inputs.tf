@@ -4,6 +4,18 @@ variable "ibmcloud_api_key" {
   sensitive   = true
 }
 
+variable "location" {
+  type        = string
+  description = "The IBM Cloud location to deploy resources (e.g., us-south, eu-de)."
+  default     = "us-south"
+}
+
+variable "resource_group_name" {
+  type        = string
+  description = "The name of the IBM Cloud resource group to deploy into."
+  default     = "default"
+}
+
 variable "cos_instance_name" {
   type        = string
   description = "Name of the IBM Cloud Object Storage instance to create."
