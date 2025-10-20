@@ -25,8 +25,9 @@ provider "ibm" {
 
 # This is the main provider configuration used by all resources.
 # It is explicitly configured with the account ID fetched by the bootstrap provider.
-# This avoids the circular dependency error.
+# FIX: An alias is added to make its usage explicit.
 provider "ibm" {
+  alias               = "main"
   ibmcloud_api_key    = var.ibmcloud_api_key
   region              = var.location
   ibmcloud_account_id = data.ibm_iam_account_settings.acc.account_id
@@ -36,7 +37,8 @@ provider "ibm" {
 
 # Look up the details of the resource group provided by the user.
 data "ibm_resource_group" "group" {
-  name = var.resource_group_name
+  provider = ibm.main # FIX: Explicitly use the main provider
+  name     = var.resource_group_name
 }
 
 # This data source fetches details about the account associated with the API key.
@@ -54,6 +56,7 @@ resource "random_id" "suffix" {
 
 # This creates the "lite" plan Cloud Object Storage service instance.
 resource "ibm_resource_instance" "cos" {
+  provider          = ibm.main # FIX: Explicitly use the main provider
   name              = var.cos_instance_name
   service           = "cloud-object-storage"
   plan              = "lite"
@@ -63,6 +66,7 @@ resource "ibm_resource_instance" "cos" {
 
 # This creates the storage bucket within the COS instance.
 resource "ibm_cos_bucket" "sample" {
+  provider             = ibm.main # FIX: Explicitly use the main provider
   bucket_name          = "${var.bucket_name_prefix}-${random_id.suffix.hex}"
   resource_instance_id = ibm_resource_instance.cos.id
   region_location      = var.location # The bucket itself is regional
@@ -72,6 +76,7 @@ resource "ibm_cos_bucket" "sample" {
 
 # This uploads a sample index.html file to the bucket.
 resource "ibm_cos_bucket_object" "html_spa" {
+  provider        = ibm.main # FIX: Explicitly use the main provider
   bucket_crn      = ibm_cos_bucket.sample.crn
   bucket_location = ibm_cos_bucket.sample.region_location
   key             = "index.html"
@@ -86,7 +91,8 @@ resource "ibm_cos_bucket_object" "html_spa" {
 # It is only created if the 'make_public' variable is set to true.
 
 resource "ibm_iam_access_group_policy" "public_access_policy" {
-  count = var.make_public ? 1 : 0
+  provider = ibm.main # FIX: Explicitly use the main provider
+  count    = var.make_public ? 1 : 0
 
   access_group_id = "PublicAccess"
   roles           = ["Content Reader"]
