@@ -30,7 +30,6 @@ resource "ibm_resource_instance" "cos" {
 resource "ibm_cos_bucket" "sample" {
   bucket_name          = var.bucket_name
   resource_instance_id = ibm_resource_instance.cos.id
-  # --- FIX 1: Added the bucket's location ---
   region_location      = var.location
 }
 
@@ -49,17 +48,15 @@ resource "ibm_iam_access_group_policy" "public_access_policy" {
 }
 
 resource "ibm_cos_bucket_object" "html_spa" {
-  # --- FIX 2: Corrected 'bucket' to 'bucket_name' ---
-  bucket_name = ibm_cos_bucket.sample.bucket_name
-  
-  # --- FIX 3: Added required arguments ---
+  # --- THIS IS THE FIX ---
+  # The line "bucket_name = ibm_cos_bucket.sample.bucket_name" has been removed.
+  # ---------------------
+
   bucket_crn      = ibm_resource_instance.cos.crn
   bucket_location = var.location
-
-  # --- (No changes below this line) ---
-  key          = "index.html"
-  content      = var.html_content
-  content_type = "text/html"
+  key             = "index.html"
+  content         = var.html_content
+  content_type    = "text/html"
 
   depends_on = [
     ibm_iam_access_group_policy.public_access_policy
