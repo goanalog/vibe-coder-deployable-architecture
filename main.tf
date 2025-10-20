@@ -29,6 +29,11 @@ data "ibm_resource_group" "group" {
   name = var.resource_group_name
 }
 
+# This data source fetches the account ID associated with the API key.
+# This ID is used to resolve ambiguity when creating the IAM policy.
+data "ibm_iam_account_settings" "acc" {
+}
+
 # --- Configuration ---
 
 # Add a random suffix to the bucket name to ensure it is globally unique.
@@ -74,9 +79,11 @@ resource "ibm_iam_access_group_policy" "public_access_policy" {
   access_group_id = "PublicAccess"
   roles           = ["Content Reader"]
 
+  # FINAL FIX: This argument explicitly provides the account context
+  # directly to the IAM policy resource, which resolves the error.
+  iam_account_id = data.ibm_iam_account_settings.acc.account_id
+
   # The 'resources' block correctly targets the policy to your new bucket.
-  # The provider now correctly infers the account ID, so the explicit
-  # 'attributes' block is no longer needed and has been removed.
   resources {
     service              = "cloud-object-storage"
     resource_instance_id = ibm_resource_instance.cos.id
