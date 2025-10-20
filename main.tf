@@ -65,21 +65,15 @@ resource "ibm_cos_bucket_object" "html_spa" {
 }
 
 # --- Public Access Policy (Conditional) ---
-# FINAL FIX: This defines the resource using attributes supported by the provider.
-# It targets the bucket by specifying the service instance, resource type, and bucket name.
-resource "ibm_iam_access_group_policy" "public_access_policy" {
+# FINAL FIX: This uses the dedicated resource for granting public access to a bucket.
+# This avoids the account-level IAM policy errors.
+resource "ibm_cos_bucket_public_access" "public_access" {
   count = var.make_public ? 1 : 0
 
-  access_group_id = "PublicAccess"
-  roles           = ["Content Reader"]
-
-  resources {
-    service              = "cloud-object-storage"
-    resource_instance_id = ibm_resource_instance.cos.id
-    resource_type        = "bucket"
-    resource             = ibm_cos_bucket.sample.bucket_name
-  }
-
+  bucket_crn      = ibm_cos_bucket.sample.crn
+  bucket_location = ibm_cos_bucket.sample.region_location
+  access_type     = "public" # Can be "public" or "private"
+  
   # This ensures the bucket is created before this policy is applied.
   depends_on = [
     ibm_cos_bucket.sample
