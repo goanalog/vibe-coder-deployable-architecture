@@ -11,11 +11,9 @@ provider "ibm" {
   ibmcloud_api_key = var.ibmcloud_api_key
 }
 
-# --- THIS IS THE FIX ---
 data "ibm_iam_access_group" "public_access_group" {
   access_group_name = "Public Access"
 }
-# ---------------------
 
 data "ibm_resource_group" "group" {
   name = var.resource_group_name
@@ -32,6 +30,8 @@ resource "ibm_resource_instance" "cos" {
 resource "ibm_cos_bucket" "sample" {
   bucket_name          = var.bucket_name
   resource_instance_id = ibm_resource_instance.cos.id
+  # --- FIX 1: Added the bucket's location ---
+  region_location      = var.location
 }
 
 resource "ibm_iam_access_group_policy" "public_access_policy" {
@@ -49,7 +49,14 @@ resource "ibm_iam_access_group_policy" "public_access_policy" {
 }
 
 resource "ibm_cos_bucket_object" "html_spa" {
-  bucket       = ibm_cos_bucket.sample.bucket_name
+  # --- FIX 2: Corrected 'bucket' to 'bucket_name' ---
+  bucket_name = ibm_cos_bucket.sample.bucket_name
+  
+  # --- FIX 3: Added required arguments ---
+  bucket_crn      = ibm_resource_instance.cos.crn
+  bucket_location = var.location
+
+  # --- (No changes below this line) ---
   key          = "index.html"
   content      = var.html_content
   content_type = "text/html"
