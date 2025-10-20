@@ -1,31 +1,18 @@
 provider "ibm" {
-  region = var.region
+  ibmcloud_api_key = "YOUR_API_KEY_HERE"  # Replace with secure catalog input
+  region           = "us-south"
 }
 
-# Create COS instance
+# COS Resource Instance
 resource "ibm_resource_instance" "cos" {
-  name     = var.cos_name
+  name     = "vibe-coder-cos"
   service  = "cloud-object-storage"
   plan     = "standard"
-  location = var.region
+  location = "us-south"
 }
 
-# Create COS bucket
+# COS Bucket for SPA hosting
 resource "ibm_cos_bucket" "sample" {
-  bucket_name          = var.bucket_name
-  resource_instance_id = ibm_resource_instance.cos.id
-}
-
-# Set public/private ACL
-resource "ibm_cos_bucket_acl" "sample_acl" {
-  bucket_name = ibm_cos_bucket.sample.bucket_name
-  acl         = var.make_public ? "public-read" : "private"
-}
-
-# Upload default SPA HTML
-resource "ibm_cos_object" "sample_html" {
-  bucket       = ibm_cos_bucket.sample.bucket_name
-  key          = "index.html"
-  content      = var.sample_app_html
-  content_type = "text/html"
+  bucket      = "vibe-coder-sample-bucket"
+  instance_id = ibm_resource_instance.cos.id
 }
