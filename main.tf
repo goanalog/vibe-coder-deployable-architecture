@@ -1,7 +1,8 @@
 resource "ibm_cos_bucket" "sample" {
-  bucket       = var.bucket_name
-  cos_instance = ibm_resource_instance.cos.id
-  public_access = var.make_public
+  name                 = var.bucket_name
+  resource_instance_id = ibm_resource_instance.cos.id
+  acl                  = var.make_public ? "public-read" : "private"
+  location             = var.region
 }
 
 resource "local_file" "sample_html" {
