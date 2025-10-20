@@ -4,7 +4,7 @@ variable "ibmcloud_api_key" {
 }
 
 variable "region" {
-  description = "IBM Cloud region where resources will be created."
+  description = "Region where resources will be created."
   type        = string
   default     = "us-south"
 }
