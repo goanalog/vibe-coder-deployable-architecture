@@ -1,7 +1,7 @@
 # 🎶 Vibe Coder — Instant Sample Application
 
 Welcome, fellow vibe coder.  
-This little project lets you turn a plain HTML file into a **real, hosted web app** — instantly — using **IBM Cloud Object Storage (COS)** and a tiny bit of Terraform magic. ✨
+This little project lets you turn a plain HTML file into a **real, hosted web app** — instantly — using **IBM Cloud Object Storage (COS)** and Terraform magic. ✨
 
 Don’t worry if you’ve never used Terraform or IBM Cloud before.  
 You can literally paste or upload your `index.html` and hit **Deploy**, and it just works.
@@ -21,30 +21,21 @@ This Deployable Architecture creates:
 
 ## 🧭 How To Use
 
-### Option 1: The Easy Way (IBM Cloud Catalog)
-
-If you’re using this through IBM Cloud’s Private or Community Catalog:
-1. Click **Deploy**.
-2. Wait a minute or two — grab a coffee or hum a tune. ☕🎵  
-3. When it’s done, look for the `web_app_url` output.
+### Option 1: IBM Cloud Catalog
+1. Click **Deploy**.  
+2. Wait a minute or two. ☕🎵  
+3. When it’s done, look for the `app_url` output.  
 4. Click it — that’s your live app!
-
-If you didn’t change anything, it’ll show the included sample page.
 
 ---
 
-### Option 2: The Local Way (Run it Yourself)
-
-If you’d rather run it locally:
-
+### Option 2: Local Deployment
 ```bash
 git clone https://github.com/goanalog/vibe-coder-deployable-architecture.git
 cd vibe-coder-deployable-architecture
 
-# Log into IBM Cloud
 ibmcloud login --sso
 ibmcloud target -r us-south
 
-# Initialize and deploy
 terraform init
 terraform apply
