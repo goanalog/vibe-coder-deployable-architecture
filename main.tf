@@ -14,24 +14,33 @@ terraform {
   }
 }
 
+# --- Data Sources ---
+
+# Look up the details of the resource group provided by the user.
+data "ibm_resource_group" "group" {
+  name = var.resource_group_name
+}
+
+# <-- FIX: Look up the account ID to ensure provider context is correct.
+# This data source fetches details about the account associated with the API key.
+data "ibm_iam_account_settings" "acc" {
+}
+
 # --- Provider Configuration ---
-# Configures the IBM Cloud provider with the API key.
+# Configures the IBM Cloud provider with the API key and explicit account ID.
 
 provider "ibm" {
-  ibmcloud_api_key = var.ibmcloud_api_key
-  region           = var.location # Use the location variable for the provider region
+  ibmcloud_api_key    = var.ibmcloud_api_key
+  region              = var.location
+  ibmcloud_account_id = data.ibm_iam_account_settings.acc.account_id # <-- FIX: Explicitly set the account ID
 }
+
 
 # --- Configuration ---
 
 # Add a random suffix to the bucket name to ensure it is globally unique.
 resource "random_id" "suffix" {
   byte_length = 4
-}
-
-# Look up the details of the resource group provided by the user.
-data "ibm_resource_group" "group" {
-  name = var.resource_group_name
 }
 
 # This creates the "lite" plan Cloud Object Storage service instance.
@@ -57,7 +66,7 @@ resource "ibm_cos_bucket_object" "html_spa" {
   bucket_crn      = ibm_cos_bucket.sample.crn
   bucket_location = ibm_cos_bucket.sample.region_location
   key             = "index.html"
-  content         = var.html_content # <-- FIX: Use the variable for HTML content
+  content         = var.html_content
   endpoint_type   = "public"
   force_delete    = true
 }
@@ -68,7 +77,6 @@ resource "ibm_cos_bucket_object" "html_spa" {
 # It is only created if the 'make_public' variable is set to true.
 
 resource "ibm_iam_access_group_policy" "public_access_policy" {
-  # <-- FIX: Conditionally create this resource
   count = var.make_public ? 1 : 0
 
   access_group_id = "PublicAccess"
@@ -96,3 +104,4 @@ output "application_url" {
   description = "The public URL for the sample application."
   value       = "https://${ibm_cos_bucket.sample.s3_endpoint_public}/${ibm_cos_bucket_object.html_spa.key}"
 }
+
