@@ -1,21 +1,22 @@
 {
-  "id": "vibe-coder-spa",
-  "version": "0.4.0",
+  "id": "vibe-coder",
+  "version": "0.1.0",
   "displayName": "Vibe Coder — Instant SPA",
-  "description": "Deploy an IBM Cloud SPA for vibe coding. Paste HTML directly into the input and deploy.",
+  "description": "Deploy an instant SPA by pasting HTML. Hosted in IBM Cloud Object Storage automatically.",
   "type": "deployable_architecture",
-  "deliveryMethod": "auto-upload",
-  "resources": [
-    "main.tf",
-    "inputs.tf",
-    "index.html",
-    "README.md"
-  ],
-  "tags": [
-    "vibe-coder",
-    "SPA",
-    "IBM Cloud",
-    "deployable-architecture",
-    "sample-app"
+  "deliveryMethod": "terraform",
+  "inputs": [
+    {
+      "name": "ibmcloud_api_key",
+      "type": "password",
+      "required": true,
+      "description": "Your IBM Cloud API key to deploy resources."
+    },
+    {
+      "name": "html_content",
+      "type": "textarea",
+      "required": true,
+      "description": "Paste your HTML code here for the SPA."
+    }
   ]
 }

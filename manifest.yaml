@@ -1,31 +1,14 @@
-name: vibe-coder-spa
-version: 0.4.0
-type: deployable_architecture
-displayName: Vibe Coder — Instant SPA
-description: >
-  Deploy an IBM Cloud single-page app (SPA) for "vibe coding".
-  Paste HTML directly into the catalog input and deploy immediately. Don't worry — sample content is included.
-catalog:
-  id: vibe-coder-spa
-  version: 0.4.0
-  deliveryMethod: auto-upload
-resources:
-  - main.tf
-  - inputs.tf
-  - index.html.tpl
-  - catalog.json
-  - README.md
-tags:
-  - vibe-coder
-  - SPA
-  - IBM Cloud
-  - deployable-architecture
-ui_hints:
-  logo_url: logo.png
-  categories:
-    - Tools
-    - Developer Utilities
+name: vibe-coder
+version: 0.1.0
+description: Deploy an instant SPA by pasting HTML, hosted in IBM Cloud Object Storage automatically.
+
 inputs:
+  - name: ibmcloud_api_key
+    type: password
+    label: IBM Cloud API Key
+    required: true
+    description: "Your IBM Cloud API key. Needed to deploy the SPA and COS bucket."
+
   - name: html_content
     type: textarea
     label: Paste Your HTML
