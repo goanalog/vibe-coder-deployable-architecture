@@ -49,7 +49,6 @@ resource "ibm_cos_bucket_object" "html_spa" {
   bucket_crn      = ibm_cos_bucket.sample.crn
   bucket_location = ibm_cos_bucket.sample.region_location
   key             = "index.html"
-  content_type    = "text/html" # Good practice to add this
   content         = "<h1>Welcome to Vibe Coder!</h1><p>Your instant SPA is live.</p>"
   endpoint_type   = "public"
   force_delete    = true
@@ -63,15 +62,7 @@ resource "ibm_cos_bucket_object" "html_spa" {
 # 3. I added this single resource, which is the correct way
 #    to make a COS bucket public.
 #
-resource "ibm_cos_bucket_public_access" "public_access" {
-  bucket_crn    = ibm_cos_bucket.sample.crn
-  public_access = "reader" # Grants "Content Reader" and "Object Reader"
-  
-  # This ensures the bucket is created before this rule is applied
-  depends_on = [
-    ibm_cos_bucket.sample
-  ]
-}
+
 
 #
 # --- CLICKABLE OUTPUT ---
@@ -82,4 +73,24 @@ resource "ibm_cos_bucket_public_access" "public_access" {
 output "application_url" {
   description = "The public URL for the sample application."
   value       = "https://${ibm_cos_bucket.sample.s3_endpoint_public}/${ibm_cos_bucket_object.html_spa.key}"
+}
+
+resource "ibm_iam_access_group_policy" "public_access_policy" {
+  # This is the key fix: "PublicAccess" is the correct ID,
+  # not the data source we used before.
+  access_group_id = "PublicAccess"
+
+  roles = ["Content Reader"]
+
+  resources {
+    service              = "cloud-object-storage"
+    resource_instance_id = ibm_resource_instance.cos.id
+    resource_type        = "bucket"
+    resource             = ibm_cos_bucket.sample.bucket_name
+  }
+
+  # This ensures the bucket is created before the policy is
+  depends_on = [
+    ibm_cos_bucket.sample
+  ]
 }
