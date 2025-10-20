@@ -1,13 +1,20 @@
 {
+  "$schema": "https://cloud.ibm.com/schemas/deployable-architecture/v1.json",
   "id": "vibe-coder",
   "version": "0.1.1",
   "displayName": "Vibe Coder — Instant SPA",
   "description": "A deployable architecture for 'vibe coding' single-page apps: paste or upload your index.html and get an instant IBM COS-hosted sample app.",
   "type": "deployable_architecture",
-"source": {
-  "path": "terraform"
-},
   "deliveryMethod": "terraform",
+  "source": {
+    "path": "terraform"
+  },
+  "metadata": {
+    "category": "Developer Tools",
+    "tags": ["vibe", "spa", "cos", "web-hosting", "ibm-cloud"],
+    "language": "hcl",
+    "terraformVersion": "1.5"
+  },
   "inputs": [
     {
       "name": "ibmcloud_api_key",
