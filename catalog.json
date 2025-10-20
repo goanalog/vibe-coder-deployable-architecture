@@ -2,68 +2,55 @@
   "id": "vibe-coder",
   "version": "0.1.0",
   "displayName": "Vibe Coder — Instant SPA",
-  "description": "Deploy an instant 'vibe coding' sample app: upload or paste your HTML and host it in IBM Cloud Object Storage.",
+  "description": "Deploy an instant SPA hosted in IBM Cloud Object Storage. Comes with a default HTML file, fully plug-and-play. Users can paste custom HTML directly in the catalog UI.",
   "type": "deployable_architecture",
   "deliveryMethod": "terraform",
-  "terraform": {
-    "targetWorkspaces": ["us-south"],
-    "source": {
-      "type": "git",
-      "url": "https://github.com/goanalog/vibe-coder-deployable-architecture.git",
-      "ref": "main"
-    },
-    "varFile": "schematics.tfvars"
-  },
-  "uiHints": {
-    "icon": "https://raw.githubusercontent.com/goanalog/vibe-coder-deployable-architecture/main/icon.png",
-    "categories": ["Developer Tools", "Sample Apps"],
-    "keywords": ["vibe", "spa", "sample app", "IBM COS", "HTML"]
-  },
-  "inputs": [
+  "tags": ["vibe-coding", "spa", "cos"],
+  "variables": [
     {
       "name": "ibmcloud_api_key",
       "type": "string",
-      "label": "IBM Cloud API Key",
-      "description": "Your IBM Cloud API key — needed to authenticate Terraform. Don't worry, it's safe!",
-      "required": true
+      "required": true,
+      "description": "Your IBM Cloud API key"
     },
     {
       "name": "region",
       "type": "string",
-      "label": "IBM Cloud Region",
-      "description": "Region where resources will be created.",
+      "required": false,
       "default": "us-south",
-      "required": false
+      "description": "Region to deploy resources in"
     },
     {
-      "name": "cos_crn",
+      "name": "cos_name",
       "type": "string",
-      "label": "COS Instance CRN",
-      "description": "The CRN of your IBM Cloud Object Storage instance.",
-      "required": true
+      "required": false,
+      "default": "vibe-coder-cos",
+      "description": "IBM COS instance name"
     },
     {
       "name": "bucket_name",
       "type": "string",
-      "label": "Bucket Name",
-      "description": "Name of the bucket where the sample app HTML will be uploaded.",
+      "required": false,
       "default": "vibe-coder-sample-bucket",
-      "required": false
+      "description": "COS bucket name"
     },
     {
       "name": "make_public",
       "type": "boolean",
-      "label": "Make Bucket Public",
-      "description": "Whether to make the bucket publicly accessible.",
+      "required": false,
       "default": true,
-      "required": false
+      "description": "Whether to make the COS bucket public"
     },
     {
       "name": "sample_app_html",
       "type": "string",
-      "label": "Sample App HTML",
-      "description": "HTML content for your sample app. Defaults to the included sample-app-index.html file.",
-      "required": false
+      "required": false,
+      "default": "sample-app-index.html",
+      "description": "Paste your custom HTML here to override the default sample app",
+      "ui_hints": {
+        "control": "textarea",
+        "rows": 20
+      }
     }
   ]
 }

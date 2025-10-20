@@ -1,16 +1,18 @@
-provider "ibm" {
-  ibmcloud_api_key = var.ibmcloud_api_key
-  region           = var.region
+resource "ibm_cos_bucket" "sample" {
+  bucket = var.bucket_name
+  cos_instance = ibm_resource_instance.cos.id
+  public_access = var.make_public
 }
 
-resource "ibm_cos_bucket" "sample_app_bucket" {
-  bucket  = var.bucket_name
-  crn     = var.cos_crn
-  public  = var.make_public
+resource "local_file" "sample_html" {
+  content  = var.sample_app_html
+  filename = "${path.module}/sample-app-output.html"
 }
 
-resource "ibm_cos_object" "sample_app_html" {
-  bucket  = ibm_cos_bucket.sample_app_bucket.bucket
-  key     = "index.html"
-  content = var.sample_app_html
+output "bucket_name" {
+  value = ibm_cos_bucket.sample.bucket
+}
+
+output "app_url" {
+  value = "https://${var.bucket_name}.s3.${var.region}.cloud-object-storage.appdomain.cloud/index.html"
 }
