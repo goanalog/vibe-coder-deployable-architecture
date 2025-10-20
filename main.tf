@@ -15,36 +15,23 @@ terraform {
 }
 
 # --- Provider Configuration ---
-
-# This is a minimal "bootstrap" provider configuration.
-# Its only purpose is to enable the data source below to fetch account details.
+# A single, simple provider configuration is used for all resources.
+# It authenticates with your API key and sets the target region.
 provider "ibm" {
-  alias              = "bootstrap"
-  ibmcloud_api_key   = var.ibmcloud_api_key
-}
-
-# This is the main provider configuration used by all resources.
-# It is explicitly configured with the account ID fetched by the bootstrap provider.
-# FIX: An alias is added to make its usage explicit.
-provider "ibm" {
-  alias               = "main"
-  ibmcloud_api_key    = var.ibmcloud_api_key
-  region              = var.location
-  ibmcloud_account_id = data.ibm_iam_account_settings.acc.account_id
+  ibmcloud_api_key = var.ibmcloud_api_key
+  region           = var.location
 }
 
 # --- Data Sources ---
 
 # Look up the details of the resource group provided by the user.
 data "ibm_resource_group" "group" {
-  provider = ibm.main # FIX: Explicitly use the main provider
-  name     = var.resource_group_name
+  name = var.resource_group_name
 }
 
-# This data source fetches details about the account associated with the API key.
-# It explicitly uses the "bootstrap" provider to avoid a dependency cycle.
+# This data source fetches the account ID associated with the API key.
+# This ID is used to resolve ambiguity when creating the IAM policy.
 data "ibm_iam_account_settings" "acc" {
-  provider = ibm.bootstrap
 }
 
 # --- Configuration ---
@@ -56,7 +43,6 @@ resource "random_id" "suffix" {
 
 # This creates the "lite" plan Cloud Object Storage service instance.
 resource "ibm_resource_instance" "cos" {
-  provider          = ibm.main # FIX: Explicitly use the main provider
   name              = var.cos_instance_name
   service           = "cloud-object-storage"
   plan              = "lite"
@@ -66,7 +52,6 @@ resource "ibm_resource_instance" "cos" {
 
 # This creates the storage bucket within the COS instance.
 resource "ibm_cos_bucket" "sample" {
-  provider             = ibm.main # FIX: Explicitly use the main provider
   bucket_name          = "${var.bucket_name_prefix}-${random_id.suffix.hex}"
   resource_instance_id = ibm_resource_instance.cos.id
   region_location      = var.location # The bucket itself is regional
@@ -76,7 +61,6 @@ resource "ibm_cos_bucket" "sample" {
 
 # This uploads a sample index.html file to the bucket.
 resource "ibm_cos_bucket_object" "html_spa" {
-  provider        = ibm.main # FIX: Explicitly use the main provider
   bucket_crn      = ibm_cos_bucket.sample.crn
   bucket_location = ibm_cos_bucket.sample.region_location
   key             = "index.html"
@@ -88,21 +72,25 @@ resource "ibm_cos_bucket_object" "html_spa" {
 # --- Public Access Policy (Conditional) ---
 # This policy grants "Content Reader" access to the "PublicAccess" group,
 # making your bucket's objects readable by anyone on the internet.
-# It is only created if the 'make_public' variable is set to true.
 
 resource "ibm_iam_access_group_policy" "public_access_policy" {
-  provider = ibm.main # FIX: Explicitly use the main provider
-  count    = var.make_public ? 1 : 0
+  count = var.make_public ? 1 : 0
 
   access_group_id = "PublicAccess"
   roles           = ["Content Reader"]
 
-  # This block correctly targets the policy to your new bucket.
   resources {
     service              = "cloud-object-storage"
     resource_instance_id = ibm_resource_instance.cos.id
     resource_type        = "bucket"
     resource             = ibm_cos_bucket.sample.bucket_name
+
+    # This block adds service-specific attributes to the policy.
+    # Explicitly providing the accountId resolves the "resource in the same account"
+    # error without creating a provider dependency cycle.
+    attributes = {
+      accountId = data.ibm_iam_account_settings.acc.account_id
+    }
   }
 
   # This ensures the bucket is created before this policy is applied.
