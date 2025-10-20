@@ -4,16 +4,16 @@ terraform {
 
 # COS bucket
 resource "ibm_cos_bucket" "bucket" {
-  bucket_name      = var.bucket_name
+  bucket_name      = var.bucket_name      # from catalog input
   cos_instance_crn = var.cos_instance_crn
-  location         = var.region
+  location         = var.region           # from catalog input
   storage_class    = "standard"
-  public_access    = var.make_public
+  public_access    = var.make_public      # from catalog input
 }
 
 # Resource key for COS
 resource "ibm_resource_key" "cos_key" {
-  name       = "${var.cos_name}-key"
+  name       = "${var.cos_name}-key"     # from catalog input
   role       = "Writer"
   source_crn = var.cos_instance_crn
 }
@@ -23,5 +23,5 @@ resource "ibm_cos_bucket_object" "index" {
   bucket_crn      = ibm_cos_bucket.bucket.crn
   bucket_location = ibm_cos_bucket.bucket.location
   key             = "index.html"
-  source          = var.index_file_path
+  source          = var.index_file_path  # from catalog input
 }
