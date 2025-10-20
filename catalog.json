@@ -1,55 +1,86 @@
 {
   "id": "vibe-coder",
   "version": "0.1.0",
-  "displayName": "Vibe Coder — Instant SPA",
-  "description": "Deploy an instant SPA hosted in IBM Cloud Object Storage. Comes with a default HTML file. Users can paste custom HTML directly in the catalog UI.",
+  "displayName": "Vibe Coder — Instant COS SPA",
+  "description": "Deploy a sample HTML app instantly to IBM Cloud Object Storage. Paste or upload HTML, create a bucket, and optionally make it public — Catalog will prompt for all required inputs.",
   "type": "deployable_architecture",
   "deliveryMethod": "terraform",
-  "tags": ["vibe-coding", "spa", "cos"],
-  "variables": [
+  "tags": ["vibe coding", "cloud object storage", "sample app", "SPA"],
+  "terraform": {
+    "main": "main.tf",
+    "variables": "inputs.tf"
+  },
+  "inputs": [
     {
       "name": "ibmcloud_api_key",
       "type": "string",
       "required": true,
-      "description": "Your IBM Cloud API key"
+      "ui_hints": {
+        "label": "IBM Cloud API Key",
+        "placeholder": "Enter your API key"
+      }
     },
     {
       "name": "region",
       "type": "string",
-      "required": false,
       "default": "us-south",
-      "description": "Region to deploy resources in"
+      "ui_hints": {
+        "label": "Region",
+        "placeholder": "Select a region"
+      }
+    },
+    {
+      "name": "resource_group_id",
+      "type": "string",
+      "required": true,
+      "ui_hints": {
+        "label": "Resource Group ID",
+        "placeholder": "Enter your resource group ID"
+      }
     },
     {
       "name": "cos_name",
       "type": "string",
-      "required": false,
       "default": "vibe-coder-cos",
-      "description": "IBM COS instance name"
+      "ui_hints": {
+        "label": "COS Instance Name",
+        "placeholder": "Name your COS instance"
+      }
     },
     {
       "name": "bucket_name",
       "type": "string",
-      "required": false,
       "default": "vibe-coder-sample-bucket",
-      "description": "COS bucket name"
+      "ui_hints": {
+        "label": "Bucket Name",
+        "placeholder": "Name your bucket"
+      }
     },
     {
       "name": "make_public",
       "type": "boolean",
-      "required": false,
-      "default": true,
-      "description": "Whether to make the COS bucket public"
+      "default": false,
+      "ui_hints": {
+        "label": "Make Bucket Public"
+      }
     },
     {
       "name": "sample_app_html",
       "type": "string",
-      "required": false,
-      "default": "<!DOCTYPE html><html lang=\"en\"><head><meta charset=\"UTF-8\"><title>Vibe Coder Sample App</title><style>body{font-family:sans-serif;text-align:center;margin:50px;}</style></head><body><h1>Welcome to your Vibe Coder SPA!</h1><p>Paste your own HTML in the catalog variable to override this.</p></body></html>",
-      "description": "Paste your custom HTML here to override the default sample app",
+      "default": "<h1>Hello Vibe Coder!</h1>",
       "ui_hints": {
-        "control": "textarea",
-        "rows": 20
+        "label": "Sample App HTML",
+        "placeholder": "Paste your HTML code here",
+        "widget": "textarea"
+      }
+    },
+    {
+      "name": "existing_cos_id",
+      "type": "string",
+      "default": "",
+      "ui_hints": {
+        "label": "Existing COS Instance ID",
+        "placeholder": "Leave empty to create a new COS instance"
       }
     }
   ]

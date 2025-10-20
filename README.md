@@ -1,41 +1,25 @@
-# 🎶 Vibe Coder — Instant Sample Application
+# Vibe Coder — Instant COS SPA
 
-Welcome, fellow vibe coder.  
-This little project lets you turn a plain HTML file into a **real, hosted web app** — instantly — using **IBM Cloud Object Storage (COS)** and Terraform magic. ✨
+Welcome to **Vibe Coder**, your instant IBM Cloud Object Storage single-page app deployer!  
 
-Don’t worry if you’ve never used Terraform or IBM Cloud before.  
-You can literally paste or upload your `index.html` and hit **Deploy**, and it just works.
+This deployable architecture lets you:
 
----
+- Paste or upload HTML content for a sample app.
+- Automatically create a COS instance and bucket (or use an existing one).
+- Optionally make your bucket public for instant access.
+- Everything is deployable from IBM Cloud Catalog in a few clicks.
 
-## 🚀 What This Does
+## Inputs
 
-This Deployable Architecture creates:
+- `ibmcloud_api_key`: Your IBM Cloud API key (secure).
+- `region`: IBM Cloud region (default: `us-south`).
+- `resource_group_id`: Resource group where your COS instance will live.
+- `cos_name`: Name for the COS instance (default: `vibe-coder-cos`).
+- `bucket_name`: Name of the COS bucket (default: `vibe-coder-sample-bucket`).
+- `make_public`: Make the bucket publicly accessible? (default: false).
+- `sample_app_html`: HTML content for your sample SPA.
+- `existing_cos_id`: Optional: Use an existing COS instance instead of creating a new one.
 
-- 🪣 A new IBM Cloud Object Storage bucket (your app’s home in the cloud)  
-- 🪶 Optional public access, so you can share your app with friends  
-- 🧱 An automatic upload of your `index.html` (your app’s main page)  
-- 🌐 A friendly URL you can open in your browser right away  
+Deploy, wait a minute, and your HTML SPA is live on IBM Cloud Object Storage. Don’t worry — the Catalog will prompt for all inputs clearly.
 
----
-
-## 🧭 How To Use
-
-### Option 1: IBM Cloud Catalog
-1. Click **Deploy**.  
-2. Wait a minute or two. ☕🎵  
-3. When it’s done, look for the `app_url` output.  
-4. Click it — that’s your live app!
-
----
-
-### Option 2: Local Deployment
-```bash
-git clone https://github.com/goanalog/vibe-coder-deployable-architecture.git
-cd vibe-coder-deployable-architecture
-
-ibmcloud login --sso
-ibmcloud target -r us-south
-
-terraform init
-terraform apply
+Enjoy coding the vibes! 🎵✨
