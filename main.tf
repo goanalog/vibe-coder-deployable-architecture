@@ -22,7 +22,7 @@ data "ibm_resource_group" "group" {
 resource "ibm_resource_instance" "cos" {
   name              = var.cos_instance_name
   service           = "cloud-object-storage"
-  plan              = "standard"
+  plan              = "lite"
   # --- THIS IS THE FIX ---
   location          = "global" 
   # ---------------------
