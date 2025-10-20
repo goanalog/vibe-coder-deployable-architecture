@@ -1,18 +1,24 @@
 provider "ibm" {
-  ibmcloud_api_key = "YOUR_API_KEY_HERE"  # Replace with secure catalog input
-  region           = "us-south"
+  ibmcloud_api_key = var.api_key
+  region           = var.region
 }
 
-# COS Resource Instance
 resource "ibm_resource_instance" "cos" {
   name     = "vibe-coder-cos"
   service  = "cloud-object-storage"
   plan     = "standard"
-  location = "us-south"
+  location = var.region
 }
 
-# COS Bucket for SPA hosting
 resource "ibm_cos_bucket" "sample" {
-  bucket      = "vibe-coder-sample-bucket"
+  bucket      = var.bucket_name
   instance_id = ibm_resource_instance.cos.id
+}
+
+resource "ibm_cos_object" "index" {
+  bucket       = ibm_cos_bucket.sample.bucket
+  instance_id  = ibm_cos_bucket.sample.instance_id
+  key          = "index.html"
+  source       = var.spa_file_path
+  content_type = "text/html"
 }

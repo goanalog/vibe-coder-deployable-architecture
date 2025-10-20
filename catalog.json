@@ -1,8 +1,8 @@
 {
   "id": "vibe-coder",
-  "version": "1.0.0",
+  "version": "1.2.0",
   "displayName": "Vibe Coder — Instant SPA",
-  "description": "Deploy a single-page app in IBM Cloud Object Storage instantly. No TFVARS or variables.tf needed.",
+  "description": "Deploy a vibe-coded single-page app hosted in IBM Cloud Object Storage with automatic upload.",
   "type": "deployable_architecture",
   "deliveryMethod": "terraform",
   "provider": "IBM Cloud",
@@ -10,7 +10,7 @@
   "tags": ["vibe-coding", "SPA", "COS", "IBM Cloud", "instant"],
   "catalogUI": [
     {
-      "id": "apiKey",
+      "id": "api_key",
       "type": "secure",
       "label": "IBM Cloud API Key",
       "required": true,
@@ -22,6 +22,20 @@
       "label": "Region",
       "required": true,
       "default": "us-south"
+    },
+    {
+      "id": "bucket_name",
+      "type": "string",
+      "label": "COS Bucket Name",
+      "required": true,
+      "default": "vibe-coder-sample-bucket"
+    },
+    {
+      "id": "spa_file_path",
+      "type": "string",
+      "label": "SPA File Path",
+      "required": true,
+      "default": "sample-app/index.html"
     }
   ]
 }
