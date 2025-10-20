@@ -1,13 +1,7 @@
 variable "ibmcloud_api_key" {
-  description = "IBM Cloud API Key from Schematics/DA input"
+  description = "IBM Cloud API Key"
   type        = string
   sensitive   = true
-}
-
-variable "sample_app_html" {
-  description = "The HTML content for your sample app. Leave blank to use the default file."
-  type        = string
-  default     = ""
 }
 
 variable "region" {
@@ -16,20 +10,31 @@ variable "region" {
   default     = "us-south"
 }
 
-variable "bucket_name" {
-  description = "COS bucket name (auto-generated if blank)"
-  type        = string
-  default     = ""
-}
-
 variable "cos_name" {
-  description = "IBM Cloud Object Storage instance name"
+  description = "Name of COS instance"
   type        = string
   default     = "vibe-coder-cos"
 }
 
+variable "cos_crn" {
+  description = "COS instance CRN"
+  type        = string
+}
+
+variable "bucket_name" {
+  description = "Custom COS bucket name"
+  type        = string
+  default     = ""
+}
+
 variable "make_public" {
-  description = "Whether the COS bucket should be publicly accessible"
+  description = "Make the bucket publicly accessible"
   type        = bool
   default     = true
+}
+
+variable "sample_app_html" {
+  description = "Paste your HTML code here; overrides sample-app-index.html"
+  type        = string
+  default     = ""
 }
