@@ -1,10 +1,11 @@
 # --- Required Providers ---
+# Defines the Terraform providers needed for this configuration.
 
 terraform {
   required_providers {
     ibm = {
       source  = "ibm-cloud/ibm"
-      version = ">= 1.54.0" # From your log
+      version = ">= 1.54.0" # Matches the version from your logs
     }
     random = {
       source  = "hashicorp/random"
@@ -15,16 +16,17 @@ terraform {
 
 # --- Configuration ---
 
-# Add a random suffix to the bucket name to make it unique
+# Add a random suffix to the bucket name to ensure it is globally unique.
 resource "random_id" "suffix" {
   byte_length = 4
 }
 
+# Look up the details of the resource group provided by the user.
 data "ibm_resource_group" "group" {
   name = var.resource_group_name
 }
 
-# This creates the "lite" COS service instance
+# This creates the "lite" plan Cloud Object Storage service instance.
 resource "ibm_resource_instance" "cos" {
   name              = var.cos_instance_name
   service           = "cloud-object-storage"
@@ -33,16 +35,16 @@ resource "ibm_resource_instance" "cos" {
   resource_group_id = data.ibm_resource_group.group.id
 }
 
-# This creates the bucket within the COS instance
+# This creates the storage bucket within the COS instance.
 resource "ibm_cos_bucket" "sample" {
   bucket_name          = "${var.bucket_name_prefix}-${random_id.suffix.hex}"
   resource_instance_id = ibm_resource_instance.cos.id
   region_location      = var.region
   endpoint_type        = "public"
-  force_delete         = true
+  force_delete         = true # Allows the bucket to be deleted even if not empty
 }
 
-# This uploads your sample index.html file
+# This uploads a sample index.html file to the bucket.
 resource "ibm_cos_bucket_object" "html_spa" {
   bucket_crn      = ibm_cos_bucket.sample.crn
   bucket_location = ibm_cos_bucket.sample.region_location
@@ -52,15 +54,18 @@ resource "ibm_cos_bucket_object" "html_spa" {
   force_delete    = true
 }
 
+# --- FIX ---
 # This policy grants "Content Reader" access to the "PublicAccess" group,
 # making your bucket's objects readable by anyone on the internet.
+# It correctly targets the specific bucket and COS instance created above.
 resource "ibm_iam_access_group_policy" "public_access_policy" {
   # This correctly sets the group to "PublicAccess"
   access_group_id = "PublicAccess"
 
   roles = ["Content Reader"]
 
-  # This block correctly targets the policy to your new bucket
+  # This block correctly targets the policy to your new bucket.
+  # This was the source of the previous errors.
   resources {
     service              = "cloud-object-storage"
     resource_instance_id = ibm_resource_instance.cos.id
@@ -68,7 +73,7 @@ resource "ibm_iam_access_group_policy" "public_access_policy" {
     resource             = ibm_cos_bucket.sample.bucket_name
   }
 
-  # This ensures the bucket is created before the policy is
+  # This ensures the bucket is created before this policy is applied.
   depends_on = [
     ibm_cos_bucket.sample
   ]
