@@ -64,22 +64,28 @@ resource "ibm_cos_bucket_object" "html_spa" {
   force_delete    = true
 }
 
-# --- Public Access Policy (Conditional) ---
-# FINAL FIX: This uses the dedicated resource for granting public access to a bucket.
-# This avoids the account-level IAM policy errors.
-resource "ibm_cos_bucket_public_access" "public_access" {
+# --- Public Access Bucket Policy (Conditional) ---
+# This applies a JSON policy to the bucket to make objects publicly readable.
+resource "ibm_cos_bucket_policy" "public_read_policy" {
   count = var.make_public ? 1 : 0
 
   bucket_crn      = ibm_cos_bucket.sample.crn
   bucket_location = ibm_cos_bucket.sample.region_location
-  access_type     = "public" # Can be "public" or "private"
-  
-  # This ensures the bucket is created before this policy is applied.
-  depends_on = [
-    ibm_cos_bucket.sample
-  ]
-}
+  endpoint_type   = "public"
 
+  policy_document = jsonencode({
+    "Version" : "2012-10-17",
+    "Statement" : [
+      {
+        "Sid" : "PublicRead",
+        "Effect" : "Allow",
+        "Principal" : "*",
+        "Action" : "s3:GetObject",
+        "Resource" : "${ibm_cos_bucket.sample.crn}/*"
+      }
+    ]
+  })
+}
 
 # --- Clickable Output ---
 # This creates the key output for your deployable architecture.
