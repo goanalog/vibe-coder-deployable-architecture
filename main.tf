@@ -1,6 +1,9 @@
-provider "ibm" {
-  ibmcloud_api_key = var.ibmcloud_api_key
-  region           = "us-south"
+required_providers {
+    ibm = {
+      source  = "IBM-Cloud/ibm" // <-- This is the correct source
+      version = ">= 1.54.0"     // Use your required version
+    }
+  }
 }
 
 resource "ibm_resource_instance" "cos" {
