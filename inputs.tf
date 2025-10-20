@@ -1,22 +1,17 @@
-variable "cos_bucket_name" {
+variable "cos_instance_name" {
   type        = string
-  description = "The name of the IBM COS bucket where your SPA will be hosted."
+  description = "Name your IBM Cloud Object Storage instance — don't worry, it will be created if missing."
+  default     = "vibe-coder-cos"
+}
+
+variable "bucket_name" {
+  type        = string
+  description = "Name of the bucket where your SPA will live — can be auto-generated if not provided."
+  default     = "vibe-coder-sample-bucket"
 }
 
 variable "make_public" {
   type        = bool
-  description = "Set to true to make the SPA publicly accessible."
+  description = "Whether to make the SPA publicly accessible. Default is true."
   default     = true
-}
-
-variable "region" {
-  type        = string
-  description = "IBM Cloud region where COS will be deployed."
-  default     = "us-south"
-}
-
-variable "custom_html" {
-  type        = string
-  description = "Optional: paste your HTML code here. If empty, the default sample SPA will be used."
-  default     = ""
 }

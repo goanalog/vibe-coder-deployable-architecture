@@ -2,49 +2,19 @@
   "id": "vibe-coder-spa",
   "version": "0.2.0",
   "displayName": "Vibe Coder SPA",
-  "description": "Deploy an instant IBM Cloud SPA: paste HTML or use default sample app.",
+  "description": "Deploy an instant IBM Cloud single-page app. Paste or upload HTML and see it live immediately.",
   "type": "deployable_architecture",
   "deliveryMethod": "auto-upload",
-  "inputs": [
-    {
-      "name": "custom_html",
-      "type": "string",
-      "required": false,
-      "ui_hints": {
-        "group": "Setup",
-        "label": "Custom HTML (optional)",
-        "placeholder": "Paste your HTML here for instant deployment"
-      }
-    },
-    {
-      "name": "cos_bucket_name",
-      "type": "string",
-      "required": true,
-      "ui_hints": {
-        "group": "Setup",
-        "label": "COS Bucket Name",
-        "placeholder": "vibe-coder-sample-bucket"
-      }
-    },
-    {
-      "name": "make_public",
-      "type": "boolean",
-      "required": false,
-      "ui_hints": {
-        "group": "Setup",
-        "label": "Make Public",
-        "default": true
-      }
-    },
-    {
-      "name": "region",
-      "type": "string",
-      "required": false,
-      "ui_hints": {
-        "group": "Setup",
-        "label": "IBM Cloud Region",
-        "default": "us-south"
-      }
-    }
+  "resources": [
+    "main.tf",
+    "inputs.tf",
+    "index.html",
+    "README.md"
+  ],
+  "tags": [
+    "vibe-coder",
+    "SPA",
+    "IBM Cloud",
+    "deployable-architecture"
   ]
 }
