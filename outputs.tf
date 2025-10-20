@@ -1,7 +1,9 @@
 output "bucket_name" {
-  value = ibm_cos_bucket.bucket.bucket
+  description = "Name of the COS bucket hosting the sample app"
+  value       = var.bucket_name
 }
 
 output "app_url" {
-  value = "https://${ibm_cos_bucket.bucket.bucket}.s3.${var.region}.cloud-object-storage.appdomain.cloud/index.html"
+  description = "Public URL of the sample app"
+  value       = "https://${var.bucket_name}.s3.${var.region}.cloud-object-storage.appdomain.cloud/index.html"
 }
