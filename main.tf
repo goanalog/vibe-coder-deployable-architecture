@@ -52,10 +52,6 @@ resource "ibm_cos_bucket" "sample" {
   region_location      = var.location # The bucket itself is regional
   endpoint_type        = "public"
   force_delete         = true # Allows the bucket to be deleted even if not empty
-
-  # FINAL FIX: This is the correct and most compatible way to make the bucket public.
-  # It applies a simple Access Control List (ACL) directly to the bucket.
-  acl = var.make_public ? "public-read" : "private"
 }
 
 # This uploads a sample index.html file to the bucket.
@@ -67,6 +63,26 @@ resource "ibm_cos_bucket_object" "html_spa" {
   endpoint_type   = "public"
   force_delete    = true
 }
+
+# --- Public Access Policy (Conditional) ---
+# FINAL FIX: This uses the only supported resource for this provider version.
+# It targets the bucket by its unique CRN to avoid all account context errors.
+resource "ibm_iam_access_group_policy" "public_access_policy" {
+  count = var.make_public ? 1 : 0
+
+  access_group_id = "PublicAccess"
+  roles           = ["Content Reader"]
+
+  resources {
+    resource_crn = ibm_cos_bucket.sample.crn
+  }
+
+  # This ensures the bucket is created before this policy is applied.
+  depends_on = [
+    ibm_cos_bucket.sample
+  ]
+}
+
 
 # --- Clickable Output ---
 # This creates the key output for your deployable architecture.
