@@ -1,26 +1,33 @@
 name: vibe-coder
-version: 1.0.0
-displayName: Vibe Coder — Instant SPA
-description: Deploy a vibe-coded single-page app hosted in IBM COS.
-provider: IBM Cloud
+version: 0.1.0
+description: Deploy a sample SPA hosted in IBM Cloud Object Storage
 tags:
   - vibe-coding
   - SPA
   - COS
   - IBM Cloud
-  - instant
-deploy:
-  type: terraform
-  files:
-    - main.tf
-    - sample-app/index.html
-parameters:
-  - id: apiKey
-    type: secure
-    label: IBM Cloud API Key
-    required: true
-  - id: region
-    type: string
-    label: Region
-    required: true
-    default: us-south
+inputs:
+  - ibmcloud_api_key:
+      type: secure
+      required: true
+  - region:
+      type: string
+      default: us-south
+  - resource_group:
+      type: string
+      default: Default
+  - cos_name:
+      type: string
+      default: vibe-coder-cos
+  - cos_plan:
+      type: string
+      default: standard
+  - bucket_name:
+      type: string
+      default: vibe-coder-sample-bucket
+  - make_public:
+      type: boolean
+      default: true
+resources:
+  - type: terraform
+    file: main.tf
