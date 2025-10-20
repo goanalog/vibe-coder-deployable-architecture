@@ -1,4 +1,3 @@
-# Explicitly map catalog variables to Terraform variables
 variable "ibmcloud_api_key" {}
 variable "region" {}
 variable "cos_name" {}

@@ -30,5 +30,5 @@ variable "make_public" {
 variable "sample_app_html" {
   description = "HTML content of the sample SPA; paste new HTML here to override the default."
   type        = string
-  default     = file("${path.module}/sample-app-index.html")
+  default     = ""
 }
