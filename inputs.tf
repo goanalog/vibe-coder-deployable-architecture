@@ -19,7 +19,7 @@ variable "html_content" {
 variable "resource_group_name" {
   description = "The name of the resource group to deploy resources into."
   type        = string
-  default     = "default"
+  default     = "Default"
 }
 
 variable "bucket_name_prefix" {
