@@ -14,6 +14,24 @@ terraform {
   }
 }
 
+# --- Provider Configuration ---
+
+# This is a minimal "bootstrap" provider configuration.
+# Its only purpose is to enable the data source below to fetch account details.
+provider "ibm" {
+  alias              = "bootstrap"
+  ibmcloud_api_key   = var.ibmcloud_api_key
+}
+
+# This is the main provider configuration used by all resources.
+# It is explicitly configured with the account ID fetched by the bootstrap provider.
+# This avoids the circular dependency error.
+provider "ibm" {
+  ibmcloud_api_key    = var.ibmcloud_api_key
+  region              = var.location
+  ibmcloud_account_id = data.ibm_iam_account_settings.acc.account_id
+}
+
 # --- Data Sources ---
 
 # Look up the details of the resource group provided by the user.
@@ -21,20 +39,11 @@ data "ibm_resource_group" "group" {
   name = var.resource_group_name
 }
 
-# <-- FIX: Look up the account ID to ensure provider context is correct.
 # This data source fetches details about the account associated with the API key.
+# It explicitly uses the "bootstrap" provider to avoid a dependency cycle.
 data "ibm_iam_account_settings" "acc" {
+  provider = ibm.bootstrap
 }
-
-# --- Provider Configuration ---
-# Configures the IBM Cloud provider with the API key and explicit account ID.
-
-provider "ibm" {
-  ibmcloud_api_key    = var.ibmcloud_api_key
-  region              = var.location
-  ibmcloud_account_id = data.ibm_iam_account_settings.acc.account_id # <-- FIX: Explicitly set the account ID
-}
-
 
 # --- Configuration ---
 
