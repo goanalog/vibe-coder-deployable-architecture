@@ -30,5 +30,20 @@ variable "make_public" {
 variable "sample_app_html" {
   description = "HTML content of the sample SPA; paste new HTML here to override the default."
   type        = string
-  default     = file("${path.module}/sample-app-index.html")
+  default     = <<HTML
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Vibe Coder Sample App</title>
+<style>
+body { font-family: sans-serif; text-align: center; margin: 50px; }
+</style>
+</head>
+<body>
+<h1>Welcome to your Vibe Coder SPA!</h1>
+<p>Paste your own HTML in the catalog variable to override this.</p>
+</body>
+</html>
+HTML
 }

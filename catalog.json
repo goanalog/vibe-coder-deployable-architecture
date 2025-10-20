@@ -45,7 +45,7 @@
       "name": "sample_app_html",
       "type": "string",
       "required": false,
-      "default": "sample-app-index.html",
+      "default": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"UTF-8\">\n<title>Vibe Coder Sample App</title>\n<style>body{font-family:sans-serif;text-align:center;margin:50px;}</style>\n</head>\n<body>\n<h1>Welcome to your Vibe Coder SPA!</h1>\n<p>Paste your own HTML in the catalog variable to override this.</p>\n</body>\n</html>",
       "description": "Paste your custom HTML here to override the default sample app",
       "ui_hints": {
         "control": "textarea",
