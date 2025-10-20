@@ -1,40 +1,22 @@
-variable "ibmcloud_api_key" {
+variable "cos_bucket_name" {
   type        = string
-  description = "Your IBM Cloud API key (don’t worry, this will be a secure input in catalog)."
-}
-
-variable "region" {
-  type        = string
-  default     = "us-south"
-  description = "IBM Cloud region for your resources."
-}
-
-variable "resource_group" {
-  type        = string
-  default     = "Default"
-  description = "IBM Cloud resource group."
-}
-
-variable "cos_name" {
-  type        = string
-  default     = "vibe-coder-cos"
-  description = "Name of your IBM COS instance."
-}
-
-variable "cos_plan" {
-  type        = string
-  default     = "standard"
-  description = "COS service plan (standard or lite)."
-}
-
-variable "bucket_name" {
-  type        = string
-  default     = "vibe-coder-sample-bucket"
-  description = "Bucket name to host the SPA."
+  description = "The name of the IBM COS bucket where your SPA will be hosted."
 }
 
 variable "make_public" {
   type        = bool
+  description = "Set to true to make the SPA publicly accessible."
   default     = true
-  description = "Whether the bucket should be public."
+}
+
+variable "region" {
+  type        = string
+  description = "IBM Cloud region where COS will be deployed."
+  default     = "us-south"
+}
+
+variable "custom_html" {
+  type        = string
+  description = "Optional: paste your HTML code here. If empty, the default sample SPA will be used."
+  default     = ""
 }

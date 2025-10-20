@@ -1,33 +1,18 @@
-name: vibe-coder
-version: 0.1.0
-description: Deploy a sample SPA hosted in IBM Cloud Object Storage
-tags:
-  - vibe-coding
-  - SPA
-  - COS
-  - IBM Cloud
-inputs:
-  - ibmcloud_api_key:
-      type: secure
-      required: true
-  - region:
-      type: string
-      default: us-south
-  - resource_group:
-      type: string
-      default: Default
-  - cos_name:
-      type: string
-      default: vibe-coder-cos
-  - cos_plan:
-      type: string
-      default: standard
-  - bucket_name:
-      type: string
-      default: vibe-coder-sample-bucket
-  - make_public:
-      type: boolean
-      default: true
+name: vibe-coder-spa
+version: 0.2.0
+type: deployable_architecture
+displayName: Vibe Coder SPA
+description: Deploy an instant IBM Cloud SPA: paste HTML or use default sample app.
+catalog:
+  id: vibe-coder-spa
+  version: 0.2.0
+  deliveryMethod: auto-upload
 resources:
-  - type: terraform
-    file: main.tf
+  - main.tf
+  - inputs.tf
+  - index.html
+  - catalog.json
+tags:
+  - vibe-coder
+  - SPA
+  - IBM Cloud

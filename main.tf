@@ -5,27 +5,31 @@ terraform {
       version = "~> 1.84"
     }
   }
-  required_version = ">= 1.12"
 }
 
-provider "ibm" {
-  ibmcloud_api_key = var.ibmcloud_api_key
-  region           = var.region
-}
+provider "ibm" {}
 
-# IBM Cloud Object Storage Instance
-resource "ibm_resource_instance" "cos" {
-  name        = var.cos_name
-  service     = "cloud-object-storage"
-  plan        = var.cos_plan
-  resource_group = var.resource_group
-  location    = var.region
-}
-
-# IBM Cloud Object Storage Bucket
+# COS Bucket
 resource "ibm_cos_bucket" "sample" {
-  bucket      = var.bucket_name
-  instance_id = ibm_resource_instance.cos.id
-  force_destroy = true
-  public_access = var.make_public ? "true" : "false"
+  bucket_name         = var.cos_bucket_name
+  resource_instance_id = ibm_resource_instance.cos.id
+  force_destroy        = true
+  public_access        = var.make_public ? "true" : "false"
+}
+
+# COS Object for SPA
+resource "ibm_cos_object" "sample_app" {
+  bucket       = ibm_cos_bucket.sample.bucket_name
+  key          = "index.html"
+  content      = var.custom_html != "" ? var.custom_html : file("${path.module}/index.html")
+  content_type = "text/html"
+}
+
+# COS Instance
+resource "ibm_resource_instance" "cos" {
+  name           = "${var.cos_bucket_name}-instance"
+  service        = "cloud-object-storage"
+  plan           = "standard"
+  region         = var.region
+  tags           = ["vibe-coder", "spa"]
 }

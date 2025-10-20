@@ -1,25 +1,50 @@
 {
-  "id": "vibe-coder",
-  "version": "0.1.0",
-  "displayName": "Vibe Coder — Instant SPA",
-  "description": "Deploy a single-page app instantly in IBM Cloud Object Storage. Paste or upload HTML and get it live.",
+  "id": "vibe-coder-spa",
+  "version": "0.2.0",
+  "displayName": "Vibe Coder SPA",
+  "description": "Deploy an instant IBM Cloud SPA: paste HTML or use default sample app.",
   "type": "deployable_architecture",
-  "deliveryMethod": "terraform",
-  "resources": [
-    {
-      "name": "IBM COS instance",
-      "type": "terraform",
-      "file": "main.tf"
-    }
-  ],
+  "deliveryMethod": "auto-upload",
   "inputs": [
-    {"name": "ibmcloud_api_key", "type": "secure", "required": true},
-    {"name": "region", "type": "string"},
-    {"name": "resource_group", "type": "string"},
-    {"name": "cos_name", "type": "string"},
-    {"name": "cos_plan", "type": "string"},
-    {"name": "bucket_name", "type": "string"},
-    {"name": "make_public", "type": "boolean"}
-  ],
-  "tags": ["vibe-coding", "SPA", "cloud-object-storage", "IBM Cloud"]
+    {
+      "name": "custom_html",
+      "type": "string",
+      "required": false,
+      "ui_hints": {
+        "group": "Setup",
+        "label": "Custom HTML (optional)",
+        "placeholder": "Paste your HTML here for instant deployment"
+      }
+    },
+    {
+      "name": "cos_bucket_name",
+      "type": "string",
+      "required": true,
+      "ui_hints": {
+        "group": "Setup",
+        "label": "COS Bucket Name",
+        "placeholder": "vibe-coder-sample-bucket"
+      }
+    },
+    {
+      "name": "make_public",
+      "type": "boolean",
+      "required": false,
+      "ui_hints": {
+        "group": "Setup",
+        "label": "Make Public",
+        "default": true
+      }
+    },
+    {
+      "name": "region",
+      "type": "string",
+      "required": false,
+      "ui_hints": {
+        "group": "Setup",
+        "label": "IBM Cloud Region",
+        "default": "us-south"
+      }
+    }
+  ]
 }
