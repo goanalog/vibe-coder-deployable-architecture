@@ -15,11 +15,16 @@ data "ibm_resource_group" "default" {
   name = "Default"
 }
 
+# --- THIS RESOURCE IS STILL WRONG ---
 resource "ibm_resource_instance" "cos_instance" {
-  name              = var.cos_instance_name
-  service           = "cloud-object-storage"
-  plan              = var.cos_plan
-  location          = var.cos_bucket_location
+  name    = var.cos_instance_name
+  service = "cloud-object-storage"
+  plan    = var.cos_plan
+  
+  # --- FIX THIS LINE ---
+  # It should be "global", not var.cos_bucket_location
+  location = "global" 
+  
   resource_group_id = var.resource_group_id != null ? var.resource_group_id : data.ibm_resource_group.default.id
 }
 
@@ -27,20 +32,18 @@ locals {
   spa_content = var.pasted_code
 }
 
+# This resource is correct
 resource "ibm_cos_bucket" "vibe_spa_bucket" {
   bucket_name          = var.cos_bucket_name 
   resource_instance_id = ibm_resource_instance.cos_instance.id 
-  region_location      = var.cos_bucket_location 
+  region_location      = var.cos_bucket_location # This is correct, buckets are regional
 }
 
-# --- THIS BLOCK IS NOW FIXED ---
 resource "ibm_cos_bucket_object" "vibe_index" {
   count = length(var.pasted_code) > 0 ? 1 : 0
 
   bucket_crn      = ibm_cos_bucket.vibe_spa_bucket.crn 
-  # --- ADD THIS LINE ---
   bucket_location = ibm_cos_bucket.vibe_spa_bucket.region_location 
-  
   key             = "index.html"
   content         = local.spa_content
 }
