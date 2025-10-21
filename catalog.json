@@ -19,7 +19,6 @@
       "type": "string",
       "ui_hints": {
         "group": "Setup",
-        # --- UPDATED LABEL ---
         "label": "COS Bucket Name (Prefix)"
       }
     },
@@ -30,7 +29,6 @@
         "group": "Setup",
         "label": "Resource Group (Optional)",
         "control": "resource-group"
-        
       }
     },
     {
@@ -45,7 +43,7 @@
     {
       "name": "cos_plan",
       "type": "string",
-      "default": "lite", 
+      "default": "lite",
       "ui_hints": {
         "group": "Setup",
         "label": "COS Plan"
@@ -60,23 +58,13 @@
         "placeholder": "<!DOCTYPE html>...",
         "control": "textarea"
       }
-    },
-    {
-      "name": "api_key",
-      "type": "string",
-      "ui_hints": {
-        "group": "Authentication",
-        "label": "IBM Cloud API Key",
-        "secret": true,
-        "required": true
-      }
     }
   ],
   "outputs": [
     {
       "name": "spa_url",
       "key_output": true,
-      "description": "This isn't just a URL; it's the canonical link to your digital soul, freshly plucked from the ether. Point your browser here to witness the deployed aesthetic in all its glory."
+      "description": "Behold, the consecrated endpoint for direct vibe consumption. This isn't just a link; it's a globally propagated portal where the digital consciousness can bask in the glow of your manifested aesthetic. Share wisely—unfiltered vibes can be disorienting to the uninitiated."
     }
   ]
 }

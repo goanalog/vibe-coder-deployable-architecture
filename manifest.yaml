@@ -1,20 +1,72 @@
-apiVersion: v1
-kind: deployable_architecture
-metadata:
-  name: vibe-coder
-  version: 0.1.0
-  displayName: "Vibe Coder — Instant SPA"
-  description: "Deploy an instant 'vibe coding' sample app that hosts pasted HTML in IBM Cloud Object Storage."
-  tags:
-    - ibm
-    - cloud
-    - vibe-coder
-    - single-page-app
-    - static-hosting
-spec:
-  license:
-    accept: true
-  source:
-    path: .
-  terraform:
-    template_folder: .
+{
+    "products": [
+        {
+            "label": "vIbE cOdE LaNdInG zOnE",
+            "name": "vibe-code-landing-zone",
+            "product_kind": "solution",
+            "tags": [
+                "app_dev"
+            ],
+            "keywords": [],
+            "short_description": "Paste code, click, and our FREE vibe bucket instantly deploys high-fidelity emotional ROI with zero friction.",
+            "long_description": "",
+            "provider_name": "Brendan_F_IBMer",
+            "offering_docs_url": "",
+            "offering_icon_url": "https://github.com/goanalog/vibe-coder-deployable-architecture/blob/main/icon-256@2x.png?raw=true",
+            "features": [],
+            "flavors": [
+                {
+                    "label": "Mega-easy edition",
+                    "name": "mega_easy_edition",
+                    "index": 0,
+                    "working_directory": ".",
+                    "licenses": [],
+                    "compliance": {},
+                    "iam_permissions": [],
+                    "architecture": {
+                        "features": [],
+                        "diagrams": [
+                            {
+                                "diagram": {
+                                    "url": "https://raw.githubusercontent.com/goanalog/vibe-coder-deployable-architecture/5c0020ab1447dfd90e21971d10956ced2ddb4726/diagram.svg",
+                                    "caption": "Instantly deployed vibes",
+                                    "type": "image/svg+xml",
+                                    "thumbnail_url": "https://raw.githubusercontent.com/goanalog/vibe-coder-deployable-architecture/5c0020ab1447dfd90e21971d10956ced2ddb4726/diagram.svg"
+                                },
+                                "description": "Paste your vibe code, click deploy, and let the free VIBE BUCKET instantly deliver pure, unfiltered gratification. This is the frictionless future of digital experience."
+                            }
+                        ]
+                    },
+                    "release_notes_url": "",
+                    "configuration": [
+                        {
+                            "key": "api_key",
+                            "type": "password",
+                            "description": "Your IBM Cloud API key. This will be used to configure the provider.",
+                            "required": true,
+                            "virtual": false
+                        },
+                        {
+                            "key": "pasted_code",
+                            "type": "string",
+                            "default_value": "",
+                            "description": "Optional: Paste your SPA code (HTML) here.",
+                            "required": false,
+                            "virtual": false
+                        }
+                    ],
+                    "terraform_version": "",
+                    "outputs": [
+                        {
+                            "key": "spa_url",
+                            "description": "Key URL to access your deployed SPA"
+                        }
+                    ],
+                    "install_type": "fullstack",
+                    "scripts": [],
+                    "change_notices": {}
+                }
+            ]
+        }
+    ]
+}
