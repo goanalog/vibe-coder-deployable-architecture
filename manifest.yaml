@@ -25,34 +25,34 @@ inputs:
     required: true
     description: "Paste your HTML code for the live-editable SPA."
     default: |
-      <!DOCTYPE html>
-      <html>
-        <head>
-          <title>Vibe Coder SPA</title>
-          <style>
+      &lt;!DOCTYPE html&gt;
+      &lt;html&gt;
+        &lt;head&gt;
+          &lt;title&gt;Vibe Coder SPA&lt;/title&gt;
+          &lt;style&gt;
             body { font-family: sans-serif; text-align: center; padding: 2em; background: #f4f6f8; }
             h1 { color: #0f62fe; }
             textarea { width: 80%; height: 200px; margin-top: 1em; font-family: monospace; font-size: 14px; }
             button { padding: 0.5em 1em; margin-top: 0.5em; font-size: 14px; }
             #preview { margin-top: 2em; padding: 1em; background: #fff; border: 1px solid #ccc; min-height: 150px; }
-          </style>
-        </head>
-        <body>
-          <h1>Welcome to Vibe Coder!</h1>
-          <p>Your instant IBM Cloud SPA is live. Start pasting HTML below to code your vibes!</p>
-          <textarea id="editor">&lt;h1&gt;Editable Vibe!&lt;/h1&gt;
-&lt;p&gt;See it live.&lt;/p&gt;</textarea>
-          <br>
-          <button onclick="updatePreview()">Update Preview</button>
-          <div id="preview">
-            <h1>Editable Vibe!</h1>
-            <p>Change this text and click 'Update Preview' to see it live.</p>
-          </div>
-          <script>
+          &lt;/style&gt;
+        &lt;/head&gt;
+        &lt;body&gt;
+          &lt;h1&gt;Welcome to Vibe Coder!&lt;/h1&gt;
+          &lt;p&gt;Your instant IBM Cloud SPA is live. Start pasting HTML below to code your vibes!&lt;/p&gt;
+          &lt;textarea id="editor"&gt;&amp;lt;h1&amp;gt;Editable Vibe!&amp;lt;/h1&amp;gt;
+&amp;lt;p&amp;gt;See it live.&amp;lt;/p&amp;gt;&lt;/textarea&gt;
+          &lt;br&gt;
+          &lt;button onclick="updatePreview()"&gt;Update Preview&lt;/button&gt;
+          &lt;div id="preview"&gt;
+            &lt;h1&gt;Editable Vibe!&lt;/h1&gt;
+            &lt;p&gt;Change this text and click 'Update Preview' to see it live.&lt;/p&gt;
+          &lt;/div&gt;
+          &lt;script&gt;
             function updatePreview() {
               const html = document.getElementById('editor').value;
               document.getElementById('preview').innerHTML = html;
             }
-          </script>
-        </body>
-      </html>
+          &lt;/script&gt;
+        &lt;/body&gt;
+      &lt;/html&gt;

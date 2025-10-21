@@ -3,24 +3,21 @@ provider "ibm" {
   region           = var.location
 }
 
-# Create COS bucket
+resource "ibm_resource_group" "vibe_group" {
+  name = "Vibe-Coder-RG"
+}
+
 resource "ibm_cos_bucket" "spa_bucket" {
-  bucket = "vibe-coder-sample-bucket"
-  location = var.location
+  name          = "vibe-coder-spa-bucket"
+  location      = var.location
+  resource_group = ibm_resource_group.vibe_group.id
   force_destroy = true
+  public_access = var.make_public ? "public-read" : "private"
 }
 
-# Write the vibe_code input to a local file
-resource "local_file" "vibe_code_file" {
-  filename = "${path.module}/vibe_code.html"
-  content  = var.vibe_code
-}
-
-# Upload the HTML file to COS
 resource "ibm_cos_bucket_object" "html_spa" {
-  bucket = ibm_cos_bucket.spa_bucket.name
-  key    = "index.html"
-  source = local_file.vibe_code_file.filename
-
-  acl = var.make_public ? "public-read" : "private"
+  bucket       = ibm_cos_bucket.spa_bucket.name
+  key          = "index.html"
+  source       = "${path.module}/default.html"
+  content_type = "text/html"
 }
