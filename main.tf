@@ -1,32 +1,75 @@
 terraform {
+  required_version = ">= 1.12"
   required_providers {
     ibm = {
-      source  = "ibm-cloud/ibm"
+      source  = "IBM-Cloud/ibm"
       version = ">= 1.84.0"
     }
   }
-  required_version = ">= 1.2.0"
 }
 
-
-# Create IBM Cloud Object Storage instance
-resource "ibm_resource_instance" "vibe_cos" {
-  name     = "vibe-coder-cos"
-  service  = "cloud-object-storage"
-  plan     = "standard"
-  location = var.region
+# -------------------------
+# Variables
+# -------------------------
+variable "cos_bucket_name" {
+  description = "Name your IBM Cloud Object Storage bucket. Don't worry, it just needs to be unique in your region."
+  type        = string
+  default     = "vibe-coder-sample-bucket"
 }
 
-# Create COS bucket (Terraform 1.12 syntax)
+variable "cos_region" {
+  description = "Region where your COS bucket will be created. Example: us-south"
+  type        = string
+  default     = "us-south"
+}
+
+# -------------------------
+# IBM COS Bucket
+# -------------------------
 resource "ibm_cos_bucket" "vibe_spa_bucket" {
-  bucket_name          = var.cos_bucket_name
-  resource_instance_id = ibm_resource_instance.vibe_cos.id
+  bucket_name = var.cos_bucket_name
+  location    = var.cos_region
+  force       = true  # allows re-creating if bucket exists
 }
 
-# Upload HTML SPA
+# -------------------------
+# SPA HTML Object
+# -------------------------
 resource "ibm_cos_bucket_object" "html_spa" {
-  bucket_location = ibm_cos_bucket.vibe_spa_bucket.location
-  bucket_crn      = ibm_cos_bucket.vibe_spa_bucket.crn
+  bucket          = var.cos_bucket_name
+  bucket_location = var.cos_region
+  key             = "index.html"   # the name in the bucket
+  source          = "index.html"   # local file to upload
+  content_type    = "text/html"
+}
+
+# -------------------------
+# Optional Output
+# -------------------------
+output "spa_url" {
+  value       = "https://${var.cos_bucket_name}.s3.${var.cos_region}.cloud-object-storage.appdomain.cloud/index.html"
+  description = "URL to access your deployed SPA."
+}
+terraform {
+  required_version = ">= 1.12"
+  required_providers {
+    ibm = {
+      source  = "IBM-Cloud/ibm"
+      version = ">= 1.84.0"
+    }
+  }
+}
+
+resource "ibm_cos_bucket" "vibe_spa_bucket" {
+  bucket_name = var.cos_bucket_name
+  location    = var.cos_region
+  force       = true
+}
+
+resource "ibm_cos_bucket_object" "html_spa" {
+  bucket          = var.cos_bucket_name
+  bucket_location = var.cos_region
   key             = "index.html"
-  content         = var.vibe_code
+  source          = "index.html"
+  content_type    = "text/html"
 }
