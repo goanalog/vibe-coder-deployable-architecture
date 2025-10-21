@@ -24,7 +24,7 @@ inputs:
     label: Live-Editable SPA HTML
     required: true
     description: "Paste your HTML code for the live-editable SPA."
-    default: >
+    default: |
       <!DOCTYPE html>
       <html>
       <head>
