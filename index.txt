@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Vibe Coder Sample SPA</title>
+</head>
+<body>
+  <h1>🎉 Welcome to Vibe Coder!</h1>
+  <p>Your instant SPA is live in IBM COS.</p>
+</body>
+</html>

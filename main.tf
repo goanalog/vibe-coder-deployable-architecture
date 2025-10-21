@@ -1,11 +1,12 @@
 terraform {
+  required_version = ">= 1.2"
+
   required_providers {
     ibm = {
       source  = "IBM-Cloud/ibm"
       version = ">= 1.84.0"
     }
   }
-  required_version = ">= 1.2"
 }
 
 provider "ibm" {
@@ -16,12 +17,10 @@ provider "ibm" {
 resource "ibm_cos_bucket" "vibe_spa_bucket" {
   bucket_name = var.cos_bucket_name
   location    = var.cos_bucket_location
-  force_destroy = true
 }
 
 resource "ibm_cos_bucket_object" "html_spa" {
-  bucket_crn = ibm_cos_bucket.vibe_spa_bucket.bucket_crn
+  bucket_crn = ibm_cos_bucket.vibe_spa_bucket.crn
   key        = "index.html"
-  content    = var.html_content
-  content_type = "text/html"
+  source     = "index.html"
 }
