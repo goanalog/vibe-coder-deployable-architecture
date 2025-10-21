@@ -56,7 +56,7 @@
       "type": "string",
       "ui_hints": {
         "group": "Input",
-        "label": "Pasted SPA Code (Optional)",
+        "label": "Channel your app's complete essence here. Pour in the HTML, CSS, and JavaScript—the entire vibe—and our cosmic pipeline will manifest it.",
         "placeholder": "<!DOCTYPE html>...",
         "control": "textarea"
       }
