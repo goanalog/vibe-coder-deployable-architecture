@@ -1,10 +1,9 @@
-variable "ibmcloud_api_key" {
-  description = "IBM Cloud API key for provisioning resources"
+variable "api_key" {
+  description = "Your IBM Cloud API key for provisioning COS resources."
   type        = string
-  sensitive   = true
 }
 
 variable "vibe_code" {
-  description = "Your vibe-coded HTML/SPA content"
+  description = "The HTML code for your Vibe Coder single-page app."
   type        = string
 }

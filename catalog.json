@@ -2,27 +2,39 @@
   "id": "vibe-coder",
   "version": "0.1.0",
   "displayName": "Vibe Coder — Instant SPA",
-  "description": "Deploy an instant SPA by pasting your vibe-coded HTML. Hosted on IBM Cloud Object Storage.",
+  "description": "Deploy a Vibe Coder SPA: paste your HTML and get an instant IBM COS-hosted sample app. Don't worry, it's quick and simple!",
   "type": "deployable_architecture",
   "deliveryMethod": "terraform",
-  "terraform": {
-    "version": "1.12",
-    "provider": "ibm"
-  },
+  "provider": "IBM Cloud",
+  "tags": ["vibe", "SPA", "cos", "instant", "developer"],
   "inputs": [
     {
-      "name": "ibmcloud_api_key",
+      "name": "api_key",
       "type": "string",
-      "description": "IBM Cloud API key for provisioning resources",
       "required": true,
-      "sensitive": true
+      "ui_hints": {
+        "label": "IBM Cloud API Key",
+        "placeholder": "Enter your IBM Cloud API key",
+        "group": "Setup"
+      },
+      "description": "Your IBM Cloud API key for provisioning COS resources."
     },
     {
       "name": "vibe_code",
       "type": "string",
-      "description": "Your vibe-coded HTML/SPA content",
-      "required": true
+      "required": true,
+      "ui_hints": {
+        "label": "Vibe Coder HTML",
+        "placeholder": "Paste your index.html content here",
+        "group": "Vibe Content",
+        "multiLine": true
+      },
+      "description": "The HTML code for your Vibe Coder single-page app. Don't worry, you can paste it directly!"
     }
   ],
-  "tags": ["vibe", "SPA", "IBM Cloud", "cos"]
+  "files": [
+    {
+      "path": "main.tf"
+    }
+  ]
 }
