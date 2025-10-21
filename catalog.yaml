@@ -6,11 +6,18 @@ type: "deployable_architecture"
 deliveryMethod: "terraform"
 terraform:
   main: "main.tf"
-variables:
-  - name: "vibe_code"
+inputs:
+  - id: "vibe_code"
     type: "string"
-    description: "Paste your HTML/JS/CSS here for the Vibe Coder SPA. Don't worry, just start coding!"
+    display_name: "Vibe Code"
+    description: "Paste your HTML/JS/CSS here for the SPA."
+    required: true
+    default: |
+      <!DOCTYPE html>
+      <html>
+      <head><title>Vibe Coder</title></head>
+      <body><h1>Hello, Vibe!</h1></body>
+      </html>
     ui_hints:
       group: "Setup"
-      label: "Vibe Code"
       placeholder: "<!DOCTYPE html>\n<html>\n<head>\n  <title>Vibe Coder</title>\n</head>\n<body>\n  <h1>Hello, Vibe!</h1>\n</body>\n</html>"
