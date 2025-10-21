@@ -24,10 +24,13 @@ data "ibm_resource_group" "group" {
 }
 
 # --- Configuration ---
+
+# Generate a random suffix for unique bucket name
 resource "random_id" "suffix" {
   byte_length = 4
 }
 
+# COS service instance
 resource "ibm_resource_instance" "cos" {
   name              = var.cos_instance_name
   service           = "cloud-object-storage"
@@ -36,6 +39,7 @@ resource "ibm_resource_instance" "cos" {
   resource_group_id = data.ibm_resource_group.group.id
 }
 
+# COS bucket
 resource "ibm_cos_bucket" "sample" {
   bucket_name          = "${var.bucket_name_prefix}-${random_id.suffix.hex}"
   resource_instance_id = ibm_resource_instance.cos.id
@@ -45,17 +49,18 @@ resource "ibm_cos_bucket" "sample" {
   acl                  = var.make_public ? "public-read" : "private"
 }
 
+# Upload SPA HTML
 resource "ibm_cos_bucket_object" "html_spa" {
   bucket_crn      = ibm_cos_bucket.sample.crn
   bucket_location = ibm_cos_bucket.sample.region_location
   key             = "index.html"
   content         = var.vibe_code
+  endpoint_type   = "public"
   force_delete    = true
-  # ⚡ Remove content_type to let provider auto-detect text/html
 }
 
-# --- Clickable Output ---
+# Public SPA URL output
 output "application_url" {
-  description = "The public URL for the sample SPA application."
+  description = "The public URL for the sample application."
   value       = "https://${ibm_cos_bucket.sample.s3_endpoint_public}/${ibm_cos_bucket_object.html_spa.key}"
 }
