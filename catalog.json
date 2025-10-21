@@ -76,7 +76,7 @@
     {
       "name": "spa_url",
       "key_output": true,
-      "description": "The public URL of your deployed SPA"
+      "description": "This isn't just a URL; it's the canonical link to your digital soul, freshly plucked from the ether. Point your browser here to witness the deployed aesthetic in all its glory."
     }
   ]
 }
