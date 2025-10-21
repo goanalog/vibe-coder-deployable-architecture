@@ -1,10 +1,16 @@
 {
   "id": "vibe-code-landing-zone",
+  "manifest_version": "1.0",
   "version": "0.1.0",
   "displayName": "Vibe Code Landing Zone",
   "description": "Deploy a paste-or-upload single-page app to IBM Cloud Object Storage with one click. Built for vibe coding.",
   "type": "deployable_architecture",
   "deliveryMethod": "terraform",
+  "metadata": {
+    "provider": "IBM",
+    "support_url": "https://cloud.ibm.com",
+    "license": "Apache-2.0"
+  },
   "tags": [
     "ibm-cloud",
     "deployable-architecture",
@@ -23,9 +29,9 @@
       "ui_hints": {
         "group": "Setup",
         "label": "Resource Group",
-        "control": "resource-group"
+        "control": "text"
       },
-      "required": false
+      "required": true
     },
     {
       "name": "region",
@@ -35,9 +41,9 @@
       "ui_hints": {
         "group": "Setup",
         "label": "Region",
-        "control": "region"
+        "control": "text"
       },
-      "required": false
+      "required": true
     },
     {
       "name": "cos_instance_name",
@@ -46,7 +52,8 @@
       "default": "",
       "ui_hints": {
         "group": "Setup",
-        "label": "COS Instance Name (optional)"
+        "label": "COS Instance Name (optional)",
+        "control": "text"
       },
       "required": false
     },
@@ -57,21 +64,22 @@
       "default": "",
       "ui_hints": {
         "group": "Setup",
-        "label": "Bucket Name (optional)"
+        "label": "Bucket Name (optional)",
+        "control": "text"
       },
       "required": false
     },
     {
       "name": "index_html",
       "type": "string",
-      "description": "Paste your full HTML here — it becomes your app’s index.html when deployed. Leave blank to use the sample app.",
+      "description": "Paste your full HTML here \u2014 it becomes your app\u2019s index.html when deployed. Leave blank to use the sample app.",
       "ui_hints": {
         "group": "App Content",
         "label": "App HTML",
         "control": "textarea",
         "placeholder": "<!DOCTYPE html>\\n<html>\\n  <head>...</head>\\n  <body>...</body>\\n</html>"
       },
-      "required": false
+      "required": true
     }
   ],
   "outputs": [
