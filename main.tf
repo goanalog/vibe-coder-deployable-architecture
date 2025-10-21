@@ -11,16 +11,24 @@ provider "ibm" {
   ibmcloud_api_key = var.api_key
 }
 
-# --- NEW RESOURCE ---
+# --- NEW DATA SOURCE ---
+# This finds the resource group named "Default" in your account
+data "ibm_resource_group" "default" {
+  name = "Default"
+}
+# ---------------------
+
 # This creates the Cloud Object Storage service instance
 resource "ibm_resource_instance" "cos_instance" {
   name              = var.cos_instance_name
   service           = "cloud-object-storage"
   plan              = var.cos_plan
-  location          = var.cos_bucket_location # Use the same location for the instance
-  resource_group_id = var.resource_group_id
+  location          = var.cos_bucket_location
+  
+  # --- UPDATED LINE ---
+  # Use the variable if provided, otherwise use the default group ID we found
+  resource_group_id = var.resource_group_id != null ? var.resource_group_id : data.ibm_resource_group.default.id
 }
-# --------------------
 
 locals {
   spa_content = var.pasted_code
@@ -28,8 +36,6 @@ locals {
 
 resource "ibm_cos_bucket" "vibe_spa_bucket" {
   bucket               = var.cos_bucket_name
-  # --- UPDATED LINE ---
-  # This now refers to the new resource we just created
   resource_instance_id = ibm_resource_instance.cos_instance.id 
   location             = var.cos_bucket_location
 }

@@ -27,9 +27,9 @@
       "type": "string",
       "ui_hints": {
         "group": "Setup",
-        "label": "Resource Group",
-        "control": "resource-group",
-        "required": true
+        "label": "Resource Group (Optional)",
+        "control": "resource-group"
+        
       }
     },
     {
