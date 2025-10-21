@@ -49,7 +49,6 @@ resource "ibm_cos_bucket_object" "html_spa" {
   bucket_location = ibm_cos_bucket.sample.region_location
   key             = "index.html"
   content         = var.html_content
-  content_type    = "text/html"
   endpoint_type   = "public"
   force_delete    = true
 }
