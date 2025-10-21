@@ -2,7 +2,7 @@
   "id": "vibe-coder-instant-spa",
   "version": "0.2.0",
   "displayName": "Vibe Coder — Instant SPA",
-  "description": "Deploy an instant live-editable SPA by pasting HTML, hosted in IBM Cloud Object Storage.",
+  "description": "Deploy a live-editable SPA hosted in IBM Cloud Object Storage.",
   "type": "deployable_architecture",
   "deliveryMethod": "terraform",
   "tags": ["Vibe", "Developer Tools", "WebApp"],
@@ -11,7 +11,7 @@
       "name": "ibmcloud_api_key",
       "type": "password",
       "required": true,
-      "description": "Your IBM Cloud API key."
+      "description": "Your IBM Cloud API key to deploy resources."
     },
     {
       "name": "location",
@@ -25,14 +25,13 @@
       "type": "boolean",
       "required": true,
       "defaultValue": "true",
-      "description": "Make the SPA publicly accessible."
+      "description": "Make the SPA publicly accessible on the internet."
     },
     {
       "name": "vibe_code",
       "type": "textarea",
       "required": true,
-      "defaultValue": "<!DOCTYPE html>...full SPA HTML here...",
-      "description": "Paste your HTML code here for the live-editable SPA."
+      "defaultValue": "<!DOCTYPE html>\n<html>\n  <head>\n    <title>Vibe Coder SPA</title>\n    <style>\n      body { font-family: sans-serif; text-align: center; padding: 2em; background: #f4f6f8; }\n      h1 { color: #0f62fe; }\n      textarea { width: 80%; height: 200px; margin-top: 1em; font-family: monospace; font-size: 14px; }\n      button { padding: 0.5em 1em; margin-top: 0.5em; font-size: 14px; }\n      #preview { margin-top: 2em; padding: 1em; background: #fff; border: 1px solid #ccc; min-height: 150px; }\n    </style>\n  </head>\n  <body>\n    <h1>Welcome to Vibe Coder!</h1>\n    <p>Your instant IBM Cloud SPA is live. Start pasting HTML below to code your vibes!</p>\n    <textarea id=\"editor\">\n<h1>Editable Vibe!</h1>\n<p>Change this text and click 'Update Preview' to see it live.</p>\n    </textarea>\n    <br>\n    <button onclick=\"updatePreview()\">Update Preview</button>\n    <div id=\"preview\">\n      <h1>Editable Vibe!</h1>\n      <p>Change this text and click 'Update Preview' to see it live.</p>\n    </div>\n    <script>\n      function updatePreview() {\n        const html = document.getElementById('editor').value;\n        document.getElementById('preview').innerHTML = html;\n      }\n    </script>\n  </body>\n</html>"
     }
   ]
 }
