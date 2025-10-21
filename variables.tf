@@ -1,28 +1,34 @@
-variable "cos_name" {
-  description = "Name your IBM Cloud Object Storage instance — where your Vibe Coder app will live."
-  type        = string
-  default     = "vibe-coder-cos"
-}
-
 variable "cos_bucket_name" {
-  description = "The name of the IBM COS bucket where the SPA will be hosted."
+  description = "Name your IBM Cloud Object Storage bucket — where your SPA will live. Don't worry, it will be created automatically if it doesn't exist."
   type        = string
   default     = "vibe-coder-sample-bucket"
 }
 
+variable "cos_instance_id" {
+  description = "IBM COS service instance ID. Required to create the bucket."
+  type        = string
+}
+
 variable "cos_bucket_location" {
-  description = "The IBM Cloud region where your COS bucket resides."
+  description = "COS bucket location/region. Default is 'us-south'."
   type        = string
   default     = "us-south"
 }
 
-variable "resource_group_id" {
-  description = "IBM Cloud Resource Group ID where the COS instance and bucket will be created."
-  type        = string
-}
-
-variable "index_html_file" {
-  description = "Optional: Local path to your index.html file to upload to COS."
+variable "local_file" {
+  description = "Optional: path to a local SPA file to upload. If left empty, pasted SPA code will be used instead."
   type        = string
   default     = ""
+}
+
+variable "pasted_code" {
+  description = "Optional: paste your SPA code here if not using a local file."
+  type        = string
+  default     = ""
+}
+
+variable "api_key" {
+  description = "Your IBM Cloud API key. We'll surface it so your workspace can use it."
+  type        = string
+  sensitive   = true
 }
