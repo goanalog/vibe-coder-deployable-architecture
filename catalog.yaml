@@ -1,23 +1,28 @@
-id: "vibe-coder"
-version: "0.1.0"
-displayName: "Vibe Coder — Instant SPA"
-description: "Paste your HTML/JS/CSS and get an instant IBM COS-hosted SPA. Just start coding!"
-type: "deployable_architecture"
-deliveryMethod: "terraform"
-terraform:
-  main: "main.tf"
+id: vibe-coder
+version: 0.1.0
+displayName: Vibe Coder — Instant SPA
+description: >
+  Deploy an instant "Vibe Coding" single-page app.
+  Paste your HTML code into the catalog input and see it live in IBM Cloud Object Storage.
+type: deployable_architecture
+deliveryMethod: terraform
+tags:
+  - SPA
+  - IBM Cloud
+  - COS
+  - Vibe Coding
+uihints:
+  icon16: icons/vibe-coder-16.png
+  icon32: icons/vibe-coder-32.png
+  icon64: icons/vibe-coder-64.png
+  icon128: icons/vibe-coder-128.png
+  icon256: icons/vibe-coder-256.png
 inputs:
-  - id: "vibe_code"
-    type: "string"
-    display_name: "Vibe Code"
-    description: "Paste your HTML/JS/CSS here for the SPA."
+  - name: vibe_code
+    type: string
+    description: "Paste your HTML code here. Don't worry, just type and deploy!"
     required: true
-    default: |
-      <!DOCTYPE html>
-      <html>
-      <head><title>Vibe Coder</title></head>
-      <body><h1>Hello, Vibe!</h1></body>
-      </html>
     ui_hints:
-      group: "Setup"
-      placeholder: "<!DOCTYPE html>\n<html>\n<head>\n  <title>Vibe Coder</title>\n</head>\n<body>\n  <h1>Hello, Vibe!</h1>\n</body>\n</html>"
+      group: "Vibe Code"
+      label: "HTML Input"
+      placeholder: "<!DOCTYPE html><html>...</html>"
