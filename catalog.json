@@ -2,7 +2,7 @@
   "id": "vibe-coder",
   "version": "0.1.0",
   "displayName": "Vibe Coder — Instant SPA",
-  "description": "Deploy an instant SPA by uploading a local file or pasting your HTML code. IBM COS hosts it for you!",
+  "description": "Deploy an instant SPA by pasting your HTML code. Hosted in IBM COS.",
   "type": "deployable_architecture",
   "deliveryMethod": "terraform",
   "variables": [
@@ -33,20 +33,11 @@
       }
     },
     {
-      "name": "local_file",
-      "type": "string",
-      "ui_hints": {
-        "group": "Input",
-        "label": "Local SPA File (optional)",
-        "placeholder": "/path/to/index.html"
-      }
-    },
-    {
       "name": "pasted_code",
       "type": "string",
       "ui_hints": {
         "group": "Input",
-        "label": "Pasted SPA Code (optional)",
+        "label": "Pasted SPA Code",
         "placeholder": "<!DOCTYPE html>..."
       }
     },
