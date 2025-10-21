@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vibe Coder SPA</title>
+  <style>
+    body { font-family: sans-serif; padding: 2rem; background: #f4f4f9; }
+    textarea { width: 100%; height: 200px; margin-top: 1rem; }
+    iframe { width: 100%; height: 400px; margin-top: 1rem; border: 1px solid #ccc; }
+    button { margin-top: 1rem; padding: 0.5rem 1rem; font-size: 1rem; }
+  </style>
+</head>
+<body>
+  <h1>Vibe Coder SPA</h1>
+  <p>Paste your HTML below and click "Run" to see it deployed instantly:</p>
+  <textarea id="vibeInput" placeholder="Paste your HTML here"></textarea>
+  <br>
+  <button onclick="runVibe()">Run</button>
+  <iframe id="vibeOutput"></iframe>
+
+  <script>
+    function runVibe() {
+      const html = document.getElementById('vibeInput').value;
+      const iframe = document.getElementById('vibeOutput');
+      iframe.srcdoc = html;
+    }
+  </script>
+</body>
+</html>
