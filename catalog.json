@@ -1,60 +1,52 @@
 {
-  "id": "vibe-coder",
-  "version": "0.1.0",
-  "displayName": "Vibe Coder — Instant SPA",
-  "description": "Deploy an instant SPA by pasting your HTML code. IBM COS hosts it for you!",
+  "id": "vibe-coder-da",
+  "version": "1.0.0",
+  "displayName": "Vibe Coder Landing Zone ✨",
+  "description": "🌀 Paste your vibe code, click deploy, and manifest a live Vibe on the IBM Cloud free tier. Zero friction, maximum emotional ROI.",
   "type": "deployable_architecture",
   "deliveryMethod": "terraform",
   "variables": [
     {
-      "name": "cos_instance_name",
+      "name": "vibe_instance_name",
       "type": "string",
       "ui_hints": {
         "group": "Setup",
-        "label": "COS Instance Name"
+        "label": "Vessel Name (COS Instance)"
       }
     },
     {
-      "name": "cos_bucket_name",
+      "name": "vibe_bucket_name",
       "type": "string",
       "ui_hints": {
         "group": "Setup",
-        "label": "COS Bucket Name (Prefix)"
+        "label": "Vibe Bucket Name (Prefix)"
       }
     },
     {
-      "name": "resource_group_id",
+      "name": "resource_group",
       "type": "string",
       "ui_hints": {
         "group": "Setup",
-        "label": "Resource Group (Optional)",
+        "label": "Resource Group",
         "control": "resource-group"
       }
     },
     {
-      "name": "cos_bucket_location",
+      "name": "vibe_bucket_location",
       "type": "string",
       "default": "us-south",
       "ui_hints": {
         "group": "Setup",
-        "label": "Location"
+        "label": "Vibe Resonance Region",
+        "control": "region"
       }
     },
     {
-      "name": "cos_plan",
-      "type": "string",
-      "default": "lite",
-      "ui_hints": {
-        "group": "Setup",
-        "label": "COS Plan"
-      }
-    },
-    {
-      "name": "pasted_code",
+      "name": "vibe_code",
       "type": "string",
       "ui_hints": {
         "group": "Input",
-        "label": "Channel your app's complete essence here. Pour in the HTML, CSS, and JavaScript—the entire vibe—and our cosmic pipeline will manifest it.",
+        "label": "🌀 Channel your app's complete essence here. Pour in the HTML, CSS, and JavaScript—the entire vibe—and our cosmic pipeline will manifest it.",
         "placeholder": "<!DOCTYPE html>...",
         "control": "textarea"
       }
@@ -62,9 +54,14 @@
   ],
   "outputs": [
     {
-      "name": "spa_url",
+      "name": "vibe_url",
       "key_output": true,
-      "description": "Behold, the consecrated endpoint for direct vibe consumption. This isn't just a link; it's a globally propagated portal where the digital consciousness can bask in the glow of your manifested aesthetic. Share wisely—unfiltered vibes can be disorienting to the uninitiated."
+      "description": "Behold, the consecrated endpoint for direct vibe consumption. Share wisely—unfiltered vibes can be disorienting to the uninitiated."
+    },
+    {
+      "name": "vibe_bucket_url",
+      "description": "A direct link to the sacred Vibe Bucket, where you can view the immortalized scrolls and artifacts of your deployment ritual."
     }
   ]
 }
+

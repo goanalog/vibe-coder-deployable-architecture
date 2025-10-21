@@ -1,72 +1,100 @@
-{
-    "products": [
-        {
-            "label": "vIbE cOdE LaNdInG zOnE",
-            "name": "vibe-code-landing-zone",
-            "product_kind": "solution",
-            "tags": [
-                "app_dev"
-            ],
-            "keywords": [],
-            "short_description": "Paste code, click, and our FREE vibe bucket instantly deploys high-fidelity emotional ROI with zero friction.",
-            "long_description": "",
-            "provider_name": "Brendan_F_IBMer",
-            "offering_docs_url": "",
-            "offering_icon_url": "https://github.com/goanalog/vibe-coder-deployable-architecture/blob/main/icon-256@2x.png?raw=true",
-            "features": [],
-            "flavors": [
-                {
-                    "label": "Mega-easy edition",
-                    "name": "mega_easy_edition",
-                    "index": 0,
-                    "working_directory": ".",
-                    "licenses": [],
-                    "compliance": {},
-                    "iam_permissions": [],
-                    "architecture": {
-                        "features": [],
-                        "diagrams": [
-                            {
-                                "diagram": {
-                                    "url": "https://raw.githubusercontent.com/goanalog/vibe-coder-deployable-architecture/5c0020ab1447dfd90e21971d10956ced2ddb4726/diagram.svg",
-                                    "caption": "Instantly deployed vibes",
-                                    "type": "image/svg+xml",
-                                    "thumbnail_url": "https://raw.githubusercontent.com/goanalog/vibe-coder-deployable-architecture/5c0020ab1447dfd90e21971d10956ced2ddb4726/diagram.svg"
-                                },
-                                "description": "Paste your vibe code, click deploy, and let the free VIBE BUCKET instantly deliver pure, unfiltered gratification. This is the frictionless future of digital experience."
-                            }
-                        ]
-                    },
-                    "release_notes_url": "",
-                    "configuration": [
-                        {
-                            "key": "api_key",
-                            "type": "password",
-                            "description": "Your IBM Cloud API key. This will be used to configure the provider.",
-                            "required": true,
-                            "virtual": false
-                        },
-                        {
-                            "key": "pasted_code",
-                            "type": "string",
-                            "default_value": "",
-                            "description": "Optional: Paste your SPA code (HTML) here.",
-                            "required": false,
-                            "virtual": false
-                        }
-                    ],
-                    "terraform_version": "",
-                    "outputs": [
-                        {
-                            "key": "spa_url",
-                            "description": "Key URL to access your deployed SPA"
-                        }
-                    ],
-                    "install_type": "fullstack",
-                    "scripts": [],
-                    "change_notices": {}
-                }
-            ]
-        }
-    ]
-}
+version: v1
+metadata:
+  name: vibe-coder-landing-zone
+  label: "Vibe Coder Landing Zone ✨"
+  short_description: "🌀 Paste your vibe code, click deploy, and manifest a live Vibe on the IBM Cloud free tier."
+  long_description: "Tired of YAML engineering and CI/CD pipelines just to share a vibe? Ascend to a higher plane of deployment. The Vibe Coder Landing Zone is a sacred Deployable Architecture that transmutes raw HTML, CSS, and JS into a live, globally-propagated digital experience. Paste your code, click deploy, and let our Synergy Realization Engine handle the rest. This isn't just Infrastructure-as-Code; it's Infrastructure-as-Vibe. Perfect for portfolios, prototypes, and high-fidelity emotional MVPs. Manifest your destiny, for free, in minutes."
+  offering_icon_url: "https://raw.githubusercontent.com/goanalog/vibe-coder-deployable-architecture/main/icon-256%402x.png"
+  offering_docs_url: "https://github.com/goanalog/vibe-coder-deployable-architecture/blob/main/HELP.md"
+  provider_name: "The Vibe Coder Collective"
+  tags:
+    - "app_dev"
+    - "vibe"
+    - "synergy"
+    - "free-tier"
+    - "serverless"
+  keywords:
+    - "vibe coding"
+    - "static site"
+    - "static website"
+    - "static web hosting"
+    - "html deploy"
+    - "website deploy"
+    - "one-click deploy"
+    - "serverless hosting"
+    - "free hosting"
+    - "free website"
+    - "no cost hosting"
+    - "object storage"
+    - "cloud object storage"
+    - "cos bucket"
+    - "s3 bucket"
+    - "single page app"
+    - "spa hosting"
+    - "landing page"
+    - "portfolio site"
+    - "personal website"
+    - "student project"
+    - "hackathon project"
+    - "prototype hosting"
+    - "instant website"
+    - "quick deploy"
+    - "easy hosting"
+    - "simple web hosting"
+    - "frontend hosting"
+    - "javascript app"
+    - "html css js"
+    - "paste to deploy"
+    - "serverless"
+    - "IBM Cloud"
+    - "lite plan"
+    - "vibe"
+    - "synergy"
+flavors:
+  - name: "standard"
+    label: "Standard Vibe Ascension (Free Tier)"
+    architecture:
+      diagrams:
+        - diagram:
+            url: "https://raw.githubusercontent.com/goanalog/vibe-coder-deployable-architecture/63d5d6e597046f7c075f8645df173e0b523d00af/diagram.svg"
+            caption: "Diagram of the Vibe Ascension Pipeline"
+          description: "Your raw Vibe Code is channeled into a secure Vibe Bucket, where it is immortalized as a globally accessible URL."
+      features:
+        - title: "Instant Deployment on the Free Tier"
+          description: "Go from raw code to a live, globally-available URL in minutes. This architecture is designed for the IBM Cloud Lite plan, offering a straightforward path to deployment at zero cost."
+        - title: "One-Click Vibe Manifestation"
+          description: "No command lines, no YAML files to edit, no complex configurations. Just paste your HTML, CSS, and JS, and click 'Deploy' to bring your vision to life."
+        - title: "Metaphysical Vibe Synchronization"
+          description: "Our proprietary Synergy Realization Engine doesn't just deploy your code; it attunes its quantum state to your core creative intent, ensuring maximum aesthetic resonance across all digital planes."
+        - title: "Automated Ritualistic Audit Trail"
+          description: "For compliance with the highest cosmic standards, the engine automatically generates sacred scrolls (PLAN.md, PROGRESS.md) in your Vibe Bucket, documenting the successful manifestation of your vibe for posterity."
+        - title: "Zero-Gravity Scalability"
+          description: "Powered by IBM Cloud Object Storage, your vibe can handle anything from a curious visitor to a viral surge of global consciousness without you ever touching a server."
+        - title: "Total Creative Sovereignty"
+          description: "You provide the vision, we provide the vessel. This is your code, your URL, and your corner of the digital cosmos. We just help you get there, frictionlessly."
+    tf_vars:
+      - name: "vibe_instance_name"
+        type: "string"
+        description: "The celestial vessel for your vibe. This is the name for the underlying Object Storage service."
+        default: "vibe-coder-cos-instance"
+      - name: "vibe_bucket_name"
+        type: "string"
+        description: "The sacred container where your code will be immortalized. A random suffix is added to ensure its unique place in the digital cosmos."
+        default: "vibe-bucket"
+      - name: "resource_group"
+        type: "string"
+        description: "The celestial plane where your vibe will manifest. Using the default is recommended for a smooth ascension."
+      - name: "vibe_bucket_location"
+        type: "string"
+        description: "The geographical region where your vibe will resonate most strongly with the planet's ley lines."
+        default: "us-south"
+      - name: "vibe_code"
+        type: "string"
+        description: "Pour in the complete essence of your application—the HTML, CSS, and JavaScript. Our cosmic pipeline will receive and manifest it."
+        default: "<!DOCTYPE html><html lang=\"en\"><head><meta charset=\"UTF-8\"><meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\"><title>Vibe Manifested</title><style>body { display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; background-color: #1a1a1a; color: #00ff9d; font-family: 'Courier New', Courier, monospace; text-align: center; } .container { border: 1px solid #00ff9d; padding: 2rem; box-shadow: 0 0 15px #00ff9d; } h1 { font-size: 2.5rem; margin-bottom: 1rem; } p { font-size: 1.2rem; }</style></head><body><div class=\"container\"><h1>🌀 Vibe Ascended 🌀</h1><p>Your digital essence has been successfully manifested.</p></div></body></html>"
+    outputs:
+      - name: "vibe_url"
+        description: "Behold, the consecrated endpoint for direct vibe consumption."
+      - name: "vibe_bucket_url"
+        description: "A direct link to the sacred Vibe Bucket, where you can view the immortalized scrolls of your deployment ritual."
+

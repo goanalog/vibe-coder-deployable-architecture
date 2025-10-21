@@ -1,35 +1,31 @@
-variable "cos_bucket_name" {
-  description = "A prefix for your new IBM Cloud Object Storage bucket. A random suffix will be added to ensure uniqueness."
+variable "vibe_bucket_name" {
+  description = "🔮 A prefix for your new Vibe Bucket. A random suffix will be added to ensure uniqueness across all known dimensions."
   type        = string
-  default     = "vibe-coder-sample"
+  default     = "vibe-manifestation"
 }
 
-variable "cos_instance_name" {
-  description = "Name for your new IBM Cloud Object Storage service instance."
+variable "vibe_instance_name" {
+  description = "✨ A unique name for the Cloud Object Storage instance that will serve as the celestial vessel for your vibe."
   type        = string
-  default     = "vibe-coder-cos-instance"
+  default     = "vibe-vessel-instance"
 }
 
-variable "resource_group_id" {
-  description = "Optional: The ID of the Resource Group. If left blank, the 'Default' group will be used."
+variable "resource_group" {
+  description = "🌍 The resource group where your vibe will manifest. If left blank, your account's default resource group will be used."
   type        = string
   default     = null
 }
 
-variable "cos_plan" {
-  description = "The plan for the COS service instance."
-  type        = string
-  default     = "lite"
-}
-
-variable "cos_bucket_location" {
-  description = "Region where the COS instance and bucket will be created."
+variable "vibe_bucket_location" {
+  description = "📍 The geographical region where your vibe will resonate most strongly. This determines the physical location of your Vibe Bucket."
   type        = string
   default     = "us-south"
 }
 
-variable "pasted_code" {
-  description = "Channel your app's complete essence here. Pour in the HTML, CSS, and JavaScript—the entire vibe—and our cosmic pipeline will manifest it."
+variable "vibe_code" {
+  description = "🌀 Channel your app's complete essence here. Pour in the HTML, CSS, and JavaScript—the entire vibe—and our cosmic pipeline will manifest it."
   type        = string
-  default     = ""
+  default     = "<!DOCTYPE html><html><head><title>My Vibe</title><style>body { font-family: sans-serif; background-color: #f0f8ff; color: #333; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; } h1 { font-size: 4rem; text-shadow: 2px 2px 4px #ccc; }</style></head><body><h1>✨ Vibe Manifested! ✨</h1></body></html>"
+  sensitive   = true
 }
+
