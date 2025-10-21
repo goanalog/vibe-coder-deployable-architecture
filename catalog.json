@@ -1,45 +1,63 @@
 {
   "id": "vibe-coder",
-  "version": "0.1.1",
+  "version": "0.1.0",
   "displayName": "Vibe Coder — Instant SPA",
-  "description": "Deploy an instant 'vibe coding' single-page app: paste your HTML and get an IBM COS-hosted SPA immediately.",
+  "description": "Deploy an instant Vibe Coder single-page app in IBM Cloud Object Storage. Optionally upload or paste your index.html file.",
   "type": "deployable_architecture",
   "deliveryMethod": "terraform",
-  "variables": [
-    {
-      "name": "ibmcloud_api_key",
-      "type": "string",
-      "description": "Your IBM Cloud API key — don't worry, it stays secure.",
-      "ui_hints": {
-        "group": "Authentication",
-        "label": "IBM Cloud API Key",
-        "placeholder": "Enter your IBM Cloud API key"
+  "tags": ["Vibe Coder", "SPA", "IBM Cloud", "COS", "developer"],
+  "terraform": {
+    "main": "main.tf",
+    "variables": "variables.tf",
+    "outputs": "outputs.tf",
+    "version": "1.12"
+  },
+  "ui_hints": {
+    "groups": [
+      {
+        "name": "Setup",
+        "inputs": [
+          {
+            "name": "cos_name",
+            "label": "COS Instance Name",
+            "placeholder": "vibe-coder-cos",
+            "required": true
+          },
+          {
+            "name": "cos_bucket_name",
+            "label": "COS Bucket Name",
+            "placeholder": "vibe-coder-sample-bucket",
+            "required": true
+          },
+          {
+            "name": "cos_bucket_location",
+            "label": "COS Bucket Location",
+            "placeholder": "us-south",
+            "required": true
+          },
+          {
+            "name": "resource_group_id",
+            "label": "Resource Group ID",
+            "placeholder": "Enter your IBM Cloud Resource Group ID",
+            "required": true
+          },
+          {
+            "name": "index_html_file",
+            "label": "Optional index.html file",
+            "placeholder": "Upload your local index.html",
+            "required": false,
+            "type": "file"
+          }
+        ]
       }
-    },
+    ]
+  },
+  "outputs": [
     {
-      "name": "cos_bucket_name",
-      "type": "string",
-      "description": "Name your IBM COS bucket for the Vibe Coder SPA. Don't worry — it will be created automatically.",
-      "default": "vibe-coder-sample-bucket",
-      "ui_hints": {
-        "group": "Setup",
-        "label": "COS Bucket Name"
-      }
-    },
-    {
-      "name": "vibe_code",
-      "type": "string",
-      "description": "Paste your HTML 'vibe code' here. Your SPA will instantly use it.",
-      "default": "<!DOCTYPE html>\n<html>\n  <head>\n    <title>Vibe Coder</title>\n  </head>\n  <body>\n    <h1>Hello, Vibe!</h1>\n  </body>\n</html>",
-      "ui_hints": {
-        "group": "Vibe Code",
-        "label": "HTML Content",
-        "placeholder": "Paste your vibe code here",
-        "editor_type": "code",
-        "syntax": "html",
-        "rows": 15
-      }
+      "name": "spa_url",
+      "label": "Vibe Coder SPA URL",
+      "key_output": true,
+      "description": "Your deployed SPA URL — click to open or copy."
     }
-  ],
-  "tags": ["vibe-coder", "SPA", "IBM COS", "developer-experience"]
+  ]
 }
