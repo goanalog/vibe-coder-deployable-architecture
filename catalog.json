@@ -2,39 +2,42 @@
   "id": "vibe-coder-instant-spa",
   "version": "0.1.0",
   "displayName": "Vibe Coder — Instant SPA",
-  "description": "Deploy an instant Single Page Application (SPA) by pasting HTML, hosted automatically in IBM Cloud Object Storage.",
+  "description": "Deploy an instant Single Page Application (SPA) by pasting or editing your HTML — hosted automatically in IBM Cloud Object Storage.",
   "type": "deployable_architecture",
   "deliveryMethod": "terraform",
-  "cloudProvider": "ibm",
-  "architectureType": "web_app",
-  "tags": ["Vibe", "Developer Tools", "WebApp", "IBM Cloud", "COS"],
+  "tags": [
+    "Vibe",
+    "Developer Tools",
+    "WebApp",
+    "IBM Cloud Object Storage"
+  ],
   "inputs": [
     {
       "name": "ibmcloud_api_key",
       "type": "password",
       "required": true,
-      "description": "Your IBM Cloud API key to deploy resources."
+      "description": "Your IBM Cloud API key to deploy and host your vibe-coded SPA."
     },
     {
       "name": "location",
       "type": "string",
       "required": true,
       "defaultValue": "us-south",
-      "description": "IBM Cloud region for the COS bucket (e.g., us-south, eu-de)."
+      "description": "IBM Cloud location for your hosted app (e.g., us-south, eu-de)."
     },
     {
-      "name": "html_content",
+      "name": "vibe_code",
       "type": "textarea",
       "required": true,
-      "defaultValue": "<h1>Welcome to Vibe Coder!</h1><p>Your instant SPA is live.</p>",
-      "description": "Paste your HTML code here for your SPA."
-    },
-    {
-      "name": "make_public",
-      "type": "boolean",
-      "required": true,
-      "defaultValue": true,
-      "description": "If true, the SPA will be publicly accessible."
+      "description": "Paste or edit your HTML — your instant vibe-coded app! A live sample is provided by default.",
+      "defaultValue": "<!DOCTYPE html>\n<html>\n<head>\n  <title>Vibe Coder SPA</title>\n  <style>\n    body { font-family: sans-serif; text-align: center; padding: 4em; background: #f4f6f8; }\n    h1 { color: #0f62fe; }\n  </style>\n</head>\n<body>\n  <h1>Welcome to Vibe Coder!</h1>\n  <p>Your instant IBM Cloud SPA is live. Start pasting HTML or editing this page to code your vibes!</p>\n</body>\n</html>",
+      "ui_hints": {
+        "group": "App Content",
+        "label": "Vibe Code (HTML)",
+        "multiline": true,
+        "rows": 18,
+        "placeholder": "<!DOCTYPE html>\n<html>\n<head>\n  <title>Vibe Coder SPA</title>\n  <style>\n    body { font-family: sans-serif; text-align: center; padding: 4em; background: #f4f6f8; }\n    h1 { color: #0f62fe; }\n  </style>\n</head>\n<body>\n  <h1>Welcome to Vibe Coder!</h1>\n  <p>Your instant IBM Cloud SPA is live. Start pasting HTML or editing this page to code your vibes!</p>\n</body>\n</html>"
+      }
     }
   ]
 }
