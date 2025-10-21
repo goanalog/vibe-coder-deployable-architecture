@@ -2,7 +2,7 @@
   "id": "vibe-code-landing-zone",
   "version": "0.1.0",
   "displayName": "Vibe Code Landing Zone",
-  "description": "A deployable architecture for instant 'vibe coding' apps — paste or upload HTML and deploy it to IBM Cloud Object Storage. One click. Infinite vibes.",
+  "description": "A deployable architecture for instant 'vibe coding' — paste or upload your HTML to IBM Cloud Object Storage and watch it go live instantly.",
   "type": "deployable_architecture",
   "deliveryMethod": "terraform",
   "tags": [
@@ -30,7 +30,7 @@
     {
       "name": "region",
       "type": "string",
-      "description": "IBM Cloud region where your bucket will groove. 'us-south' is a steady classic.",
+      "description": "IBM Cloud region for your Object Storage bucket. 'us-south' is a steady classic.",
       "default": "us-south",
       "ui_hints": {
         "group": "Setup",
@@ -42,7 +42,7 @@
     {
       "name": "cos_instance_name",
       "type": "string",
-      "description": "A friendly name for your Object Storage instance. Don’t overthink it — the vibe’s in the content.",
+      "description": "A friendly name for your IBM Cloud Object Storage instance.",
       "default": "vibe-instance-123456",
       "ui_hints": {
         "group": "Setup",

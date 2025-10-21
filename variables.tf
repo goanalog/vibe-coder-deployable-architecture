@@ -1,6 +1,5 @@
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #  Vibe Code Landing Zone — Variables
-#  Align your energy. Align your inputs.
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 variable "resource_group" {
@@ -10,13 +9,13 @@ variable "resource_group" {
 }
 
 variable "region" {
-  description = "IBM Cloud region where your bucket will groove. 'us-south' is a steady classic."
+  description = "IBM Cloud region for your Object Storage bucket. 'us-south' is a steady classic."
   type        = string
   default     = "us-south"
 }
 
 variable "cos_instance_name" {
-  description = "A friendly name for your Object Storage instance. Don’t overthink it — the vibe’s in the content."
+  description = "A friendly name for your IBM Cloud Object Storage instance."
   type        = string
   default     = "vibe-instance-123456"
 }

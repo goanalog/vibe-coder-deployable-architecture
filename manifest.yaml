@@ -3,8 +3,8 @@ kind: deployable-architecture
 metadata:
   name: vibe-code-landing-zone
   displayName: Vibe Code Landing Zone
-  description: "Paste your vibe, exhale, and ship — a static site on IBM Cloud Object Storage (website enabled)."
-  version: 1.0.1
+  description: "Paste your vibe, exhale, and ship — a static site hosted on IBM Cloud Object Storage (website enabled)."
+  version: 0.1.0
 spec:
   deliveryMethod: terraform
   entrypoint: main.tf
@@ -12,3 +12,10 @@ spec:
     name: terraform
     version: '1.5'
   variables: variables.tf
+  tags:
+    - ibm-cloud
+    - object-storage
+    - static-website
+    - website-ready
+    - deployable-architecture
+    - vibe-coding
