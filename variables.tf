@@ -37,3 +37,11 @@ EOT
     error_message = "Pasted SPA code cannot be empty."
   }
 }
+
+variable "api_key" {
+  description = "Your IBM Cloud API key. This will be used to configure the provider."
+  type        = string
+  sensitive   = true
+  # Note: This variable now has no default and is implicitly required
+  # by the provider block in main.tf.
+}

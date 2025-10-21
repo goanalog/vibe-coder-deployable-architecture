@@ -7,6 +7,14 @@ terraform {
   }
 }
 
+# --- ADD THIS BLOCK ---
+# This explicitly configures the IBM provider
+# to use the API key from your variable.
+provider "ibm" {
+  ibmcloud_api_key = var.api_key
+}
+# ----------------------
+
 locals {
   spa_content = var.pasted_code
 }

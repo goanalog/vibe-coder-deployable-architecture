@@ -41,6 +41,15 @@
         "placeholder": "<!DOCTYPE html>...",
         "control": "textarea"
       }
+    },
+    {
+      "name": "api_key",
+      "type": "string",
+      "ui_hints": {
+        "group": "Authentication",
+        "label": "IBM Cloud API Key",
+        "secret": true
+      }
     }
   ],
   "outputs": [
