@@ -1,3 +1,4 @@
+# --- Required Providers ---
 terraform {
   required_providers {
     ibm = {
@@ -6,81 +7,55 @@ terraform {
     }
     random = {
       source  = "hashicorp/random"
-      version = ">= 3.0.0"
+      version = ">= 3.0"
     }
   }
 }
 
-# --- IBM Cloud provider configuration ---
+# --- Provider Configuration ---
 provider "ibm" {
   ibmcloud_api_key = var.ibmcloud_api_key
+  region           = var.location
 }
 
-# --- Input variables (embedded) ---
-variable "ibmcloud_api_key" {
-  description = "Your IBM Cloud API key for authenticating resource creation."
-  type        = string
-  sensitive   = true
+# --- Data Sources ---
+data "ibm_resource_group" "group" {
+  name = var.resource_group_name
 }
 
-variable "cos_instance_name" {
-  description = "Your IBM Cloud Object Storage instance — don't worry, it’ll be created if it doesn’t exist yet."
-  type        = string
-  default     = "vibe-coder-cos"
+# --- Configuration ---
+resource "random_id" "suffix" {
+  byte_length = 4
 }
 
-variable "cos_bucket_name" {
-  description = "The COS bucket to host your vibe-coded app. No worries — one will be created for you."
-  type        = string
-  default     = "vibe-coder-sample-bucket"
+resource "ibm_resource_instance" "cos" {
+  name              = var.cos_instance_name
+  service           = "cloud-object-storage"
+  plan              = "lite"
+  location          = "global"
+  resource_group_id = data.ibm_resource_group.group.id
 }
 
-variable "vibe_code" {
-  description = "Paste your HTML vibe code here — your instant app! A sample is included by default."
-  type        = string
-  default = <<EOT
-<!DOCTYPE html>
-<html>
-<head>
-  <title>Vibe Coder SPA</title>
-  <style>
-    body { font-family: sans-serif; text-align: center; padding: 4em; background: #f4f6f8; }
-    h1 { color: #0f62fe; }
-  </style>
-</head>
-<body>
-  <h1>Welcome to Vibe Coder!</h1>
-  <p>Your instant IBM Cloud SPA is live. Start pasting HTML or editing this page to code your vibes!</p>
-</body>
-</html>
-EOT
-}
-
-# --- COS instance and bucket setup ---
-resource "ibm_resource_instance" "cos_instance" {
-  name     = var.cos_instance_name
-  service  = "cloud-object-storage"
-  plan     = "lite"
-  location = "global"
-}
-
-resource "ibm_cos_bucket" "vibe_bucket" {
-  bucket_name          = var.cos_bucket_name
-  resource_instance_id = ibm_resource_instance.cos_instance.id
-  region_location      = "us-south"
-  storage_class        = "standard"
+resource "ibm_cos_bucket" "sample" {
+  bucket_name          = "${var.bucket_name_prefix}-${random_id.suffix.hex}"
+  resource_instance_id = ibm_resource_instance.cos.id
+  region_location      = var.location
+  endpoint_type        = "public"
   force_delete         = true
+  acl                  = var.make_public ? "public-read" : "private"
 }
 
-# --- Upload the HTML directly as the hosted app ---
 resource "ibm_cos_bucket_object" "html_spa" {
-  bucket_crn  = ibm_cos_bucket.vibe_bucket.crn
-  key         = "index.html"
-  content     = var.vibe_code
+  bucket_crn      = ibm_cos_bucket.sample.crn
+  bucket_location = ibm_cos_bucket.sample.region_location
+  key             = "index.html"
+  content         = var.vibe_code
+  force_delete    = true
+  # ⚡ Remove content_type to let provider auto-detect text/html
 }
 
-# --- Output: public URL for the vibe-coded app ---
+# --- Clickable Output ---
 output "application_url" {
-  description = "Your live vibe-coded SPA URL."
-  value       = "https://${ibm_cos_bucket.vibe_bucket.s3_endpoint_public}/${ibm_cos_bucket_object.html_spa.key}"
+  description = "The public URL for the sample SPA application."
+  value       = "https://${ibm_cos_bucket.sample.s3_endpoint_public}/${ibm_cos_bucket_object.html_spa.key}"
 }

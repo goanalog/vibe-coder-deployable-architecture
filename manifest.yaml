@@ -1,38 +1,43 @@
 name: vibe-coder-instant-spa
-type: deployable_architecture
 version: 0.1.0
-description: >
-  Deploy an instant Single Page Application (SPA) by pasting HTML,
-  hosted automatically in IBM Cloud Object Storage.
-
+description: "Deploy an instant SPA by pasting or editing HTML, hosted automatically in IBM Cloud Object Storage."
 inputs:
   - name: ibmcloud_api_key
     type: password
     label: IBM Cloud API Key
     required: true
-    description: >
-      Your IBM Cloud API key. Required to create the COS instance and deploy the SPA.
+    description: "Your IBM Cloud API key. Needed to deploy the SPA and COS bucket."
 
   - name: location
     type: string
     label: Location
-    default: us-south
+    default: "us-south"
     required: true
-    description: >
-      The IBM Cloud region where the COS bucket will be created (e.g., us-south, eu-de).
+    description: "The IBM Cloud location where the COS bucket will be created (e.g., us-south, eu-de)."
 
-  - name: html_content
+  - name: vibe_code
     type: textarea
-    label: Paste Your HTML
-    default: "<h1>Welcome to Vibe Coder!</h1><p>Your instant SPA is live.</p>"
+    label: Vibe Code (HTML)
     required: true
-    description: >
-      Paste the full HTML content for your SPA. The default sample is provided if left empty.
+    default: |
+      <!DOCTYPE html>
+      <html>
+      <head>
+        <title>Vibe Coder SPA</title>
+        <style>
+          body { font-family: sans-serif; text-align: center; padding: 4em; background: #f4f6f8; }
+          h1 { color: #0f62fe; }
+        </style>
+      </head>
+      <body>
+        <h1>Welcome to Vibe Coder!</h1>
+        <p>Your instant IBM Cloud SPA is live. Start pasting HTML or editing this page to code your vibes!</p>
+      </body>
+      </html>
 
   - name: make_public
     type: boolean
     label: Make Publicly Accessible
     default: true
     required: true
-    description: >
-      If true, a public access policy will be attached to the bucket, making your SPA viewable online.
+    description: "If true, a public access policy will be attached to the bucket, making your SPA viewable on the internet."
