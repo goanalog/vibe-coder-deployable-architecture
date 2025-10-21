@@ -13,13 +13,13 @@ variable "cos_instance_name" {
 variable "resource_group_id" {
   description = "Optional: The ID of the Resource Group. If left blank, the 'Default' group will be used."
   type        = string
-  default     = null # <-- ADDED THIS LINE
+  default     = null 
 }
 
 variable "cos_plan" {
   description = "The plan for the COS service instance."
   type        = string
-  default     = "standard"
+  default     = "lite" # <-- CHANGED FROM "standard"
 }
 
 variable "cos_bucket_location" {
@@ -38,5 +38,4 @@ variable "api_key" {
   description = "Your IBM Cloud API key. This will be used to configure the provider."
   type        = string
   sensitive   = true
-  # This is still required, so no default
 }

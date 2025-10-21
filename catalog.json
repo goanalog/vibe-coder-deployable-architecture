@@ -44,7 +44,7 @@
     {
       "name": "cos_plan",
       "type": "string",
-      "default": "standard",
+      "default": "lite", 
       "ui_hints": {
         "group": "Setup",
         "label": "COS Plan"
