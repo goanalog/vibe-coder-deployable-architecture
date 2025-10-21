@@ -42,7 +42,7 @@ inputs:
           <p>Your instant IBM Cloud SPA is live. Start pasting HTML below to code your vibes!</p>
           <textarea id="editor">
 <h1>Editable Vibe!</h1>
-<p>Change this text and click 'Update Preview' to see it live.</p>
+<p>Change this text and update the preview to see it live.</p>
           </textarea>
           <br>
           <button onclick="updatePreview()">Update Preview</button>
