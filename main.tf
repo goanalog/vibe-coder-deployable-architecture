@@ -1,26 +1,26 @@
-terraform {
-  required_version = ">= 1.2"
-
-  required_providers {
-    ibm = {
-      source  = "IBM-Cloud/ibm"
-      version = ">= 1.84.0"
-    }
-  }
-}
-
 provider "ibm" {
-  ibmcloud_api_key = var.ibmcloud_api_key
-  region           = var.cos_bucket_location
+  ibmcloud_api_key = var.api_key
+  region           = "us-south"
 }
 
+# Create a COS service instance
+resource "ibm_resource_instance" "cos_instance" {
+  name     = var.cos_name
+  service  = "cloud-object-storage"
+  plan     = "standard"
+  location = "us-south"
+}
+
+# Create a COS bucket
 resource "ibm_cos_bucket" "vibe_spa_bucket" {
-  bucket_name = var.cos_bucket_name
-  location    = var.cos_bucket_location
+  name                 = var.cos_name
+  resource_instance_id = ibm_resource_instance.cos_instance.id
+  access               = "private"
 }
 
+# Upload the pasted HTML as index.html
 resource "ibm_cos_bucket_object" "html_spa" {
-  bucket_crn = ibm_cos_bucket.vibe_spa_bucket.crn
-  key        = "index.html"
-  source     = "index.html"
+  bucket  = ibm_cos_bucket.vibe_spa_bucket.name
+  key     = "index.html"
+  content = var.vibe_html
 }

@@ -1,17 +1,17 @@
-variable "ibmcloud_api_key" {
-  description = "Your IBM Cloud API key — don’t worry, this is required for Vibe Coder to deploy your SPA."
+variable "api_key" {
+  description = "Your IBM Cloud API key — don’t worry, this will authenticate Terraform."
   type        = string
   sensitive   = true
 }
 
-variable "cos_bucket_name" {
-  description = "Name of the IBM Cloud Object Storage bucket where your SPA will live."
+variable "cos_name" {
+  description = "Name your IBM Cloud Object Storage instance and bucket."
   type        = string
-  default     = "vibe-coder-sample-bucket"
+  default     = "vibe-coder-cos"
 }
 
-variable "cos_bucket_location" {
-  description = "The IBM Cloud region where your COS bucket will be created."
+variable "vibe_html" {
+  description = "Paste your Vibe Coder HTML code here — it will be published as index.html in COS."
   type        = string
-  default     = "us-south"
+  default     = "<!DOCTYPE html><html><body><h1>Hello Vibe!</h1></body></html>"
 }

@@ -1,0 +1,67 @@
+{
+  "id": "vibe-coder",
+  "version": "0.2.0",
+  "displayName": "Vibe Coder — Instant HTML Publisher",
+  "description": "Deploy a vibe-coded single-page app instantly — paste your HTML, and it’s hosted automatically in IBM Cloud Object Storage. No servers, no stress.",
+  "type": "deployable_architecture",
+  "deliveryMethod": "terraform",
+  "tags": [
+    "ibm-cloud",
+    "developer-tools",
+    "object-storage",
+    "spa",
+    "vibe-coder",
+    "frontend",
+    "instant-deploy"
+  ],
+  "icon": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjQiIGhlaWdodD0iNjQiIHZpZXdCb3g9IjAgMCA2NCA2NCI+PHBhdGggZD0iTTMyIDZhMjYgMjYgMCAxIDEgMCA1MmEyNiAyNiAwIDAgMSAwLTUyWiIgZmlsbD0iIzAwN0JDMyIvPjx0ZXh0IHg9IjMyIiB5PSIzNyIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1zaXplPSIxMiIgZmlsbD0id2hpdGUiPkNWPC90ZXh0Pjwvc3ZnPg==",
+  "documentation": {
+    "instructions": "Paste your Vibe Coder HTML in the 'Vibe Code' field below and click Deploy. The app will automatically create an IBM Cloud Object Storage bucket, upload your HTML as `index.html`, and host it securely.",
+    "learn_more_link": "https://cloud.ibm.com/docs/cloud-object-storage"
+  },
+  "inputs": [
+    {
+      "name": "api_key",
+      "type": "string",
+      "label": "IBM Cloud API Key",
+      "description": "Used to authenticate with IBM Cloud. Don't worry — it stays private.",
+      "ui_hints": {
+        "group": "Setup",
+        "placeholder": "Enter your IBM Cloud API key"
+      },
+      "required": true,
+      "sensitive": true
+    },
+    {
+      "name": "cos_name",
+      "type": "string",
+      "label": "COS Instance Name",
+      "description": "Name for your new IBM Cloud Object Storage instance and bucket.",
+      "default": "vibe-coder-cos",
+      "ui_hints": {
+        "group": "Setup",
+        "placeholder": "vibe-coder-cos"
+      }
+    },
+    {
+      "name": "vibe_html",
+      "type": "string",
+      "label": "Vibe Code",
+      "description": "Paste your HTML code here — this will become your app’s index.html.",
+      "ui_hints": {
+        "group": "Vibe Coder",
+        "multiline": true,
+        "placeholder": "<!DOCTYPE html>\\n<html>\\n  <body>\\n    <h1>Hello Vibe!</h1>\\n  </body>\\n</html>"
+      },
+      "required": true
+    }
+  ],
+  "outputs": [
+    {
+      "name": "cos_bucket_name",
+      "label": "Deployed Bucket",
+      "description": "Your vibe-coded app was deployed to this COS bucket."
+    }
+  ],
+  "defaultRegion": "us-south"
+}
