@@ -1,6 +1,7 @@
 name: vibe-coder-instant-spa
 version: 0.2.0
 description: "Deploy a live-editable Single Page Application (SPA) in IBM Cloud Object Storage."
+type: deployable_architecture
 inputs:
   - name: ibmcloud_api_key
     type: password
@@ -12,13 +13,13 @@ inputs:
     label: Location
     default: "us-south"
     required: true
-    description: "IBM Cloud location where the COS bucket will be created."
-  - name: make_public
-    type: boolean
-    label: Make Publicly Accessible
-    default: true
+    description: "IBM Cloud region where resources will be created."
+  - name: cos_bucket_name
+    type: string
+    label: COS Bucket Name
+    default: "vibe-coder-spa-bucket"
     required: true
-    description: "If true, the SPA will be publicly accessible."
+    description: "Name of the IBM COS bucket that will host your SPA."
   - name: vibe_code
     type: textarea
     label: Live-Editable SPA HTML

@@ -4,7 +4,6 @@ terraform {
       source  = "IBM-Cloud/ibm"
       version = ">= 1.84.0"
     }
-    # The "template" provider is no longer needed
   }
 }
 
@@ -13,35 +12,43 @@ provider "ibm" {
   region           = var.location
 }
 
+# Resource Group
 resource "ibm_resource_group" "vibe_rg" {
   name = "vibe-coder-rg"
 }
 
+# COS Service Instance
+resource "ibm_resource_instance" "vibe_cos" {
+  name               = "vibe-coder-cos"
+  resource_group_id   = ibm_resource_group.vibe_rg.id
+  service             = "cloud-object-storage"
+  plan                = "standard"
+  location            = var.location
+}
+
+# COS Bucket
 resource "ibm_cos_bucket" "vibe_spa_bucket" {
-  bucket_name          = "vibe-coder-spa" # Renamed from 'bucket' to 'bucket_name' for clarity
-  location_constraint  = var.location     # Renamed from 'location' to 'location_constraint'
-
-  force_destroy      = true
-  resource_group_id  = ibm_resource_group.vibe_rg.id # <-- FIX: Assign the bucket to the resource group
-  public_access        = var.make_public             # <-- FIX: Use the make_public variable
+  bucket               = var.cos_bucket_name
+  resource_instance_id = ibm_resource_instance.vibe_cos.id
 }
 
-# This resource is no longer needed:
-# data "template_file" "spa_html" {
-#  template = var.vibe_code
-# }
-
+# COS Bucket Object (SPA HTML)
 resource "ibm_cos_bucket_object" "html_spa" {
-  bucket       = ibm_cos_bucket.vibe_spa_bucket.bucket_name
-  key          = "index.html"
-  content      = var.vibe_code # <-- FIX: Use the variable directly
-  content_type = "text/html"   # Explicitly set content type for safety
+  bucket_crn      = ibm_cos_bucket.vibe_spa_bucket.bucket_crn
+  bucket_location = ibm_cos_bucket.vibe_spa_bucket.location
+  key             = "index.html"
+  content         = var.vibe_code
 }
 
-output "bucket_name" {
-  value = ibm_cos_bucket.vibe_spa_bucket.bucket_name
+# Optional Outputs
+output "cos_bucket_name" {
+  value = ibm_cos_bucket.vibe_spa_bucket.bucket
 }
 
-output "spa_url" {
-  value = "https://${ibm_cos_bucket.vibe_spa_bucket.bucket_name}.s3.${var.location}.cloud-object-storage.appdomain.cloud/index.html"
+output "cos_bucket_crn" {
+  value = ibm_cos_bucket.vibe_spa_bucket.bucket_crn
+}
+
+output "spa_object_key" {
+  value = ibm_cos_bucket_object.html_spa.key
 }
