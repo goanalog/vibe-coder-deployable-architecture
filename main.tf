@@ -37,15 +37,15 @@ resource "ibm_cos_bucket" "vibe_spa_bucket" {
 resource "ibm_cos_bucket_object" "vibe_index" {
   count = length(var.pasted_code) > 0 ? 1 : 0
 
-  # Use the bucket's CRN, which is output by the resource above
-  bucket_crn = ibm_cos_bucket.vibe_spa_bucket.crn 
+  bucket_crn      = ibm_cos_bucket.vibe_spa_bucket.crn 
+  # --- ADD THIS LINE ---
+  bucket_location = ibm_cos_bucket.vibe_spa_bucket.region_location 
   
-  key        = "index.html"
-  content    = local.spa_content
+  key             = "index.html"
+  content         = local.spa_content
 }
 
 output "spa_url" {
-  # This output logic is still correct
   value = length(var.pasted_code) > 0 ? "https://${ibm_cos_bucket.vibe_spa_bucket.bucket_name}.s3.${ibm_cos_bucket.vibe_spa_bucket.region_location}.cloud-object-storage.appdomain.cloud/index.html" : "No HTML provided. Bucket was created, but no SPA is deployed."
   description = "Key URL to access your deployed SPA"
 }
