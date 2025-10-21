@@ -5,11 +5,9 @@
   "description": "Deploy an instant Single Page Application (SPA) by pasting HTML, hosted automatically in IBM Cloud Object Storage.",
   "type": "deployable_architecture",
   "deliveryMethod": "terraform",
-  "tags": [
-    "Vibe",
-    "Developer Tools",
-    "WebApp"
-  ],
+  "cloudProvider": "ibm",
+  "architectureType": "web_app",
+  "tags": ["Vibe", "Developer Tools", "WebApp", "IBM Cloud", "COS"],
   "inputs": [
     {
       "name": "ibmcloud_api_key",
@@ -22,21 +20,21 @@
       "type": "string",
       "required": true,
       "defaultValue": "us-south",
-      "description": "The IBM Cloud location for the COS bucket (e.g., us-south, eu-de)."
+      "description": "IBM Cloud region for the COS bucket (e.g., us-south, eu-de)."
     },
     {
       "name": "html_content",
       "type": "textarea",
       "required": true,
       "defaultValue": "<h1>Welcome to Vibe Coder!</h1><p>Your instant SPA is live.</p>",
-      "description": "Paste your HTML code here for the SPA."
+      "description": "Paste your HTML code here for your SPA."
     },
     {
       "name": "make_public",
       "type": "boolean",
       "required": true,
-      "defaultValue": "true",
-      "description": "Make the SPA publicly accessible on the internet."
+      "defaultValue": true,
+      "description": "If true, the SPA will be publicly accessible."
     }
   ]
 }

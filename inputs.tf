@@ -1,42 +1,41 @@
 variable "ibmcloud_api_key" {
   type        = string
-  description = "Your IBM Cloud API key. Required for Terraform to create resources."
   sensitive   = true
+  description = "Your IBM Cloud API key. Required for Terraform to create resources."
 }
 
-variable "make_public" {
-  type        = bool
-  description = "Set to true to make the bucket's content publicly accessible via a URL."
-  default     = true
+variable "location" {
+  type        = string
+  default     = "us-south"
+  description = "IBM Cloud region for the COS bucket (e.g., us-south, eu-de)."
 }
 
 variable "html_content" {
   type        = string
-  description = "Paste your HTML code here to create an instant SPA."
+  description = "Paste your HTML here for the hosted SPA."
   default     = "<h1>Welcome to Vibe Coder!</h1><p>Your instant SPA is live.</p>"
 }
 
+variable "make_public" {
+  type        = bool
+  default     = true
+  description = "If true, makes the SPA publicly accessible via a bucket policy."
+}
+
 variable "resource_group_name" {
-  description = "The name of the resource group to deploy resources into."
   type        = string
   default     = "Default"
+  description = "The resource group name where resources will be deployed."
 }
 
 variable "bucket_name_prefix" {
-  description = "The prefix for the new COS bucket name."
   type        = string
-  default     = "vibe-coder-sample-bucket"
+  default     = "vibe-coder-sample"
+  description = "Prefix for your COS bucket name (random suffix added automatically)."
 }
 
 variable "cos_instance_name" {
-  description = "The name for the new COS service instance."
   type        = string
   default     = "vibe-coder-cos"
-}
-
-# <-- FIX: Renamed 'region' to 'location' for consistency
-variable "location" {
-  description = "The IBM Cloud location to deploy the COS bucket in (e.g., us-south)."
-  type        = string
-  default     = "us-south"
+  description = "Name for the new Cloud Object Storage instance."
 }
