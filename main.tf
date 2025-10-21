@@ -62,5 +62,5 @@ resource "ibm_cos_bucket_object" "vibe_index" {
 output "spa_url" {
   # --- UPDATE THIS LINE ---
   value = length(var.pasted_code) > 0 ? "https://${local.bucket_name_unique}.s3.${ibm_cos_bucket.vibe_spa_bucket.region_location}.cloud-object-storage.appdomain.cloud/index.html" : "No HTML provided. Bucket was created, but no SPA is deployed."
-  description = "Key URL to access your deployed SPA"
+  description = "Behold, the consecrated endpoint for direct vibe consumption. This isn't just a link; it's a globally propagated portal where the digital consciousness can bask in the glow of your manifested aesthetic. Share wisely—unfiltered vibes can be disorienting to the uninitiated."
 }
