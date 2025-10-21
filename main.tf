@@ -1,5 +1,5 @@
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-# ✨ Vibe Manifestation Engine v1.1 — Public Edition ✨
+# ✨ Vibe Manifestation Engine v1.2 ✨
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 terraform {
   required_version = ">= 1.5.0"
@@ -11,19 +11,14 @@ terraform {
 
 provider "ibm" { region = var.region }
 
+# --- CORRECTED: Uses local index.html as the default ---
 locals {
   html_content = var.index_html != "" ?
     var.index_html :
-    (var.index_html_file != "" ?
-      file(var.index_html_file) :
-      "<!DOCTYPE html><html><body><h1>🌈 Awaiting your vibe...</h1></body></html>")
+    file("${path.module}/index.html")
 }
 
-resource "local_file" "index_html" {
-  content  = local.html_content
-  filename = "${path.module}/index.html"
-}
-
+# --- This resource creates the COS instance ---
 resource "ibm_resource_instance" "cos" {
   name           = var.cos_instance_name
   service        = "cloud-object-storage"
@@ -32,16 +27,17 @@ resource "ibm_resource_instance" "cos" {
   resource_group = var.resource_group
 }
 
+# --- This resource creates the bucket ---
+# (Note: The inline 'website' block is removed for correctness)
 resource "ibm_cos_bucket" "bucket" {
   bucket_name          = var.bucket_name
   resource_instance_id = ibm_resource_instance.cos.id
   region_location      = var.region
   storage_class        = "standard"
   force_destroy        = true
-
-  
 }
 
+# --- This object is your main HTML page ---
 resource "ibm_cos_bucket_object" "index" {
   bucket_crn    = ibm_resource_instance.cos.id
   bucket_name   = ibm_cos_bucket.bucket.bucket_name
@@ -50,6 +46,7 @@ resource "ibm_cos_bucket_object" "index" {
   content_type  = "text/html"
 }
 
+# --- These are the humorous "vibe" files ---
 resource "ibm_cos_bucket_object" "plan_md" {
   bucket_crn    = ibm_resource_instance.cos.id
   bucket_name   = ibm_cos_bucket.bucket.bucket_name
@@ -75,6 +72,14 @@ resource "ibm_cos_bucket_object" "synergy_realized_md" {
   content_type = "text/markdown"
 }
 
+# --- This enables the static website hosting ---
+resource "ibm_cos_bucket_website_config" "website" {
+  bucket_crn      = ibm_cos_bucket.bucket.crn
+  index_document  = "index.html"
+  error_document  = "index.html" # You can also point this to a custom error.html
+}
+
+# --- Outputs ---
 output "vibe_url" {
   description = "Behold the consecrated endpoint for direct vibe consumption."
   value       = "https://${var.bucket_name}.s3-web.${var.region}.cloud-object-storage.appdomain.cloud/"
@@ -83,12 +88,4 @@ output "vibe_url" {
 output "vibe_bucket_url" {
   description = "Direct link to your sacred bucket."
   value       = "https://s3.${var.region}.cloud-object-storage.appdomain.cloud/${var.bucket_name}/"
-}
-
-
-# Enable static website hosting for the bucket
-resource "ibm_cos_bucket_website_config" "website" {
-  bucket_crn      = ibm_cos_bucket.bucket.crn
-  index_document  = "index.html"
-  error_document  = "index.html"
 }
