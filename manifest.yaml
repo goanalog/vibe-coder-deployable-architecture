@@ -40,10 +40,8 @@ inputs:
         <body>
           <h1>Welcome to Vibe Coder!</h1>
           <p>Your instant IBM Cloud SPA is live. Start pasting HTML below to code your vibes!</p>
-          <textarea id="editor">
-<h1>Editable Vibe!</h1>
-<p>See it live.</p>
-          </textarea>
+          <textarea id="editor">&lt;h1&gt;Editable Vibe!&lt;/h1&gt;
+&lt;p&gt;See it live.&lt;/p&gt;</textarea>
           <br>
           <button onclick="updatePreview()">Update Preview</button>
           <div id="preview">
