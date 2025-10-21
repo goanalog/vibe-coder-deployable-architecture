@@ -1,27 +1,39 @@
 variable "cos_bucket_name" {
-  description = "The name of the IBM COS bucket to host your SPA"
+  description = "Name your IBM Cloud Object Storage bucket."
   type        = string
   default     = "vibe-coder-sample-bucket"
 }
 
 variable "cos_instance_id" {
-  description = "The IBM Cloud Object Storage instance ID"
+  description = "IBM COS service instance ID. Required to create the bucket."
   type        = string
 }
 
 variable "cos_bucket_location" {
-  description = "The location/region for the COS bucket"
+  description = "COS bucket location/region. Default is 'us-south'."
   type        = string
   default     = "us-south"
 }
 
 variable "pasted_code" {
-  description = "Your SPA HTML code (paste it here)"
+  description = "Paste your SPA code (HTML) here."
   type        = string
-}
+  default     = <<-EOT
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Vibe Coder Sample SPA</title>
+</head>
+<body>
+  <h1>🎉 Welcome to Vibe Coder!</h1>
+  <p>Your instant SPA is live in IBM COS.</p>
+</body>
+</html>
+EOT
 
-variable "api_key" {
-  description = "IBM Cloud API key (used internally)"
-  type        = string
-  sensitive   = true
+  validation {
+    condition     = length(var.pasted_code) > 0
+    error_message = "Pasted SPA code cannot be empty."
+  }
 }
