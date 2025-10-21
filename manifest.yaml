@@ -13,9 +13,3 @@ metadata:
     - static-hosting
 spec:
   license:
-    accept: true
-  source:
-    path: .
-  terraform:
-    template_folder: .
-[cite_start]``` [cite: 3]
