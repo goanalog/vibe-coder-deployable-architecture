@@ -19,9 +19,3 @@ output "spa_url" {
   value       = "https://${ibm_cos_bucket.vibe_spa_bucket.bucket}.s3.${var.cos_bucket_location}.cloud-object-storage.appdomain.cloud/index.html"
   description = "Key URL to access your deployed SPA"
 }
-
-output "api_key_output" {
-  value       = var.api_key
-  description = "The IBM Cloud API key used in this workspace"
-  sensitive   = true
-}

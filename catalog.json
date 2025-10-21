@@ -65,11 +65,6 @@
       "name": "spa_url",
       "key_output": true,
       "description": "The public URL of your deployed SPA"
-    },
-    {
-      "name": "api_key_output",
-      "description": "The API key used in this deployment",
-      "sensitive": true
     }
   ]
 }
