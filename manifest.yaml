@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: deployable_architecture
+metadata:
+  name: vibe-coder
+  version: 0.1.0
+  displayName: "Vibe Coder — Instant SPA"
+  description: "Deploy an instant 'vibe coding' sample app that hosts pasted HTML in IBM Cloud Object Storage."
+  tags:
+    - ibm
+    - cloud
+    - vibe-coder
+    - single-page-app
+    - static-hosting
+spec:
+  license:
+    accept: true
+  source:
+    path: .
+  terraform:
+    template_folder: .
+[cite_start]``` [cite: 3]

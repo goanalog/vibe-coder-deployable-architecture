@@ -2,7 +2,7 @@
   "id": "vibe-coder",
   "version": "0.1.0",
   "displayName": "Vibe Coder — Instant SPA",
-  "description": "Deploy an instant SPA by pasting your HTML code. Hosted in IBM COS.",
+  "description": "Deploy an instant SPA by pasting your HTML code. IBM COS hosts it for you!",
   "type": "deployable_architecture",
   "deliveryMethod": "terraform",
   "variables": [
@@ -38,16 +38,8 @@
       "ui_hints": {
         "group": "Input",
         "label": "Pasted SPA Code",
-        "placeholder": "<!DOCTYPE html>..."
-      }
-    },
-    {
-      "name": "api_key",
-      "type": "string",
-      "ui_hints": {
-        "group": "Authentication",
-        "label": "IBM Cloud API Key",
-        "secret": true
+        "placeholder": "<!DOCTYPE html>...",
+        "control": "textarea"
       }
     }
   ],
