@@ -39,9 +39,7 @@ resource "ibm_cos_bucket" "bucket" {
   storage_class        = "standard"
   force_destroy        = true
 
-  website {
-    index_document = "index.html"
-  }
+  
 }
 
 resource "ibm_cos_bucket_object" "index" {
@@ -85,4 +83,12 @@ output "vibe_url" {
 output "vibe_bucket_url" {
   description = "Direct link to your sacred bucket."
   value       = "https://s3.${var.region}.cloud-object-storage.appdomain.cloud/${var.bucket_name}/"
+}
+
+
+# Enable static website hosting for the bucket
+resource "ibm_cos_bucket_website_config" "website" {
+  bucket_crn      = ibm_cos_bucket.bucket.crn
+  index_document  = "index.html"
+  error_document  = "index.html"
 }
