@@ -1,4 +1,3 @@
-
 variable "resource_group" {
   description = "Where your vibe lives organizationally. If unsure, 'default' is fine."
   type        = string

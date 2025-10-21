@@ -64,7 +64,7 @@
     {
       "name": "index_html",
       "type": "string",
-      "description": "Paste your full HTML here \u2014 it becomes your app\u2019s index.html when deployed. Leave blank to use the sample app.",
+      "description": "Paste your full HTML here — it becomes your app’s index.html when deployed. Leave blank to use the sample app.",
       "ui_hints": {
         "group": "App Content",
         "label": "App HTML",
