@@ -7,13 +7,9 @@ terraform {
   }
 }
 
-# --- ADD THIS BLOCK ---
-# This explicitly configures the IBM provider
-# to use the API key from your variable.
 provider "ibm" {
   ibmcloud_api_key = var.api_key
 }
-# ----------------------
 
 locals {
   spa_content = var.pasted_code
@@ -26,6 +22,10 @@ resource "ibm_cos_bucket" "vibe_spa_bucket" {
 }
 
 resource "ibm_cos_bucket_object" "vibe_index" {
+  # --- ADD THIS LINE ---
+  # Only create this resource if var.pasted_code is not empty
+  count = length(var.pasted_code) > 0 ? 1 : 0
+
   bucket_location = ibm_cos_bucket.vibe_spa_bucket.location
   bucket          = ibm_cos_bucket.vibe_spa_bucket.bucket
   key             = "index.html"
@@ -33,6 +33,8 @@ resource "ibm_cos_bucket_object" "vibe_index" {
 }
 
 output "spa_url" {
-  value       = "https://${ibm_cos_bucket.vibe_spa_bucket.bucket}.s3.${var.cos_bucket_location}.cloud-object-storage.appdomain.cloud/index.html"
+  # Updated value to be conditional
+  value = length(var.pasted_code) > 0 ? "https://${ibm_cos_bucket.vibe_spa_bucket.bucket}.s3.${var.cos_bucket_location}.cloud-object-storage.appdomain.cloud/index.html" : "No HTML provided. Bucket was created, but no SPA is deployed."
+  
   description = "Key URL to access your deployed SPA"
 }

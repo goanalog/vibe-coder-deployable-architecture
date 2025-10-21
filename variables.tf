@@ -16,32 +16,15 @@ variable "cos_bucket_location" {
 }
 
 variable "pasted_code" {
-  description = "Paste your SPA code (HTML) here."
+  description = "Optional: Paste your SPA code (HTML) here."
   type        = string
-  default     = <<-EOT
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Vibe Coder Sample SPA</title>
-</head>
-<body>
-  <h1>🎉 Welcome to Vibe Coder!</h1>
-  <p>Your instant SPA is live in IBM COS.</p>
-</body>
-</html>
-EOT
-
-  validation {
-    condition     = length(var.pasted_code) > 0
-    error_message = "Pasted SPA code cannot be empty."
-  }
+  default     = "" # Changed from HTML block to empty string
+  
+  # Validation block removed to make it optional
 }
 
 variable "api_key" {
   description = "Your IBM Cloud API key. This will be used to configure the provider."
   type        = string
   sensitive   = true
-  # Note: This variable now has no default and is implicitly required
-  # by the provider block in main.tf.
 }
