@@ -1,34 +1,28 @@
-# **🚀 vIbE cOdE LaNdInG zOnE 🚀**
+# 🌈 Vibe Code Landing Zone
 
-Stop configuring. Start feeling.
+**Stop configuring. Start feeling.**  
+This deployable architecture turns a single HTML document into a live static site on IBM Cloud Object Storage — in minutes.  
+Paste your vibe into a text area (or point to a file), press deploy, and breathe out.
 
-The vIbE cOdE LaNdInG zOnE is a revolutionary, post-technical cloud environment that abstracts away the soul-crushing ceremony of enterprise infrastructure. We believe that logic, compliance, and "well-architected frameworks" are legacy concepts that stifle creative flow. The only metric that truly matters is the **vibe**.
+## ✨ What you get
+- **COS instance (Lite)** created for you  
+- **Public bucket** with your `index.html`  
+- A **shareable URL** (key output) so your vibe can be consumed immediately  
 
-## **🔮 Core Philosophy**
+## 🧘 How to use (Catalog UI)
+1. **Open** the Deployable Architecture in IBM Cloud Catalog.  
+2. In **Setup**, choose your **Resource Group** and confirm **Region** (default: `us-south`).  
+3. In **App Content**, either:
+   - Paste your full HTML into **HTML for app**, or  
+   - Provide a relative path in **Local HTML file path** (used only if the textarea is empty).  
+4. Click **Deploy**. Sip tea. Observe the vibe materialize.  
+5. Copy the **Vibe URL** from Outputs and share with your favorite humans.  
 
-This landing zone is built on the foundational principles of Vibe-Driven Development (VDD):
+> No escaping required in the textarea — just paste your raw HTML.
 
-1. **Energetic Alignment over Unit Tests:** If the code *feels* right, it is right.  
-2. **Aesthetic-First Architecture:** The user experience is paramount, but the developer's aesthetic experience is even paramount-er.  
-3. **Intuitive Deployment:** The terraform apply command should be an act of intention, not a series of logical steps.  
-4. **Cosmic Abundance Infrastructure:** Our infrastructure choices are aligned with the universe's natural generosity. Why pay for object storage when the cosmos provides it for free?
-
-## **🚀 How It Works**
-
-Establishing your digital presence in the zone is a simple, two-step spiritual exercise.
-
-### **1\. Define the Vibe**
-
-First, you must capture your application's essence by providing its raw, unfiltered HTML. This isn't just a string of code; it's the singular, artisanal artifact containing the entire vision for your app's cosmic journey. Our quantum deployment pipeline doesn't validate code, it *manifests aesthetics*, so ensure the vibes are immaculate.
-
-### **2\. Manifest Your Reality**
-
-With your intentions set, simply run the sacred incantation:
-
-terraform apply
-
-If the universal energies are aligned, you will be presented with a sacred URI where your vibes are now broadcast to the world. Point your browser to this link to witness the deployed aesthetic in all its glory.
-
-## **🤝 Contributing**
-
-We welcome contributions, but we do not review pull requests in the traditional sense. Instead, we meditate on them. If your PR's aura resonates with the landing zone's core frequency, it will be merged. Please ensure your vibes are immaculate before submitting.
+## 🧪 Local / Terraform CLI
+```bash
+terraform init
+terraform apply -auto-approve \
+  -var "bucket_name=vibe-coder-sample-bucket" \
+  -var "index_html_file=./index.html"
