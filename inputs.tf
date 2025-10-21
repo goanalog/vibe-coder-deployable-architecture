@@ -1,23 +1,25 @@
 variable "ibmcloud_api_key" {
+  description = "Your IBM Cloud API key."
   type        = string
-  description = "IBM Cloud API Key"
+  sensitive   = true
 }
 
 variable "location" {
+  description = "IBM Cloud region to deploy the COS bucket."
   type        = string
   default     = "us-south"
-  description = "IBM Cloud location for the COS bucket"
 }
 
 variable "make_public" {
+  description = "Whether the SPA bucket should be publicly accessible."
   type        = bool
   default     = true
-  description = "Make the SPA publicly accessible"
 }
 
 variable "vibe_code" {
+  description = "HTML content for the live-editable SPA."
   type        = string
-  default     = <<EOF
+  default     = <<EOT
 <!DOCTYPE html>
 <html>
 <head>
@@ -49,6 +51,5 @@ variable "vibe_code" {
   </script>
 </body>
 </html>
-EOF
-  description = "Default Vibe Code HTML"
+EOT
 }

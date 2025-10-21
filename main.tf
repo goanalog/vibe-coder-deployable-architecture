@@ -3,25 +3,22 @@ provider "ibm" {
   region           = var.location
 }
 
-resource "ibm_resource_group" "default" {
-  name = "VibeCoderRG"
+resource "ibm_cos_bucket" "vibe_spa_bucket" {
+  bucket = "vibe-coder-spa-${random_pet.bucket_suffix.id}"
+  location = var.location
+  force_destroy = true
 }
 
-resource "ibm_cos_bucket" "spa_bucket" {
-  bucket       = "vibe-coder-spa-${random_id.bucket_suffix.hex}"
-  location     = var.location
-  force       = true
-  resource_group_id = ibm_resource_group.default.id
-  public       = var.make_public
-}
-
-resource "random_id" "bucket_suffix" {
-  byte_length = 4
+resource "random_pet" "bucket_suffix" {
+  length = 2
 }
 
 resource "ibm_cos_bucket_object" "html_spa" {
-  bucket       = ibm_cos_bucket.spa_bucket.name
-  key          = "index.html"
-  content      = var.vibe_code
-  # Let COS auto-detect content_type
+  bucket = ibm_cos_bucket.vibe_spa_bucket.bucket
+  key    = "index.html"
+  content = var.vibe_code
+}
+
+output "spa_url" {
+  value = "https://${ibm_cos_bucket.vibe_spa_bucket.bucket}.s3.${var.location}.cloud-object-storage.appdomain.cloud/index.html"
 }
