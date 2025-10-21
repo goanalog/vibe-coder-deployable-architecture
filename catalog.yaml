@@ -1,7 +1,7 @@
 id: "vibe-coder"
 version: "0.1.0"
 displayName: "Vibe Coder — Instant SPA"
-description: "Paste or type your HTML/JS/CSS and get an instant IBM COS-hosted SPA."
+description: "Paste your HTML/JS/CSS and get an instant IBM COS-hosted SPA. Just start coding!"
 type: "deployable_architecture"
 deliveryMethod: "terraform"
 terraform:
