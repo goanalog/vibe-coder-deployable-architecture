@@ -7,20 +7,29 @@
   "deliveryMethod": "terraform",
   "variables": [
     {
+      "name": "cos_instance_name",
+      "type": "string",
+      "ui_hints": {
+        "group": "Setup",
+        "label": "COS Instance Name"
+      }
+    },
+    {
       "name": "cos_bucket_name",
       "type": "string",
       "ui_hints": {
         "group": "Setup",
-        "label": "COS Bucket Name",
-        "placeholder": "vibe-coder-sample-bucket"
+        "label": "COS Bucket Name"
       }
     },
     {
-      "name": "cos_instance_id",
+      "name": "resource_group_id",
       "type": "string",
       "ui_hints": {
         "group": "Setup",
-        "label": "COS Instance ID"
+        "label": "Resource Group",
+        "control": "resource-group",
+        "required": true
       }
     },
     {
@@ -29,7 +38,16 @@
       "default": "us-south",
       "ui_hints": {
         "group": "Setup",
-        "label": "Bucket Location"
+        "label": "Location"
+      }
+    },
+    {
+      "name": "cos_plan",
+      "type": "string",
+      "default": "standard",
+      "ui_hints": {
+        "group": "Setup",
+        "label": "COS Plan"
       }
     },
     {
@@ -37,7 +55,7 @@
       "type": "string",
       "ui_hints": {
         "group": "Input",
-        "label": "Pasted SPA Code",
+        "label": "Pasted SPA Code (Optional)",
         "placeholder": "<!DOCTYPE html>...",
         "control": "textarea"
       }
@@ -48,7 +66,8 @@
       "ui_hints": {
         "group": "Authentication",
         "label": "IBM Cloud API Key",
-        "secret": true
+        "secret": true,
+        "required": true
       }
     }
   ],
