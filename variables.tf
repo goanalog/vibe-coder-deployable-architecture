@@ -1,7 +1,8 @@
 variable "cos_bucket_name" {
-  description = "Name for your new IBM Cloud Object Storage bucket."
+  # --- UPDATED DESCRIPTION ---
+  description = "A prefix for your new IBM Cloud Object Storage bucket. A random suffix will be added to ensure uniqueness."
   type        = string
-  default     = "vibe-coder-sample-bucket"
+  default     = "vibe-coder-sample" # Shortened default
 }
 
 variable "cos_instance_name" {
@@ -19,7 +20,7 @@ variable "resource_group_id" {
 variable "cos_plan" {
   description = "The plan for the COS service instance."
   type        = string
-  default     = "lite" # <-- CHANGED FROM "standard"
+  default     = "lite"
 }
 
 variable "cos_bucket_location" {

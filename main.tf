@@ -4,6 +4,11 @@ terraform {
       source  = "IBM-Cloud/ibm"
       version = ">= 1.60" 
     }
+    # --- ADD THIS PROVIDER ---
+    random = {
+      source  = "hashicorp/random"
+      version = ">= 3.0"
+    }
   }
 }
 
@@ -15,28 +20,34 @@ data "ibm_resource_group" "default" {
   name = "Default"
 }
 
-# --- THIS RESOURCE IS STILL WRONG ---
+# --- ADD THIS RESOURCE ---
+# Creates a 6-character random string (e.g., "a2b4n8")
+resource "random_string" "suffix" {
+  length  = 6
+  special = false
+  upper   = false
+}
+
 resource "ibm_resource_instance" "cos_instance" {
-  name    = var.cos_instance_name
-  service = "cloud-object-storage"
-  plan    = var.cos_plan
-  
-  # --- FIX THIS LINE ---
-  # It should be "global", not var.cos_bucket_location
-  location = "global" 
-  
+  name              = var.cos_instance_name
+  service           = "cloud-object-storage"
+  plan              = var.cos_plan
+  location          = "global" 
   resource_group_id = var.resource_group_id != null ? var.resource_group_id : data.ibm_resource_group.default.id
 }
 
 locals {
   spa_content = var.pasted_code
+  # --- ADD THIS LOCAL VARIABLE ---
+  # Combines the prefix from the user with the random suffix
+  bucket_name_unique = "${var.cos_bucket_name}-${random_string.suffix.result}"
 }
 
-# This resource is correct
 resource "ibm_cos_bucket" "vibe_spa_bucket" {
-  bucket_name          = var.cos_bucket_name 
+  # --- UPDATE THIS LINE ---
+  bucket_name          = local.bucket_name_unique
   resource_instance_id = ibm_resource_instance.cos_instance.id 
-  region_location      = var.cos_bucket_location # This is correct, buckets are regional
+  region_location      = var.cos_bucket_location 
 }
 
 resource "ibm_cos_bucket_object" "vibe_index" {
@@ -49,6 +60,7 @@ resource "ibm_cos_bucket_object" "vibe_index" {
 }
 
 output "spa_url" {
-  value = length(var.pasted_code) > 0 ? "https://${ibm_cos_bucket.vibe_spa_bucket.bucket_name}.s3.${ibm_cos_bucket.vibe_spa_bucket.region_location}.cloud-object-storage.appdomain.cloud/index.html" : "No HTML provided. Bucket was created, but no SPA is deployed."
+  # --- UPDATE THIS LINE ---
+  value = length(var.pasted_code) > 0 ? "https://${local.bucket_name_unique}.s3.${ibm_cos_bucket.vibe_spa_bucket.region_location}.cloud-object-storage.appdomain.cloud/index.html" : "No HTML provided. Bucket was created, but no SPA is deployed."
   description = "Key URL to access your deployed SPA"
 }

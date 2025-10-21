@@ -19,7 +19,8 @@
       "type": "string",
       "ui_hints": {
         "group": "Setup",
-        "label": "COS Bucket Name"
+        # --- UPDATED LABEL ---
+        "label": "COS Bucket Name (Prefix)"
       }
     },
     {
