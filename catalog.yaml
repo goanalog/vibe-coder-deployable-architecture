@@ -1,21 +1,25 @@
 id: vibe-coder
 version: 0.1.0
-displayName: Vibe Coder — Instant SPA
-description: |
-  Deploy an instant "Vibe Coder" SPA. Paste your HTML code below and get a live app hosted in IBM Cloud Object Storage.
 type: deployable_architecture
-deliveryMethod: terraform
-terraform:
-  template: main.tf
-  variables:
-    - name: vibe_code
-      type: string
-      description: "Paste your HTML code here."
-      required: true
-      ui_hints:
-        label: "Vibe Code Input"
-        placeholder: "<!DOCTYPE html><html>...</html>"
+displayName: Vibe Coder — Instant SPA
+description: >
+  Deploy a minimal "Vibe Coder" single-page app. Paste or write your HTML in the input below, 
+  and see it served instantly from IBM Cloud Object Storage.
+
 tags:
-  - vibe-coding
   - SPA
-  - IBM COS
+  - COS
+  - Vibe Coding
+  - IBM Cloud
+
+deploy:
+  terraform:
+    main: main.tf
+
+inputs:
+  - id: vibe_code
+    type: string
+    label: Paste your Vibe Code (HTML)
+    description: >
+      Enter your HTML or full SPA content here. It will be served instantly from IBM Cloud Object Storage.
+    required: true
