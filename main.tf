@@ -1,73 +1,53 @@
 terraform {
   required_providers {
     ibm = {
-      source  = "ibm-cloud/ibm"
+      source  = "IBM-Cloud/ibm"
       version = ">= 1.84.0"
     }
   }
-
-  required_version = ">= 1.0"
 }
 
 provider "ibm" {
-  ibmcloud_api_key = var.api_key
-  region           = var.region
+  ibmcloud_api_key = var.ibmcloud_api_key
+  region           = var.location
 }
 
-##########################
-# Variables
-##########################
-
-variable "api_key" {
+variable "ibmcloud_api_key" {
+  description = "Your IBM Cloud API key — don’t worry, keep it secret!"
   type        = string
-  description = "Your IBM Cloud API key"
 }
 
-variable "vibe_code" {
+variable "location" {
+  description = "IBM Cloud location for the COS instance"
   type        = string
-  description = "HTML code for the Vibe Coder SPA"
-}
-
-variable "region" {
-  type        = string
-  description = "IBM Cloud region to create resources in"
   default     = "us-south"
 }
 
-variable "bucket_name" {
+variable "cos_bucket_name" {
+  description = "Name of the COS bucket where your Vibe Code SPA will live — don’t worry, you can change it!"
   type        = string
-  description = "COS bucket to host the SPA"
-  default     = "vibe-coder-sample-bucket"
+  default     = "vibe-coder-spa"
 }
 
-##########################
-# COS Instance
-##########################
+variable "vibe_code" {
+  description = "Paste your Vibe Coder HTML/SPA code here"
+  type        = string
+}
 
 resource "ibm_resource_instance" "vibe_cos" {
-  name       = "vibe-coder-cos"
-  service    = "cloud-object-storage"
-  plan       = "standard"
-  region     = var.region
+  name              = var.cos_bucket_name
+  service           = "cloud-object-storage"
+  plan              = "standard"
+  location          = var.location
 }
-
-##########################
-# COS Bucket
-##########################
 
 resource "ibm_cos_bucket" "vibe_spa_bucket" {
-  name                 = var.bucket_name
-  resource_instance_id = ibm_resource_instance.vibe_cos.id
+  name     = var.cos_bucket_name
+  location = ibm_resource_instance.vibe_cos.location
 }
 
-##########################
-# Upload HTML as Object
-##########################
-
 resource "ibm_cos_bucket_object" "html_spa" {
-  bucket_crn   = ibm_cos_bucket.vibe_spa_bucket.bucket_crn
-  bucket_name  = ibm_cos_bucket.vibe_spa_bucket.name
-  key          = "index.html"
-  content      = var.vibe_code
-  content_type = "text/html"
+  bucket  = ibm_cos_bucket.vibe_spa_bucket.name
+  key     = "index.html"
+  content = var.vibe_code
 }
