@@ -1,16 +1,96 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Vibe-Driven Development IDE</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;700&display=swap" rel="stylesheet">
-</head>
-<body class="bg-gray-900 text-gray-200 flex flex-col md:flex-row h-screen antialiased">
-  <div class="w-full flex flex-col items-center justify-center p-12">
-    <h1 class="text-4xl font-bold text-indigo-400">Welcome to the Vibe Code Landing Zone</h1>
-    <p class="mt-4 text-gray-400">Deploy instantly. Breathe deeply. Your vibes are now live.</p>
-  </div>
-</body>
-</html>
+{
+  "id": "vibe-code-landing-zone",
+  "manifest_version": "1.0",
+  "version": "0.1.0",
+  "displayName": "Vibe Code Landing Zone",
+  "description": "Deploy a paste-or-upload single-page app to IBM Cloud Object Storage with one click. Built for vibe coding.",
+  "type": "deployable_architecture",
+  "deliveryMethod": "terraform",
+  "metadata": {
+    "provider": "IBM",
+    "support_url": "https://cloud.ibm.com",
+    "license": "Apache-2.0"
+  },
+  "tags": [
+    "ibm-cloud",
+    "deployable-architecture",
+    "object-storage",
+    "static-website",
+    "cos",
+    "vibe-coding",
+    "html"
+  ],
+  "variables": [
+    {
+      "name": "resource_group",
+      "type": "string",
+      "description": "Where your vibe lives organizationally. If unsure, 'default' is fine.",
+      "default": "default",
+      "ui_hints": {
+        "group": "Setup",
+        "label": "Resource Group",
+        "control": "text"
+      },
+      "required": true
+    },
+    {
+      "name": "region",
+      "type": "string",
+      "description": "IBM Cloud region for your Object Storage bucket. 'us-south' is a steady classic.",
+      "default": "us-south",
+      "ui_hints": {
+        "group": "Setup",
+        "label": "Region",
+        "control": "text"
+      },
+      "required": true
+    },
+    {
+      "name": "cos_instance_name",
+      "type": "string",
+      "description": "Optional: name for your IBM Cloud Object Storage instance. Leave blank to auto-generate.",
+      "default": "",
+      "ui_hints": {
+        "group": "Setup",
+        "label": "COS Instance Name (optional)",
+        "control": "text"
+      },
+      "required": false
+    },
+    {
+      "name": "bucket_name",
+      "type": "string",
+      "description": "Optional: bucket name (lowercase, no spaces). Leave blank to auto-generate.",
+      "default": "",
+      "ui_hints": {
+        "group": "Setup",
+        "label": "Bucket Name (optional)",
+        "control": "text"
+      },
+      "required": false
+    },
+    {
+      "name": "index_html",
+      "type": "string",
+      "description": "Paste your full HTML here \u2014 it becomes your app\u2019s index.html when deployed. Leave blank to use the sample app.",
+      "ui_hints": {
+        "group": "App Content",
+        "label": "App HTML",
+        "control": "textarea",
+        "placeholder": "<!DOCTYPE html>\\n<html>\\n  <head>...</head>\\n  <body>...</body>\\n</html>"
+      },
+      "required": true
+    }
+  ],
+  "outputs": [
+    {
+      "name": "vibe_url",
+      "description": "Your live deployed vibe URL.",
+      "key_output": true
+    },
+    {
+      "name": "vibe_bucket_url",
+      "description": "Direct link to your bucket (listing URL)."
+    }
+  ]
+}
