@@ -2,7 +2,7 @@
   "id": "vibe-code-landing-zone",
   "version": "0.1.0",
   "displayName": "Vibe Code Landing Zone",
-  "description": "A deployable architecture for instant 'vibe coding' — paste or upload your HTML to IBM Cloud Object Storage and watch it go live instantly.",
+  "description": "Deploy a paste-or-upload single-page app to IBM Cloud Object Storage with one click. Built for vibe coding.",
   "type": "deployable_architecture",
   "deliveryMethod": "terraform",
   "tags": [
@@ -42,46 +42,34 @@
     {
       "name": "cos_instance_name",
       "type": "string",
-      "description": "A friendly name for your IBM Cloud Object Storage instance.",
-      "default": "vibe-instance-123456",
+      "description": "Optional: name for your IBM Cloud Object Storage instance. Leave blank to auto-generate.",
+      "default": "",
       "ui_hints": {
         "group": "Setup",
-        "label": "COS Instance Name"
+        "label": "COS Instance Name (optional)"
       },
       "required": false
     },
     {
       "name": "bucket_name",
       "type": "string",
-      "description": "Your public bucket name (lowercase, no spaces). This becomes your vibe’s home in the cloud.",
-      "default": "vibe-bucket-123456",
+      "description": "Optional: bucket name (lowercase, no spaces). Leave blank to auto-generate.",
+      "default": "",
       "ui_hints": {
         "group": "Setup",
-        "label": "Bucket Name (public)"
+        "label": "Bucket Name (optional)"
       },
-      "required": true
+      "required": false
     },
     {
       "name": "index_html",
       "type": "string",
-      "description": "Paste your full HTML here — it becomes your app’s index.html when deployed. No escaping needed; just vibes.",
+      "description": "Paste your full HTML here \u2014 it becomes your app\u2019s index.html when deployed. Leave blank to use the sample app.",
       "ui_hints": {
         "group": "App Content",
         "label": "App HTML",
         "control": "textarea",
         "placeholder": "<!DOCTYPE html>\\n<html>\\n  <head>...</head>\\n  <body>...</body>\\n</html>"
-      },
-      "required": false
-    },
-    {
-      "name": "index_html_file",
-      "type": "string",
-      "description": "Optional path to a local HTML file (e.g., index.html). Used only if the textarea above is empty.",
-      "ui_hints": {
-        "group": "App Content",
-        "label": "Local HTML file path",
-        "control": "text",
-        "placeholder": "index.html"
       },
       "required": false
     }
@@ -94,7 +82,7 @@
     },
     {
       "name": "vibe_bucket_url",
-      "description": "Direct link to your Vibe Bucket for browsing or verification."
+      "description": "Direct link to your bucket (listing URL)."
     }
   ]
 }
