@@ -20,15 +20,15 @@ resource "ibm_resource_group" "vibe_rg" {
 # COS Service Instance
 resource "ibm_resource_instance" "vibe_cos" {
   name               = "vibe-coder-cos"
-  resource_group_id   = ibm_resource_group.vibe_rg.id
-  service             = "cloud-object-storage"
-  plan                = "standard"
-  location            = var.location
+  resource_group_id  = ibm_resource_group.vibe_rg.id
+  service            = "cloud-object-storage"
+  plan               = "standard"
+  location           = var.location
 }
 
-# COS Bucket
+# COS Bucket (corrected arguments)
 resource "ibm_cos_bucket" "vibe_spa_bucket" {
-  bucket               = var.cos_bucket_name
+  name                = var.cos_bucket_name
   resource_instance_id = ibm_resource_instance.vibe_cos.id
 }
 
@@ -40,9 +40,9 @@ resource "ibm_cos_bucket_object" "html_spa" {
   content         = var.vibe_code
 }
 
-# Optional Outputs
+# Outputs
 output "cos_bucket_name" {
-  value = ibm_cos_bucket.vibe_spa_bucket.bucket
+  value = ibm_cos_bucket.vibe_spa_bucket.name
 }
 
 output "cos_bucket_crn" {
