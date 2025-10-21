@@ -1,7 +1,13 @@
-provider "ibm" {
-  ibmcloud_api_key = var.ibmcloud_api_key
-  region           = var.region
+terraform {
+  required_providers {
+    ibm = {
+      source  = "ibm-cloud/ibm"
+      version = ">= 1.84.0"
+    }
+  }
+  required_version = ">= 1.2.0"
 }
+
 
 # Create IBM Cloud Object Storage instance
 resource "ibm_resource_instance" "vibe_cos" {
