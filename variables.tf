@@ -1,35 +1,40 @@
 variable "ibmcloud_api_key" {
-  description = "Your IBM Cloud API key — used to securely deploy resources. Don’t worry, it’s never stored in your app. You can create one in your IBM Cloud account settings."
+  description = "Your IBM Cloud API key"
   type        = string
   sensitive   = true
 }
 
-variable "region" {
-  description = "Choose your IBM Cloud region (for example: us-south, eu-de, jp-tok). This is where your vibes will live."
+variable "ibm_region" {
+  description = "IBM Cloud region, e.g., us-south"
   type        = string
   default     = "us-south"
 }
 
-variable "resource_group" {
-  description = "The resource group where your vibe-coded app will be deployed. If unsure, use 'Default'."
+variable "resource_group_id" {
+  description = "ID of the IBM Cloud Resource Group"
   type        = string
-  default     = "Default"
 }
 
 variable "cos_name" {
-  description = "Name your IBM Cloud Object Storage instance — the container for your hosted vibe code."
+  description = "IBM COS instance name"
   type        = string
   default     = "vibe-coder-cos"
 }
 
 variable "cos_bucket_name" {
-  description = "A unique bucket name for your app’s files (letters, numbers, and dashes)."
+  description = "COS bucket name for the SPA"
   type        = string
   default     = "vibe-coder-sample-bucket"
 }
 
-variable "html_content" {
-  description = "Paste your vibe code (HTML) here — it will instantly become your hosted app’s index.html."
+variable "cos_bucket_location" {
+  description = "COS bucket location (region)"
   type        = string
-  default     = "<!DOCTYPE html><html><body><h1>Hello, Vibe Coder!</h1><p>Your HTML goes here.</p></body></html>"
+  default     = "us-south"
+}
+
+variable "vibe_code" {
+  description = "Paste your HTML code for the Vibe Coder SPA here"
+  type        = string
+  default     = "<!DOCTYPE html><html><head><title>Vibe Coder</title></head><body><h1>Hello, Vibe!</h1></body></html>"
 }

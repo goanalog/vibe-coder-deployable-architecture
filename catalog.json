@@ -1,26 +1,45 @@
 {
   "id": "vibe-coder",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "displayName": "Vibe Coder — Instant SPA",
-  "description": "Deploy an instant 'vibe coding' sample app that hosts pasted HTML in IBM Cloud Object Storage.",
+  "description": "Deploy an instant 'vibe coding' single-page app: paste your HTML and get an IBM COS-hosted SPA immediately.",
   "type": "deployable_architecture",
-  "tags": ["vibe-coder", "spa", "ibm", "html", "cloud-object-storage"],
+  "deliveryMethod": "terraform",
   "variables": [
     {
       "name": "ibmcloud_api_key",
       "type": "string",
-      "label": "IBM Cloud API key",
-      "description": "Used to securely deploy your vibe app — not stored anywhere.",
-      "required": true,
-      "sensitive": true
+      "description": "Your IBM Cloud API key — don't worry, it stays secure.",
+      "ui_hints": {
+        "group": "Authentication",
+        "label": "IBM Cloud API Key",
+        "placeholder": "Enter your IBM Cloud API key"
+      }
     },
     {
-      "name": "html_content",
+      "name": "cos_bucket_name",
       "type": "string",
-      "label": "Vibe Code (HTML)",
-      "description": "Paste your HTML or vibe code here. It will become your hosted index.html.",
-      "required": true,
-      "multiline": true
+      "description": "Name your IBM COS bucket for the Vibe Coder SPA. Don't worry — it will be created automatically.",
+      "default": "vibe-coder-sample-bucket",
+      "ui_hints": {
+        "group": "Setup",
+        "label": "COS Bucket Name"
+      }
+    },
+    {
+      "name": "vibe_code",
+      "type": "string",
+      "description": "Paste your HTML 'vibe code' here. Your SPA will instantly use it.",
+      "default": "<!DOCTYPE html>\n<html>\n  <head>\n    <title>Vibe Coder</title>\n  </head>\n  <body>\n    <h1>Hello, Vibe!</h1>\n  </body>\n</html>",
+      "ui_hints": {
+        "group": "Vibe Code",
+        "label": "HTML Content",
+        "placeholder": "Paste your vibe code here",
+        "editor_type": "code",
+        "syntax": "html",
+        "rows": 15
+      }
     }
-  ]
+  ],
+  "tags": ["vibe-coder", "SPA", "IBM COS", "developer-experience"]
 }
